@@ -1,6 +1,9 @@
 
 import '../assets/globals.css';
 import { Poppins } from 'next/font/google';
+import { AuthProvider } from '@/context/Authcontext';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 
 
 const poppins = Poppins({
@@ -22,7 +25,13 @@ export default function RootLayout({ children }) {
       <body
         className={poppins.className}
       >
+        <AuthProvider >
+          <main className=" min-h-screen">
+        <Navbar />
         {children}
+        <Footer />
+          </main>
+        </AuthProvider>
       </body>
     </html>
   );
