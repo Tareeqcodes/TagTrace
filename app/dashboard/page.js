@@ -23,7 +23,7 @@ export default function Page() {
 
   return (
     <section className="flex h-screen">
-      <nav className="flex flex-col w-56 bg-white border-r border-gray-200 pt-3 pl-9 pr-3 mt-6 space-y-5 ">
+      <nav className="flex flex-col w-56 bg-white cursor-pointer border-r border-gray-200 pt-3 pl-9 pr-3 mt-6 space-y-5 ">
         {tabs.map(({ label, value, icon: Icon }) => (
           <div key={value} 
            onClick={() => setActiveTab(value)}
@@ -32,7 +32,7 @@ export default function Page() {
           }`} 
            >
             
-            <Icon />
+            <Icon size={20} />
             <button className="text-left">{label}</button>
           </div>
         ))}
