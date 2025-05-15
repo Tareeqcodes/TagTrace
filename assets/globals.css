@@ -1,0 +1,56 @@
+@import "tailwindcss";
+
+.hero-pattern {
+  background-color: #1a202c;
+  background-image: radial-gradient(#3182ce 0.5px, transparent 0.5px), radial-gradient(#3182ce 0.5px, #1a202c 0.5px);
+  background-size: 20px 20px;
+  background-position: 0 0, 10px 10px;
+}
+
+.video-container {
+  position: relative;
+  width: 100%;
+  max-width: 768px;
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 0.5rem;
+}
+
+.video-container video {
+  width: 100%;
+  height: auto;
+  max-height: 432px; /* 16:9 aspect ratio for 768px width */
+  object-fit: contain;
+}
+
+.mobile-menu {
+  display: none;
+}
+
+.mobile-menu.active {
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .desktop-menu {
+    display: none;
+  }
+  
+  .menu-toggle {
+    display: block;
+  }
+  
+  .mobile-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: white;
+    z-index: 40;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  }
+  
+  .mobile-menu.active {
+    display: block;
+  }
+}
