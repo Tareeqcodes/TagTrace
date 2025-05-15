@@ -18,9 +18,9 @@ export default function Navbar() {
             <nav className="desktop-menu hidden md:block">
                <div className="container mx-auto px-4 py-1">
                 <div className="flex space-x-6">
-                    <Link href="/features" className="block text-gray-600 hover:text-blue-600 transition py-2">Features</Link>
-                    <Link href="/how-it-works" className="block text-gray-600 hover:text-blue-600 transition py-2">How It Works</Link>
-                    <Link href="/pricing" className="block text-gray-600 hover:text-blue-600 transition py-2">Pricing</Link>
+                    <Link href="/features" className="block text-gray-600 text-sm hover:text-blue-600 transition py-2">Features</Link>
+                    <Link href="/how-it-works" className="block text-gray-600 hover:text-blue-600 text-sm transition py-2">How It Works</Link>
+                    <Link href="/pricing" className="block text-gray-600 hover:text-blue-600 text-sm transition py-2">Pricing</Link>
                 </div>
                 
             </div>
@@ -33,8 +33,8 @@ export default function Navbar() {
                 Dashboard
               </Link>
                     ): (
-                    <Link className="pt-2 border-t border-gray-200">
-                        <a href="/login" className="block bg-blue-600 hover:bg-blue-700 text-white text-center font-medium py-2 px-4 rounded-lg transition">Login</a>
+                    <Link href="/login" className="block bg-blue-600 hover:bg-blue-700 text-white text-center font-medium py-2 px-4 rounded-lg transition">
+                        Login
                     </Link>
                     )} 
         </div>

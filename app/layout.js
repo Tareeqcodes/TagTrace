@@ -26,7 +26,7 @@ export default function RootLayout({ children }) {
         className={poppins.className}
       >
         <AuthProvider >
-          <main className=" min-h-screen">
+          <main>
         <Navbar />
         {children}
         <Footer />
