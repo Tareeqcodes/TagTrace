@@ -5,9 +5,9 @@ import { databases, Query } from '@/config/appwrite';
 import { useAuth } from '@/context/Authcontext';
 
 export default function Items() {
-  const { user } =useAuth()
-  const [ userData, setUserData ] =useState("");
-  const [ loading, setLoading ] =useState(true);
+  // const { user } =useAuth()
+  // const [ userData, setUserData ] =useState("");
+  // const [ loading, setLoading ] =useState(true);
      const taggedItems = [
     { name: "MacBook Pro", tagId: "MB-3892", status: "active", lastScan: "2 hours ago", location: "Lagos, Nigeria" },
     { name: "Backpack", tagId: "BP-1270", status: "returned", lastScan: "1 day ago", location: "Kano, naibawa" },
@@ -24,27 +24,27 @@ export default function Items() {
     }
   };
 
-  useEffect( () => {
-    const fetchData = async () => {
-      const userId = user.$id
-      try {
-        const response= await databases.listDocuments(
-          process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
-          process.env.NEXT_PUBLIC_APPWRITE_ITEMS_COLLECTION_ID
-          [Query.equal ( 'user_id', userId )]
-        )
-        setUserData(response.documents)
-        setLoading(false)
-      } catch (error) {
+  // useEffect( () => {
+  //   const fetchData = async () => {
+  //     const userId = user.$id
+  //     try {
+  //       const response= await databases.listDocuments(
+  //         process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
+  //         process.env.NEXT_PUBLIC_APPWRITE_ITEMS_COLLECTION_ID
+  //         [Query.equal ( 'user_id', userId )]
+  //       )
+  //       setUserData(response.documents)
+  //       setLoading(false)
+  //     } catch (error) {
         
-      }
-    }
-    fetchData();
-  }, [user])
+  //     }
+  //   }
+  //   fetchData();
+  // }, [user])
 
-  if(loading) {
-    return <div>loading data...</div>
-  }
+  // if(loading) {
+  //   return <div>loading data...</div>
+  // }
   
    return (
           <div>
