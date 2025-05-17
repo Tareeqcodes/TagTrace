@@ -6,11 +6,13 @@ import Pricing from '@/components/Pricing';
 import Tesmonials from '@/components/Tesmonials';
 import Action from '@/components/Action';
 import FAQ from '@/components/FAQ';
+import Navbar from '@/components/Navbar';
 
 
 export default function page() {
   return (
     <>
+    <Navbar />
      <HeroSection />
      <Features />
      <How />

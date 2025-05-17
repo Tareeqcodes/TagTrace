@@ -2,7 +2,6 @@
 import '../assets/globals.css';
 import { Poppins } from 'next/font/google';
 import { AuthProvider } from '@/context/Authcontext';
-import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
 
@@ -27,7 +26,7 @@ export default function RootLayout({ children }) {
       >
         <AuthProvider >
           <main>
-        <Navbar />
+         
         {children}
         <Footer />
           </main>
