@@ -9,12 +9,12 @@ import Scan from '@/components/Dashboard/Scan';
 import Message from '@/components/Dashboard/Message';
 import Setting from '@/components/Dashboard/Setting';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useRouter } from 'next/navigation';
+
 
 const tabs = [
   { label: 'Dashboard', value: 'main', icon: Home, color: 'bg-blue-100 text-blue-600' },
   { label: 'My Items', value: 'items', icon: Package, color: 'bg-purple-100 text-purple-600' },
-  { label: 'Create Tag', value: 'create', icon: QrCode, color: 'bg-green-100 text-green-600' },
+  { label: 'Create Trace', value: 'create', icon: QrCode, color: 'bg-green-100 text-green-600' },
   { label: 'Scan Logs', value: 'logs', icon: Clock, color: 'bg-amber-100 text-amber-600' },
   { label: 'Messages', value: 'messages', icon: MessageCircle, color: 'bg-indigo-100 text-indigo-600' },
   { label: 'Settings', value: 'settings', icon: Settings, color: 'bg-gray-100 text-gray-600' },
@@ -23,7 +23,6 @@ const tabs = [
 export default function Page() {
   const [activeTab, setActiveTab] = useState('main');
   const [hoveredTab, setHoveredTab] = useState(null);
-  const router = useRouter();
 
   const tabVariants = {
     hidden: { opacity: 0, x: -20 },

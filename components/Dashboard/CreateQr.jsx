@@ -105,7 +105,7 @@ export default function CreateQr() {
         <div className="p-6 bg-gradient-to-r from-blue-50 to-purple-50 border-b border-gray-200">
           <h1 className="text-2xl font-bold text-gray-800 flex items-center">
             <QrCode className="mr-3 text-blue-600" size={24} />
-            Create New QR Tag
+            Create New Trace
           </h1>
         </div>
 

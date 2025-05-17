@@ -172,7 +172,6 @@ export default function Main() {
                     <th className="pb-3 font-medium">Item Name</th>
                     <th className="pb-3 font-medium">Tag ID</th>
                     <th className="pb-3 font-medium">Status</th>
-                    <th className="pb-3 font-medium">Last Scan</th>
                     <th className="pb-3 font-medium">Actions</th>
                   </tr>
                 </thead>
@@ -195,7 +194,6 @@ export default function Main() {
                           {item.status.charAt(0).toUpperCase() + item.status.slice(1)}
                         </motion.span>
                       </td>
-                      <td className="py-4 text-sm text-gray-500">2 days ago</td>
                       <td className="py-4">
                         <div className="flex space-x-2">
                           <motion.button 

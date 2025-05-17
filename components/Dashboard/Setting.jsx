@@ -1,7 +1,76 @@
 'use client'
+import { useState, useEffect } from "react";
+import { databases, Query, ID } from "@/config/appwrite";
+import { useAuth } from "@/context/Authcontext";
 
+const db = process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID
+const cll = process.env.NEXT_PUBLIC_APPWRITE_USERS_ID
 
 export default function Setting() {
+  const { user, loading } =useAuth();
+   const [docId, setDocId] = useState(null)
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone:"",
+    user_id: "",
+  })
+
+  useEffect( () => {
+    if (!user || !user.email) return;
+    const fetchData = async () => {
+      try {
+        const userId = user.$id
+         const response = await databases.listDocuments(
+          db,
+          cll,
+          [Query.equal("user_id", userId)]
+         )
+        if( response.total > 0 ){
+          const doc = response.documents[0]
+          setDocId(doc.$id)
+          setFormData({
+            name: doc.name || "",
+            email: doc.email || "",
+            phone: doc.phone || "",
+            user_id: doc.user_id || "",
+          })
+        } else{
+          setFormData({
+            ...formData,
+            email: user.email,
+            name: user.name,
+            user_id: user.$id,
+          })
+        }
+      } catch (err) {
+        console.error("Error fetching user data", err)
+      }
+    }
+    fetchData();
+  },[user])
+
+  const handleChange = (e) => {
+    const { name, value } = e.target
+    setFormData(prev => ({ ...prev, [name]: value }))
+  }
+  const handleSave = async () => {
+    const payload = {
+      ...formData,
+      user_id: user.$id,
+    }
+    try {
+      if (docId) {
+        await databases.updateDocument(db, cll, docId, payload)
+      } else {
+        await databases.createDocument(db, cll, ID.unique(), payload)
+      }
+      alert("User data saved successfully")
+    } catch (err) {
+      console.error("Error saving user data", err)
+      alert("Something went wrong while saving")
+    }
+  }
     
    return (
           <div>
@@ -13,21 +82,33 @@ export default function Setting() {
                   
                   <div className="mb-4">
                     <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-                    <input type="text" className="w-full p-2 border border-gray-300 rounded-lg" value="Tareeq"/>
+                    <input type="text"
+                    name="name"
+                    onChange={handleChange}
+                    value={formData.name}
+                     className="w-full p-2 border border-gray-300 rounded-lg" />
                   </div>
                   
                   <div className="mb-4">
                     <label className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
-                    <input type="email" className="w-full p-2 border border-gray-300 rounded-lg" value="jamie.smith@example.com" />
+                    <input type="email" 
+                     name="email"
+                     value={user.email}
+                     readOnly
+                    className="w-full p-2 border border-gray-300 rounded-lg" />
                   </div>
                   
                   <div className="mb-4">
                     <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
-                    <input type="tel" className="w-full p-2 border border-gray-300 rounded-lg" value="+1 (555) 123-4567" />
+                    <input type="tel" 
+                    name="phone"
+                    onChange={handleChange}
+                    value={formData.phone}
+                    className="w-full p-2 border border-gray-300 rounded-lg"/>
                   </div>
                   
                   <div className="mt-6">
-                    <button className="px-4 py-2 bg-blue-500 text-white rounded-lg">Save Changes</button>
+                    <button onClick={handleSave} className="px-4 py-2 bg-blue-500 text-white rounded-lg cursor-pointer">Save Changes</button>
                   </div>
                 </div>
                 
