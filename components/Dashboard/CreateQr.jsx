@@ -18,6 +18,7 @@ export default function CreateQr() {
   const [error, setError] = useState("");
   const { user } = useAuth();
 
+
   const saveItem = async () => {
     if (!itemName || !contactInstructions) {
       setError("Please fill all required fields.");
@@ -131,7 +132,7 @@ export default function CreateQr() {
               </motion.div>
               <motion.div whileHover={{ scale: 1.01 }}>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Category
+                  For
                 </label>
                 <select
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
@@ -143,7 +144,7 @@ export default function CreateQr() {
                   <option>Bags & Luggage</option>
                   <option>Keys & Access</option>
                   <option>Wallet & Documents</option>
-                  <option>Other</option>
+                  <option>Everything else</option>
                 </select>
               </motion.div>
 

@@ -171,8 +171,8 @@ export default function Main() {
                   <tr className="text-left text-gray-500 text-sm border-b">
                     <th className="pb-3 font-medium">Item Name</th>
                     <th className="pb-3 font-medium">Tag ID</th>
+                    <th className="pb-3 font-medium">Last scan</th>
                     <th className="pb-3 font-medium">Status</th>
-                    <th className="pb-3 font-medium">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -186,6 +186,7 @@ export default function Main() {
                     >
                       <td className="py-4 font-medium">{item.name}</td>
                       <td className="py-4 text-gray-500 text-sm">{item.tagId}</td>
+                      <td className="py-4 text-gray-500 text-sm">2 days ago</td>
                       <td className="py-4">
                         <motion.span 
                           whileHover={{ scale: 1.05 }}
@@ -193,24 +194,6 @@ export default function Main() {
                         >
                           {item.status.charAt(0).toUpperCase() + item.status.slice(1)}
                         </motion.span>
-                      </td>
-                      <td className="py-4">
-                        <div className="flex space-x-2">
-                          <motion.button 
-                            whileHover={{ scale: 1.2 }}
-                            whileTap={{ scale: 0.9 }}
-                            className="p-2 text-blue-500 hover:bg-blue-50 rounded-full transition-colors"
-                          >
-                            <Eye size={16} />
-                          </motion.button>
-                          <motion.button 
-                            whileHover={{ scale: 1.2 }}
-                            whileTap={{ scale: 0.9 }}
-                            className="p-2 text-gray-500 hover:bg-gray-50 rounded-full transition-colors"
-                          >
-                            <Edit size={16} />
-                          </motion.button>
-                        </div>
                       </td>
                     </motion.tr>
                   ))}

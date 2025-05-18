@@ -88,7 +88,6 @@ export default function Page() {
             ))}
           </div>
 
-          {/* User Profile Section */}
           <motion.div 
             whileHover={{ scale: 1.02 }}
             className="mt-8 p-3 rounded-lg bg-gray-50 flex items-center cursor-pointer"
@@ -98,14 +97,13 @@ export default function Page() {
             </div>
             <div className="ml-3">
               <p className="font-medium text-gray-800">
-                {typeof window !== 'undefined' && JSON.parse(localStorage.getItem('user'))?.name || 'Tareeq'}
+                Tareeq
               </p>
-              <p className="text-xs text-gray-500">View Profile</p>
+              
             </div>
           </motion.div>
         </motion.nav>
 
-        {/* Main Content Area */}
         <div className="flex-1 p-4 md:p-8">
           <AnimatePresence mode="wait">
             <motion.div
