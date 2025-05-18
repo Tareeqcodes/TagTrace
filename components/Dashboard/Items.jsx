@@ -4,6 +4,7 @@ import { X, Edit, Eye, Package, Plus } from 'lucide-react';
 import { databases, Query } from '@/config/appwrite';
 import { useAuth } from '@/context/Authcontext';
 import { motion } from 'framer-motion';
+import { formatDistanceToNow } from 'date-fns';
 
 export default function Items() {
   const { user } =useAuth()
@@ -75,7 +76,7 @@ export default function Items() {
                     >
                       <td className="py-4 font-medium">{item.name}</td>
                       <td className="py-4 text-gray-500 text-sm">{item.tagId}</td>
-                      <td className="py-4 text-gray-500 text-sm">2 days ago</td>
+                      <td className="py-4 text-gray-500 text-sm">{formatDistanceToNow(new Date(item.createdAt), { addSuffix: true })}</td>
                       <td className="py-4">
                         <motion.span 
                           whileHover={{ scale: 1.05 }}

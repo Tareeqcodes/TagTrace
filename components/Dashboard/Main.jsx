@@ -1,10 +1,11 @@
 'use client'
 import { useState, useEffect } from 'react';
-import { Package, QrCode, Check, AlertCircle, RefreshCw, Edit, Eye, Plus } from 'lucide-react';
+import { Package, QrCode, Check, AlertCircle, RefreshCw, Plus } from 'lucide-react';
 import { databases, Query } from '@/config/appwrite';
 import { useAuth } from '@/context/Authcontext';
 import { motion } from 'framer-motion';
 import { fadeIn, staggerContainer, textVariant, slideIn } from '@/utils/motion';
+import { formatDistanceToNow } from 'date-fns';
 
 export default function Main() {
   const { user } = useAuth();
@@ -26,6 +27,7 @@ export default function Main() {
         );
         setUserData(response.documents);
         setLoading(false);
+        
       } catch (error) {
         console.log('error occur while fetching', error);
         setLoading(false);
@@ -186,7 +188,7 @@ export default function Main() {
                     >
                       <td className="py-4 font-medium">{item.name}</td>
                       <td className="py-4 text-gray-500 text-sm">{item.tagId}</td>
-                      <td className="py-4 text-gray-500 text-sm">2 days ago</td>
+                      <td className="py-4 text-gray-500 text-sm">{formatDistanceToNow(new Date(item.createdAt), { addSuffix: true })}</td>
                       <td className="py-4">
                         <motion.span 
                           whileHover={{ scale: 1.05 }}

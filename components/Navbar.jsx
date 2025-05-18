@@ -10,10 +10,11 @@ export default function Navbar() {
   return (
     <header className="bg-white shadow-md sticky top-0 z-50">
         <div className="container mx-auto  px-4 flex justify-between items-center">
-            <div className="flex items-center">
-              <FaQrcode className='text-blue-500 text-xl mr-2' />
-                <h1 className="text-xl font-bold text-blue-600">TagTrace</h1>
-            </div>
+            <Link href="/"
+             className="flex items-center">
+              <FaQrcode className='text-blue-500 text-sm mr-2' />
+                <h1 className="text-sm font-bold text-blue-600">Tagtrace</h1>
+            </Link>
             
 
             <nav className="desktop-menu hidden md:block">

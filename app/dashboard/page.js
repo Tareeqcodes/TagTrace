@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { Home, Package, QrCode, Clock, MessageCircle, Settings } from 'lucide-react';
+import { useState, useRef, useEffect } from 'react';
+import { Home, Package, QrCode, Clock, MessageCircle, Settings, LogOut, HelpCircle } from 'lucide-react';
 import Main from '@/components/Dashboard/Main';
 import Items from '@/components/Dashboard/Items';
 import CreateQr from '@/components/Dashboard/CreateQr';
@@ -9,7 +9,7 @@ import Scan from '@/components/Dashboard/Scan';
 import Message from '@/components/Dashboard/Message';
 import Setting from '@/components/Dashboard/Setting';
 import { motion, AnimatePresence } from 'framer-motion';
-
+import { useAuth } from '@/context/Authcontext';
 
 const tabs = [
   { label: 'Dashboard', value: 'main', icon: Home, color: 'bg-blue-100 text-blue-600' },
@@ -17,12 +17,28 @@ const tabs = [
   { label: 'Create Trace', value: 'create', icon: QrCode, color: 'bg-green-100 text-green-600' },
   { label: 'Scan Logs', value: 'logs', icon: Clock, color: 'bg-amber-100 text-amber-600' },
   { label: 'Messages', value: 'messages', icon: MessageCircle, color: 'bg-indigo-100 text-indigo-600' },
-  { label: 'Settings', value: 'settings', icon: Settings, color: 'bg-gray-100 text-gray-600' },
 ];
 
 export default function Page() {
   const [activeTab, setActiveTab] = useState('main');
   const [hoveredTab, setHoveredTab] = useState(null);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const { logout, user } = useAuth();
+  const dropdownRef = useRef(null);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    }
+    
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const tabVariants = {
     hidden: { opacity: 0, x: -20 },
@@ -35,6 +51,11 @@ export default function Page() {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0 },
     exit: { opacity: 0, y: -20 }
+  };
+
+  const handleLogout = () => {
+    logout();
+    setIsDropdownOpen(false);
   };
 
   return (
@@ -88,20 +109,67 @@ export default function Page() {
             ))}
           </div>
 
-          <motion.div 
-            whileHover={{ scale: 1.02 }}
-            className="mt-8 p-3 rounded-lg bg-gray-50 flex items-center cursor-pointer"
-          >
-            <div className="w-10 h-10 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center text-white font-bold">
-              {typeof window !== 'undefined' && localStorage.getItem('user')?.charAt(0).toUpperCase()}
-            </div>
-            <div className="ml-3">
-              <p className="font-medium text-gray-800">
-                Tareeq
-              </p>
-              
-            </div>
-          </motion.div>
+          <div className="relative mt-8" ref={dropdownRef}>
+            <motion.div 
+              whileHover={{ scale: 1.02 }}
+              className="p-3 rounded-lg bg-gray-50 flex items-center cursor-pointer"
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+            >
+              <div className="w-10 h-10 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center text-white font-bold">
+                {typeof window !== 'undefined' && localStorage.getItem('user')?.charAt(0).toUpperCase() || 'T'}
+              </div>
+              <div className="ml-3">
+                <p className="font-medium text-gray-800">
+                  Tareeq
+                </p>
+              </div>
+            </motion.div>
+
+            <AnimatePresence>
+              {isDropdownOpen && (
+                <motion.div 
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.2 }}
+                  className="absolute left-0 md:right-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-50"
+                >
+                  <div className="px-4 py-3 border-b border-gray-100">
+                    <p className="text-sm font-medium text-gray-900">Signed in as</p>
+                    <p className="text-sm text-gray-600 truncate">{user.email}</p>
+                  </div>
+                  
+                  <div className="py-1">
+                    <button 
+                      onClick={() => {
+                        setActiveTab('settings');
+                        setIsDropdownOpen(false);
+                      }}
+                      className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    >
+                      <Settings size={16} className="mr-3 text-gray-500" />
+                      Settings
+                    </button>
+                    
+                    <button className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                      <HelpCircle size={16} className="mr-3 text-gray-500" />
+                      Contact support
+                    </button>
+                  </div>
+                  
+                  <div className="py-1 border-t border-gray-100">
+                    <button 
+                      onClick={handleLogout}
+                      className="flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
+                    >
+                      <LogOut size={16} className="mr-3" />
+                      Sign out
+                    </button>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
         </motion.nav>
 
         <div className="flex-1 p-4 md:p-8">
