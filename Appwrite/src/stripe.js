@@ -1,4 +1,4 @@
-/// <reference types="stripe-event-types" />
+// <reference types="stripe-event-types" />
 
 import stripe from 'stripe';
 

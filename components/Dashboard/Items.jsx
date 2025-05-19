@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react';
-import { X, Edit, Eye, Package, Plus } from 'lucide-react';
+import { X, Edit, Package, Plus } from 'lucide-react';
 import { databases, Query } from '@/config/appwrite';
 import { useAuth } from '@/context/Authcontext';
 import { motion } from 'framer-motion';
@@ -60,7 +60,7 @@ export default function Items() {
                   <tr className="text-left text-gray-500 text-sm border-b">
                     <th className="pb-3 font-medium">Item Name</th>
                     <th className="pb-3 font-medium">Tag ID</th>
-                    <th className="pb-3 font-medium">Location</th>
+                    <th className="pb-3 font-medium">Last Scan</th>
                     <th className="pb-3 font-medium">Status</th>
                     <th className="pb-3 font-medium">Actions</th>
                   </tr>
@@ -87,13 +87,6 @@ export default function Items() {
                       </td>
                       <td className="py-4">
                         <div className="flex space-x-2">
-                          <motion.button 
-                            whileHover={{ scale: 1.2 }}
-                            whileTap={{ scale: 0.9 }}
-                            className="p-2 text-blue-500 hover:bg-blue-50 rounded-full transition-colors"
-                          >
-                            <Eye size={16} />
-                          </motion.button>
                           <motion.button 
                             whileHover={{ scale: 1.2 }}
                             whileTap={{ scale: 0.9 }}

@@ -1,6 +1,6 @@
 'use client'
 import Link from 'next/link'
-import { FaQrcode } from 'react-icons/fa'
+import { FiTag } from 'react-icons/fi'
 import { useAuth } from '@/context/Authcontext'
 import { motion, AnimatePresence } from 'framer-motion'
 
@@ -12,7 +12,7 @@ export default function Navbar() {
         <div className="container mx-auto  px-4 flex justify-between items-center">
             <Link href="/"
              className="flex items-center">
-              <FaQrcode className='text-blue-500 text-sm mr-2' />
+              <FiTag className='text-blue-500 text-sm mr-2' />
                 <h1 className="text-sm font-bold text-blue-600">Tagtrace</h1>
             </Link>
             

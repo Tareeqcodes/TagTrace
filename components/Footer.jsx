@@ -1,4 +1,6 @@
-import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn, FaQrcode } from 'react-icons/fa';
+import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
+import { FiTag } from 'react-icons/fi'
+
 
 export default function Footer() {
   return (
@@ -7,7 +9,7 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
           <div className="max-w-sm">
             <div className="flex items-center mb-3">
-              <FaQrcode className="text-blue-400 text-md mr-2" />
+              <FiTag className="text-blue-400 text-md mr-2" />
               <h3 className="text-sm font-bold text-white">Tagtrace</h3>
             </div>
             <p className="text-gray-400 text-sm">The smart way to protect your belongings and get them back if lost.</p>
