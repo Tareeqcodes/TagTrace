@@ -14,8 +14,8 @@ export default function Items() {
   const [currentItem, setCurrentItem] = useState(null);
   const [editFormData, setEditFormData] = useState({
     name: '',
-    reward: '',
-    status: 'active'
+    status: 'active',
+    reward: ''
   });
 
   const getStatusColor = (status) => {
@@ -148,7 +148,7 @@ export default function Items() {
                     className="border-b border-gray-50 hover:bg-gray-50 transition-colors duration-200"
                   >
                     <td className="py-4 font-medium">{item.name}</td>
-                    <td className="py-4 text-gray-500 text-sm">{item.reward}</td>
+                    <td className="py-4 text-gray-500 text-sm">{item.tagId}</td>
                     <td className="py-4 text-gray-500 text-sm">{formatDistanceToNow(new Date(item.createdAt), { addSuffix: true })}</td>
                     <td className="py-4">
                       <motion.span 
