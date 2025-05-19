@@ -1,5 +1,6 @@
 'use client'
 import { useState } from "react";
+import Link from "next/link";
 import { QrCode, CheckCircle, Download, RotateCw } from "lucide-react";
 import { databases, ID } from "@/config/appwrite";
 import QRCode from "react-qr-code";
@@ -346,17 +347,16 @@ export default function CreateQr() {
                       <Download size={18} className="mr-2" />
                       Download QR Code
                     </motion.button>
-
-                    <motion.button
+                    <Link href="/print">
+                    <motion.div
                       whileHover={{ scale: 1.03 }}
                       whileTap={{ scale: 0.97 }}
-                      onClick={() => window.print()}
                       className="w-full py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-xl font-medium flex items-center cursor-pointer justify-center shadow-md"
                     >
                       <CheckCircle size={18} className="mr-2" />
                       Print QR Code
-                    </motion.button>
-
+                    </motion.div>
+                      </Link>
                     <motion.button
                       whileHover={{ scale: 1.03 }}
                       whileTap={{ scale: 0.97 }}
