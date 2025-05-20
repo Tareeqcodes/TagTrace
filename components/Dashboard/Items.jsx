@@ -1,7 +1,8 @@
 'use client'
 import { useEffect, useState } from 'react';
-import { X, Edit, Package, Plus, Save } from 'lucide-react';
-import { databases, Query, ID } from '@/config/appwrite';
+import Link from 'next/link';
+import { X, Edit, Package, CheckCircle, Save } from 'lucide-react';
+import { databases, Query } from '@/config/appwrite';
 import { useAuth } from '@/context/Authcontext';
 import { motion } from 'framer-motion';
 import { formatDistanceToNow } from 'date-fns';
@@ -148,7 +149,7 @@ export default function Items() {
                       <td className="py-4">
                         <motion.span 
                           whileHover={{ scale: 1.05 }}
-                          className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(item.status)}`}
+                          className={`px-3 py-1 rounded-md text-xs font-medium ${getStatusColor(item.status)}`}
                         >
                           {item.status.charAt(0).toUpperCase() + item.status.slice(1)}
                         </motion.span>
@@ -163,14 +164,15 @@ export default function Items() {
                           >
                             <Edit size={16} />
                           </motion.button>
+                          <Link href="/print">
                           <motion.button 
                             whileHover={{ scale: 1.2 }}
                             whileTap={{ scale: 0.9 }}
                             className="p-2 text-red-500 hover:bg-red-50 rounded-full transition-colors"
-                            onClick={() => handleDeleteItem(item.$id)}
                           >
-                            <X size={16} />
+                            <CheckCircle size={16} />
                           </motion.button>
+                          </Link>
                         </div>
                       </td>
                     </motion.tr>
@@ -204,14 +206,15 @@ export default function Items() {
                       >
                         <Edit size={16} />
                       </motion.button>
+                      <Link href="/print">
                       <motion.button 
                         whileHover={{ scale: 1.2 }}
                         whileTap={{ scale: 0.9 }}
                         className="p-1 text-red-500 hover:bg-red-50 rounded-full transition-colors"
-                        onClick={() => handleDeleteItem(item.$id)}
                       >
-                        <X size={16} />
+                        <CheckCircle size={16} />
                       </motion.button>
+                      </Link>
                     </div>
                   </div>
                   <div className="mt-3">
@@ -285,10 +288,10 @@ export default function Items() {
                 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Status</label>
-                  <div className="flex space-x-3">
+                  <div className="flex space-x-2">
                     <button
                       onClick={() => handleStatusChange('active')}
-                      className={`flex items-center px-4 py-2 rounded-lg border ${
+                      className={`flex items-center px-2 py-1 rounded-lg border ${
                         editFormData.status === 'active' 
                           ? 'border-green-500 bg-green-50 text-green-700' 
                           : 'border-gray-300'
@@ -301,26 +304,26 @@ export default function Items() {
                     </button>
                     <button
                       onClick={() => handleStatusChange('lost')}
-                      className={`flex items-center px-4 py-2 rounded-lg border ${
+                      className={`flex items-center px-2 py-1 rounded-lg border ${
                         editFormData.status === 'lost' 
                           ? 'border-red-500 bg-red-50 text-red-700' 
                           : 'border-gray-300'
                       }`}
                     >
-                      <span className={`w-2 h-2 rounded-full mr-2 ${
+                      <span className={`w-2 h-2 rounded-md mr-2 ${
                         editFormData.status === 'lost' ? 'bg-red-500' : 'bg-gray-300'
                       }`}></span>
                       Lost
                     </button>
                     <button
                       onClick={() => handleStatusChange('returned')}
-                      className={`flex items-center px-4 py-2 rounded-lg border ${
+                      className={`flex items-center px-2 py-1 rounded-lg border ${
                         editFormData.status === 'returned' 
                           ? 'border-blue-500 bg-blue-50 text-blue-700' 
                           : 'border-gray-300'
                       }`}
                     >
-                      <span className={`w-2 h-2 rounded-full mr-2 ${
+                      <span className={`w-2 h-2 rounded-md mr-2 ${
                         editFormData.status === 'returned' ? 'bg-blue-500' : 'bg-gray-300'
                       }`}></span>
                       Returned
@@ -329,19 +332,25 @@ export default function Items() {
                 </div>
               </div>
               
-              <div className="mt-6 flex justify-end space-x-3">
+              <div className="mt-6 flex justify-start space-x-3">
+               <button
+                 onClick={() => currentItem && handleDeleteItem(currentItem.$id)}
+                 className="px-2 py-1 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50"
+                   >
+                   Delete
+                 </button>
                 <button
                   onClick={closeModal}
-                  className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50"
+                  className="px-2 py-1 border border-gray-300  rounded-lg text-gray-700 hover:bg-gray-50"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={handleSaveChanges}
-                  className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 flex items-center"
+                  className="px-2 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 flex items-center"
                 >
                   <Save size={16} className="mr-2" />
-                  Save Changes
+                  Save
                 </button>
               </div>
             </div>

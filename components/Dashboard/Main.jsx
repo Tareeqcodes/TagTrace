@@ -194,7 +194,7 @@ export default function Main() {
                       <td className="py-4">
                         <motion.span 
                           whileHover={{ scale: 1.05 }}
-                          className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(item.status)}`}
+                          className={`px-3 py-1 rounded-md text-xs font-medium ${getStatusColor(item.status)}`}
                         >
                           {item.status.charAt(0).toUpperCase() + item.status.slice(1)}
                         </motion.span>
