@@ -4,7 +4,7 @@ import { FiTag } from 'react-icons/fi'
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-800 hidden md:block text-white py-8">
+    <footer className="bg-gray-800 text-white py-8">
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
           <div className="max-w-sm">

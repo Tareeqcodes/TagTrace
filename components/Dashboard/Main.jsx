@@ -85,20 +85,20 @@ export default function Main() {
       initial="hidden"
       animate="show"
       variants={staggerContainer}
-      className="p-6"
+      className="p-0 md:p-6"
     >
-      <div className="flex items-center justify-between mb-8">
-        <motion.h1 variants={textVariant(0.1)} className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+      <div className="flex flex-col space-y-4 md:flex-row items-center justify-between mb-8">
+        <motion.h1 variants={textVariant(0.1)} className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
           Welcome back, {user?.name || 'Tareeq'}!
         </motion.h1>
         <div className="flex space-x-3">
           <motion.button 
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.98 }}
-            className="px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg flex items-center shadow-lg hover:shadow-xl transition-all duration-300"
+            className="px-4 py-2 text-sm bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg flex items-center shadow-lg hover:shadow-xl transition-all duration-300"
           >
-            <QrCode size={18} className="mr-2" />
-            Create New QR Tag
+            <QrCode size={18} className="mr-2 text-" />
+            Create Trace
           </motion.button>
           <motion.button 
             whileHover={{ scale: 1.03 }}
@@ -106,7 +106,7 @@ export default function Main() {
             className="px-4 py-2 bg-white border border-gray-200 text-gray-700 rounded-lg flex items-center shadow-sm hover:shadow-md transition-all duration-300 hover:border-blue-300"
           >
             <Package size={18} className="mr-2" />
-            Add New Item
+            Add Item
           </motion.button>
         </div>
       </div>
@@ -167,7 +167,9 @@ export default function Main() {
               <p>Loading items...</p>
             </div>
           ) : userData && userData.length > 0 ? (
-            <div className="overflow-x-auto">
+
+            <>
+            <div className="hidden md:block">
               <table className="w-full">
                 <thead>
                   <tr className="text-left text-gray-500 text-sm border-b">
@@ -202,6 +204,35 @@ export default function Main() {
                 </tbody>
               </table>
             </div>
+              <div className='md:hidden space-y-4'>
+                {userData.slice(0, 4).map( (item, idx) => (
+                  <motion.div
+                   key={idx} 
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: idx * 0.1 }}
+                      className="border border-gray-100 rounded-lg p-4 hover:bg-gray-50 transition-colors duration-200"
+                  >
+                     <div className='flex flex-col space-y-3 items-start'>
+                      <div>
+                      <h3 className="font-medium">{item.name}</h3>
+                      <p className="text-sm text-gray-500 mt-1">ID: {item.tagId}</p>
+                      <p className="text-sm text-gray-500">Last scan: {formatDistanceToNow(new Date(item.createdAt), { addSuffix: true })}</p>
+                        </div>
+                        <motion.span 
+                          whileHover={{ scale: 1.05 }}
+                          className={`px-3 py-1 rounded-md text-xs font-medium ${getStatusColor(item.status)}`}
+                        >
+                          {item.status.charAt(0).toUpperCase() + item.status.slice(1)}
+                        </motion.span>
+                     </div>
+                  </motion.div>
+                ))
+
+                }
+              </div>
+            </>
+            
           ) : (
             <motion.div 
               initial={{ opacity: 0 }}

@@ -112,14 +112,7 @@ export default function Items() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold">My Items</h1>
-        <button className="px-4 py-2 bg-blue-500 text-white rounded-lg flex items-center">
-          <Plus size={18} className="mr-2" />
-          Add New Item
-        </button>
-      </div>
-      
+        <h1 className="text-2xl ml-5 mb-6 font-bold">My Items</h1>
       <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-4">
         {loading ? (
           <div className="text-center py-8">
@@ -127,62 +120,112 @@ export default function Items() {
             <p>Loading items...</p>
           </div>
         ) : userData && userData.length > 0 ? (
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="text-left text-gray-500 text-sm border-b">
-                  <th className="pb-3 font-medium">Item Name</th>
-                  <th className="pb-3 font-medium">Tag ID</th>
-                  <th className="pb-3 font-medium">Last Scan</th>
-                  <th className="pb-3 font-medium">Status</th>
-                  <th className="pb-3 font-medium">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {userData.slice(0, 10).map((item, idx) => (
-                  <motion.tr 
-                    key={idx} 
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: idx * 0.1 }}
-                    className="border-b border-gray-50 hover:bg-gray-50 transition-colors duration-200"
-                  >
-                    <td className="py-4 font-medium">{item.name}</td>
-                    <td className="py-4 text-gray-500 text-sm">{item.tagId}</td>
-                    <td className="py-4 text-gray-500 text-sm">{formatDistanceToNow(new Date(item.createdAt), { addSuffix: true })}</td>
-                    <td className="py-4">
-                      <motion.span 
-                        whileHover={{ scale: 1.05 }}
-                        className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(item.status)}`}
+          <>
+            {/* Desktop Table View (hidden on mobile) */}
+            <div className="hidden md:block overflow-x-auto">
+              <table className="w-full">
+                <thead>
+                  <tr className="text-left text-gray-500 text-sm border-b">
+                    <th className="pb-3 font-medium">Item Name</th>
+                    <th className="pb-3 font-medium">Tag ID</th>
+                    <th className="pb-3 font-medium">Last Scan</th>
+                    <th className="pb-3 font-medium">Status</th>
+                    <th className="pb-3 font-medium">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {userData.slice(0, 10).map((item, idx) => (
+                    <motion.tr 
+                      key={idx} 
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: idx * 0.1 }}
+                      className="border-b border-gray-50 hover:bg-gray-50 transition-colors duration-200"
+                    >
+                      <td className="py-4 font-medium">{item.name}</td>
+                      <td className="py-4 text-gray-500 text-sm">{item.tagId}</td>
+                      <td className="py-4 text-gray-500 text-sm">{formatDistanceToNow(new Date(item.createdAt), { addSuffix: true })}</td>
+                      <td className="py-4">
+                        <motion.span 
+                          whileHover={{ scale: 1.05 }}
+                          className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(item.status)}`}
+                        >
+                          {item.status.charAt(0).toUpperCase() + item.status.slice(1)}
+                        </motion.span>
+                      </td>
+                      <td className="py-4">
+                        <div className="flex space-x-2">
+                          <motion.button 
+                            whileHover={{ scale: 1.2 }}
+                            whileTap={{ scale: 0.9 }}
+                            className="p-2 text-gray-500 hover:bg-gray-50 rounded-full transition-colors"
+                            onClick={() => openEditModal(item)}
+                          >
+                            <Edit size={16} />
+                          </motion.button>
+                          <motion.button 
+                            whileHover={{ scale: 1.2 }}
+                            whileTap={{ scale: 0.9 }}
+                            className="p-2 text-red-500 hover:bg-red-50 rounded-full transition-colors"
+                            onClick={() => handleDeleteItem(item.$id)}
+                          >
+                            <X size={16} />
+                          </motion.button>
+                        </div>
+                      </td>
+                    </motion.tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Mobile Card View (hidden on desktop) */}
+            <div className="md:hidden space-y-3">
+              {userData.slice(0, 10).map((item, idx) => (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: idx * 0.1 }}
+                  className="border border-gray-100 rounded-lg p-4 hover:bg-gray-50 transition-colors duration-200"
+                >
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <h3 className="font-medium">{item.name}</h3>
+                      <p className="text-sm text-gray-500 mt-1">ID: {item.tagId}</p>
+                      <p className="text-sm text-gray-500">Last scan: {formatDistanceToNow(new Date(item.createdAt), { addSuffix: true })}</p>
+                    </div>
+                    <div className="flex space-x-2">
+                      <motion.button 
+                        whileHover={{ scale: 1.2 }}
+                        whileTap={{ scale: 0.9 }}
+                        className="p-1 text-gray-500 hover:bg-gray-50 rounded-full transition-colors"
+                        onClick={() => openEditModal(item)}
                       >
-                        {item.status.charAt(0).toUpperCase() + item.status.slice(1)}
-                      </motion.span>
-                    </td>
-                    <td className="py-4">
-                      <div className="flex space-x-2">
-                        <motion.button 
-                          whileHover={{ scale: 1.2 }}
-                          whileTap={{ scale: 0.9 }}
-                          className="p-2 text-gray-500 hover:bg-gray-50 rounded-full transition-colors"
-                          onClick={() => openEditModal(item)}
-                        >
-                          <Edit size={16} />
-                        </motion.button>
-                        <motion.button 
-                          whileHover={{ scale: 1.2 }}
-                          whileTap={{ scale: 0.9 }}
-                          className="p-2 text-red-500 hover:bg-red-50 rounded-full transition-colors"
-                          onClick={() => handleDeleteItem(item.$id)}
-                        >
-                          <X size={16} />
-                        </motion.button>
-                      </div>
-                    </td>
-                  </motion.tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                        <Edit size={16} />
+                      </motion.button>
+                      <motion.button 
+                        whileHover={{ scale: 1.2 }}
+                        whileTap={{ scale: 0.9 }}
+                        className="p-1 text-red-500 hover:bg-red-50 rounded-full transition-colors"
+                        onClick={() => handleDeleteItem(item.$id)}
+                      >
+                        <X size={16} />
+                      </motion.button>
+                    </div>
+                  </div>
+                  <div className="mt-3">
+                    <motion.span 
+                      whileHover={{ scale: 1.05 }}
+                      className={`px-3 py-1 rounded-md text-xs font-medium ${getStatusColor(item.status)}`}
+                    >
+                      {item.status.charAt(0).toUpperCase() + item.status.slice(1)}
+                    </motion.span>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </>
         ) : (
           <motion.div 
             initial={{ opacity: 0 }}

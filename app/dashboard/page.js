@@ -172,7 +172,7 @@ export default function Page() {
           </div>
         </motion.nav>
 
-        <div className="flex-1 p-4 md:p-8">
+        <div className="flex-1 p-1 md:p-8">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeTab}
