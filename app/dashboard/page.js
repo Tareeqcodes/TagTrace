@@ -1,13 +1,14 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { Home, Package, QrCode, Clock, MessageCircle, Settings, LogOut, HelpCircle } from 'lucide-react';
+import { Home, Package, QrCode, Clock, BadgeCheck, MessageCircle, Settings, LogOut, HelpCircle } from 'lucide-react';
 import Main from '@/components/Dashboard/Main';
 import Items from '@/components/Dashboard/Items';
 import CreateQr from '@/components/Dashboard/CreateQr';
 import Scan from '@/components/Dashboard/Scan';
 import Message from '@/components/Dashboard/Message';
 import Setting from '@/components/Dashboard/Setting';
+import Subscription from '@/components/Dashboard/Subscription';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '@/context/Authcontext';
 
@@ -17,6 +18,7 @@ const tabs = [
   { label: 'Create Trace', value: 'create', icon: QrCode, color: 'bg-green-100 text-green-600' },
   { label: 'Scan Logs', value: 'logs', icon: Clock, color: 'bg-amber-100 text-amber-600' },
   { label: 'Messages', value: 'messages', icon: MessageCircle, color: 'bg-indigo-100 text-indigo-600' },
+  { label: 'Subscription', value: 'subsription', icon: BadgeCheck, color: 'bg-indigo-100 text-indigo-600' },
 ];
 
 export default function Page() {
@@ -189,6 +191,7 @@ export default function Page() {
               {activeTab === 'logs' && <Scan />}
               {activeTab === 'messages' && <Message />}
               {activeTab === 'settings' && <Setting />}
+              {activeTab === 'subsription' && <Subscription />}
             </motion.div>
           </AnimatePresence>
         </div>
