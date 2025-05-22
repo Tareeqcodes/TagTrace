@@ -13,10 +13,7 @@ class AppwriteService {
     this.users = new Users(client);
   }
 
-  /**
-   * @param {string} userId
-   * @returns {Promise<void>}
-   */
+
   async deleteSubscription(userId) {
     const labels = (await this.users.get(userId)).labels.filter(
       (label) => label !== LabelsSubscriber
@@ -25,10 +22,7 @@ class AppwriteService {
     await this.users.updateLabels(userId, labels);
   }
 
-  /**
-   * @param {string} userId
-   * @returns {Promise<void>}
-   */
+  
   async createSubscription(userId) {
     const labels = (await this.users.get(userId)).labels;
     labels.push(LabelsSubscriber);

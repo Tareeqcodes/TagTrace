@@ -2,6 +2,7 @@ import {
   lemonSqueezySetup,
   createCheckout,
 } from '@lemonsqueezy/lemonsqueezy.js';
+
 import crypto from 'crypto';
 
 class LemonSqueezyService {

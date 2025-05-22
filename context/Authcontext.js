@@ -47,6 +47,16 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const loginWithGoogle = async () => {
+    try {
+      const redirectUrl = 'http://localhost:3000/verify';
+      account.createOAuth2Session('google', 
+        "http://localhost:3000", redirectUrl);
+    } catch (error) {
+      alert('Failed to login with Google: ' + error.message);
+    }
+  };
+
   const logout = async () => {
     await account.deleteSession('current');
     setUser(null);
@@ -54,7 +64,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, logout, checkSession }}>
+    <AuthContext.Provider value={{ user, loading, login, loginWithGoogle, logout, checkSession }}>
       {loading ? <Spinner /> : children}
     </AuthContext.Provider>
   );
