@@ -5,6 +5,7 @@ import {
   Printer, 
   Download, 
   Settings, 
+  Layers, 
   QrCode, 
   Check, 
   Star,
@@ -34,14 +35,12 @@ const PrintPageComponent = () => {
   const [showGrid, setShowGrid] = useState(false);
   const printRef = useRef(null);
 
-  const languages = {
-    en: { name: 'English', code: 'EN', flag: '🇺🇸' },
-    es: { name: 'Español', code: 'ES', flag: '🇪🇸' },
-    fr: { name: 'Français', code: 'FR', flag: '🇫🇷' },
-    de: { name: 'Deutsch', code: 'DE', flag: '🇩🇪' },
-    ja: { name: '日本語', code: 'JP', flag: '🇯🇵' },
-    ko: { name: '한국어', code: 'KR', flag: '🇰🇷' }
-  };
+ const languages = {
+  en: { name: 'English', flag: '🇺🇸', greeting: 'Scan If Found' },
+  es: { name: 'Español', flag: '🇪🇸', greeting: 'Escanear Si Se Encuentra' },
+  fr: { name: 'Français', flag: '🇫🇷', greeting: 'Scanner Si Trouvé' },
+  ar: { name: 'العربية', flag: '🇸🇦', greeting: 'امسح إذا وُجد' }
+};
 
   const styles = [
     { 
@@ -157,8 +156,17 @@ const PrintPageComponent = () => {
                 whileHover={{ backgroundColor: 'rgba(255,255,255,0.15)' }}
               >
                 <Globe className="h-4 w-4 text-cyan-400" />
-                <span className="text-sm font-medium">{languages[selectedLanguage].flag}</span>
-                <span className="text-sm font-medium">{languages[selectedLanguage].code}</span>
+                <select 
+                value={selectedLanguage} 
+                onChange={(e) => setSelectedLanguage(e.target.value)}
+                className="bg-transparent border-none focus:outline-none text-md font-medium text-gray-800 cursor-pointer"
+              >
+                {Object.entries(languages).map(([code, lang]) => (
+                  <option key={code} value={code}>
+                    {lang.flag} {lang.name}
+                  </option>
+                ))}
+              </select>
               </motion.div>
               
               <motion.button
@@ -208,7 +216,7 @@ const PrintPageComponent = () => {
 
               {/* Quick Stats */}
               <div className="bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-xl rounded-2xl p-6 border border-white/10">
-                <h3 className="text-lg font-semibold mb-4 text-white">Project Stats</h3>
+                <h3 className="text-lg font-semibold mb-4 text-white"> Statistics</h3>
                 <div className="space-y-3">
                   {[
                     { label: 'QR Codes Generated', value: '2,847', color: 'text-cyan-400' },
@@ -224,6 +232,33 @@ const PrintPageComponent = () => {
                     >
                       <span className="text-sm text-gray-400">{stat.label}</span>
                       <span className={`font-bold ${stat.color}`}>{stat.value}</span>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            
+            {/* Features */}
+              <div className="bg-gradient-to-br from-emerald-500/10 to-teal-500/10 rounded-2xl p-6 border border-emerald-500/20">
+                <h4 className="font-semibold text-emerald-400 mb-3 flex items-center">
+                  <Zap className="h-5 w-5 mr-2" />
+                  Premium Features
+                </h4>
+                <div className="space-y-2">
+                  {[
+                    { icon: Shield, text: '256-bit encryption' },
+                    { icon: Eye, text: 'Real-time analytics' },
+                    { icon: Globe, text: 'Multi-language' },
+                    { icon: Sparkles, text: 'AI optimization' }
+                  ].map((feature, index) => (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                      className="flex items-center space-x-3 text-sm"
+                    >
+                      <feature.icon className="h-4 w-4 text-emerald-400" />
+                      <span className="text-gray-300">{feature.text}</span>
                     </motion.div>
                   ))}
                 </div>
@@ -250,7 +285,7 @@ const PrintPageComponent = () => {
                         <Camera className="h-6 w-6 text-cyan-400" />
                       </div>
                       <div>
-                        <h2 className="text-2xl font-bold text-white">Select Your Item</h2>
+                        <h2 className="text-2xl font-bold text-white">Where will this tag be used</h2>
                         <p className="text-gray-400">Choose what you want to tag</p>
                       </div>
                     </div>
@@ -423,7 +458,7 @@ const PrintPageComponent = () => {
                       transition={{ duration: 3, repeat: Infinity }}
                     >
                       <h4 className="text-lg font-bold text-white mb-1">{selectedItem}</h4>
-                      <p className="text-white/70 text-sm">{languages[selectedLanguage].name}</p>
+                      <p className="text-white/70 text-sm">{languages[selectedLanguage].greeting}</p>
                     </motion.div>
 
                     {/* Animated QR Code */}
@@ -467,7 +502,7 @@ const PrintPageComponent = () => {
                     whileHover={{ scale: 1.02 }}
                     className="bg-white/10 backdrop-blur-sm text-white py-3 px-4 rounded-xl font-medium flex items-center justify-center space-x-2 border border-white/20"
                   >
-                    <Download className="h-4 w-4" />
+                    <Save className="h-4 w-4" />
                     <span>Save</span>
                   </motion.button>
                   <motion.button
@@ -479,33 +514,21 @@ const PrintPageComponent = () => {
                   </motion.button>
                 </div>
               </div>
-
-              {/* Features */}
-              <div className="bg-gradient-to-br from-emerald-500/10 to-teal-500/10 rounded-2xl p-6 border border-emerald-500/20">
-                <h4 className="font-semibold text-emerald-400 mb-3 flex items-center">
-                  <Zap className="h-5 w-5 mr-2" />
-                  Premium Features
-                </h4>
-                <div className="space-y-2">
-                  {[
-                    { icon: Shield, text: '256-bit encryption' },
-                    { icon: Eye, text: 'Real-time analytics' },
-                    { icon: Globe, text: 'Multi-language' },
-                    { icon: Sparkles, text: 'AI optimization' }
-                  ].map((feature, index) => (
-                    <motion.div
-                      key={index}
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: index * 0.1 }}
-                      className="flex items-center space-x-3 text-sm"
-                    >
-                      <feature.icon className="h-4 w-4 text-emerald-400" />
-                      <span className="text-gray-300">{feature.text}</span>
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
+              {/* Tips */}
+              <div 
+              className="bg-gradient-to-r from-amber-50 to-orange-50 rounded-2xl p-6 border border-amber-200"
+            >
+              <h4 className="font-semibold text-amber-900 mb-3 flex items-center">
+                <Sparkles className="h-5 w-5 mr-2" />
+                Pro Tips
+              </h4>
+              <ul className="space-y-2 text-sm text-amber-800">
+                <li>• Use high-quality paper for better durability</li>
+                <li>• Test scan before mass printing</li>
+                <li>• Keep QR codes clean and unobstructed</li>
+                <li>• Consider laminating for outdoor use</li>
+              </ul>
+            </div>
             </div>
           </motion.div>
         </motion.div>
