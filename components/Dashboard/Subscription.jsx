@@ -1,3 +1,4 @@
+'use client'
 import React, { useState } from 'react';
 import { 
   CreditCard, 
@@ -9,7 +10,6 @@ import {
   Crown,
   Star,
   Zap,
-  TrendingUp,
   Shield,
   Clock,
   FileText
@@ -248,8 +248,8 @@ const Subscription = () => {
                 <p className="text-blue-100">Items Created</p>
                 <p className="text-2xl font-bold">23</p>
               </div>
-              <div className="bg-white text-black rounded-lg p-2">
-                <TrendingUp size={20} />
+              <div className="bg-white bg-opacity-20 rounded-lg p-2">
+                <FileText size={20} />
               </div>
             </div>
             <div className="mt-2">
@@ -266,7 +266,7 @@ const Subscription = () => {
                 <p className="text-green-100">QR Scans</p>
                 <p className="text-2xl font-bold">1,247</p>
               </div>
-              <div className="bg-white text-black rounded-lg p-2">
+              <div className="bg-white bg-opacity-20 rounded-lg p-2">
                 <Zap size={20} />
               </div>
             </div>
@@ -279,7 +279,7 @@ const Subscription = () => {
                 <p className="text-purple-100">Days Left</p>
                 <p className="text-2xl font-bold">31</p>
               </div>
-              <div className="bg-white text-black rounded-lg p-2">
+              <div className="bg-white bg-opacity-20 rounded-lg p-2">
                 <Clock size={20} />
               </div>
             </div>
