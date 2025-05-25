@@ -238,56 +238,6 @@ const Subscription = () => {
         </div>
       </div>
 
-      {/* Usage Statistics */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-        <h3 className="text-lg font-semibold mb-4">Usage This Month</h3>
-        <div className="grid md:grid-cols-3 gap-6">
-          <div className="bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg p-4 text-white">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-blue-100">Items Created</p>
-                <p className="text-2xl font-bold">23</p>
-              </div>
-              <div className="bg-white bg-opacity-20 rounded-lg p-2">
-                <FileText size={20} />
-              </div>
-            </div>
-            <div className="mt-2">
-              <div className="bg-white bg-opacity-20 rounded-full h-2">
-                <div className="bg-white h-2 rounded-full" style={{width: '23%'}}></div>
-              </div>
-              <p className="text-xs text-blue-100 mt-1">23 of {subscriptionData.itemLimit} used</p>
-            </div>
-          </div>
-
-          <div className="bg-gradient-to-r from-green-500 to-green-600 rounded-lg p-4 text-white">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-green-100">QR Scans</p>
-                <p className="text-2xl font-bold">1,247</p>
-              </div>
-              <div className="bg-white bg-opacity-20 rounded-lg p-2">
-                <Zap size={20} />
-              </div>
-            </div>
-            <p className="text-xs text-green-100 mt-3">+12% from last month</p>
-          </div>
-
-          <div className="bg-gradient-to-r from-purple-500 to-purple-600 rounded-lg p-4 text-white">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-purple-100">Days Left</p>
-                <p className="text-2xl font-bold">31</p>
-              </div>
-              <div className="bg-white bg-opacity-20 rounded-lg p-2">
-                <Clock size={20} />
-              </div>
-            </div>
-            <p className="text-xs text-purple-100 mt-3">Until next billing</p>
-          </div>
-        </div>
-      </div>
-
       {/* Billing History */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
         <div className="flex items-center justify-between mb-6">

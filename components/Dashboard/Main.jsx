@@ -87,9 +87,9 @@ export default function Main() {
       variants={staggerContainer}
       className="p-0 md:p-6"
     >
-      <div className="flex flex-col space-y-4 md:flex-row items-center justify-between mb-8">
+      <div className="flex flex-col space-y-4 md:flex-row items-center justify-between mt-5 mb-8">
         <motion.h1 variants={textVariant(0.1)} className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-          Welcome back, {user?.name || 'Tareeq'}!
+          Welcome back, {user?.name || 'User'}!
         </motion.h1>
         <div className="flex space-x-3">
           <motion.button 

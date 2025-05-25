@@ -90,10 +90,10 @@ export default function CreateQr() {
           </h1>
         </div>
 
-        <div className="p-6">
+        <div className="p-2 md:p-6">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Item Name */}
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Item Name <span className="text-red-500">*</span>
@@ -108,7 +108,6 @@ export default function CreateQr() {
                 />
               </div>
 
-              {/* Category */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Category
@@ -127,7 +126,6 @@ export default function CreateQr() {
               </div>
             </div>
 
-            {/* Description */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Description <span className="text-gray-500">(Optional)</span>
@@ -140,7 +138,6 @@ export default function CreateQr() {
               />
             </div>
 
-            {/* Status */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Status
@@ -152,7 +149,7 @@ export default function CreateQr() {
                     type="button"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className={`px-4 py-2 rounded-lg text-sm font-medium flex items-center transition-all ${
+                    className={`px-2 py-2 rounded-lg text-sm font-medium flex items-center transition-all ${
                       status === stat
                         ? stat === 'active'
                           ? 'bg-green-100 text-green-800 border border-green-300 shadow-inner'
@@ -235,13 +232,13 @@ export default function CreateQr() {
             </AnimatePresence>
 
             {/* Form Actions */}
-            <div className="flex flex-wrap gap-4 pt-4">
+            <div className="flex gap-4 pt-4 justify-between">
               <motion.button
                 type="submit"
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
                 disabled={isLoading}
-                className={`px-6 py-3 rounded-xl font-medium flex items-center ${
+                className={`px-2 py-3 rounded-xl font-medium flex items-center ${
                   isLoading
                     ? 'bg-blue-400 cursor-not-allowed'
                     : 'bg-blue-600 hover:bg-blue-700'
@@ -263,24 +260,12 @@ export default function CreateQr() {
                 )}
               </motion.button>
 
-              <motion.button
-                type="button"
-                onClick={handleReset}
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
-                className="px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl font-medium flex items-center border border-gray-200"
-              >
-                <RotateCw className="mr-2" size={18} />
-                Reset Form
-              </motion.button>
-
               <Link href="/print" className="ml-auto">
                 <motion.div
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
-                  className="px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-xl font-medium flex items-center shadow-md"
+                  className="px-2 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-xl font-medium text-sm flex items-center shadow-md"
                 >
-                  <QrCode className="mr-2" size={18} />
                   View My Items
                 </motion.div>
               </Link>

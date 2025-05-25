@@ -16,7 +16,6 @@ export default function Navbar() {
                 <h1 className="text-sm font-bold text-blue-600">Tagtrace</h1>
             </Link>
             
-
             <nav className="desktop-menu hidden md:block">
                <div className="container mx-auto px-4 py-1">
                 <div className="flex space-x-6">

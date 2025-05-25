@@ -1,7 +1,7 @@
 'use client';
-
 import { useState, useRef, useEffect } from 'react';
-import { Home, Package, QrCode, Clock, BadgeCheck, MessageCircle, Settings, LogOut, HelpCircle } from 'lucide-react';
+import { Home, Package, QrCode, Clock, BadgeCheck, MessageCircle, Settings, LogOut, HelpCircle, Menu, X, ChevronRight, User, Bell
+} from 'lucide-react';
 import Main from '@/components/Dashboard/Main';
 import Items from '@/components/Dashboard/Items';
 import CreateQr from '@/components/Dashboard/CreateQr';
@@ -27,6 +27,7 @@ export default function Page() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { logout, user } = useAuth();
   const dropdownRef = useRef(null);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -60,14 +61,134 @@ export default function Page() {
     setIsDropdownOpen(false);
   };
 
+  // Slide-out Drawer Component for Mobile
+  const SlideDrawer = () => (
+    <>
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/50 z-50 md:hidden"
+            onClick={() => setIsMobileMenuOpen(false)}
+          />
+        )}
+      </AnimatePresence>
+      
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ x: '-100%' }}
+            animate={{ x: 0 }}
+            exit={{ x: '-100%' }}
+            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+            className="fixed left-0 top-0 bottom-0 w-80 bg-white z-50 shadow-2xl md:hidden"
+          >
+            <div className="p-6">
+              <div className="flex items-center justify-between mb-8">
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center">
+                    <User className="text-white" size={20} />
+                  </div>
+                  <div>
+                    <p className="font-semibold text-gray-800">Tareeq</p>
+                    <p className="text-sm text-gray-500">{user?.email || 'tareeqcodes@gmail.com'}</p>
+                  </div>
+                </div>
+                <button onClick={() => setIsMobileMenuOpen(false)}>
+                  <X className="text-gray-500" size={24} />
+                </button>
+              </div>
+              
+              <nav className="space-y-2">
+                {tabs.map(({ label, value, icon: Icon }) => (
+                  <motion.button
+                    key={value}
+                    onClick={() => {
+                      setActiveTab(value);
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className={`w-full flex items-center space-x-3 p-3 rounded-xl transition-colors ${
+                      activeTab === value 
+                        ? 'text-blue-600 bg-blue-50' 
+                        : 'text-gray-700 hover:bg-gray-50'
+                    }`}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <Icon size={20} />
+                    <span className="font-medium">{label}</span>
+                    <ChevronRight size={16} className="ml-auto text-gray-400" />
+                  </motion.button>
+                ))}
+              </nav>
+              
+              <div className="mt-8 pt-8 border-t border-gray-200">
+                <button 
+                  onClick={() => {
+                    setActiveTab('settings');
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className="w-full flex items-center space-x-3 p-3 text-gray-700 hover:bg-gray-50 rounded-xl"
+                >
+                  <Settings size={20} />
+                  <span className="font-medium">Settings</span>
+                </button>
+                <button className="w-full flex items-center space-x-3 p-3 text-gray-700 hover:bg-gray-50 rounded-xl">
+                  <HelpCircle size={20} />
+                  <span className="font-medium">Help & Support</span>
+                </button>
+                <button 
+                  onClick={() => {
+                    handleLogout();
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className="w-full flex items-center space-x-3 p-3 text-red-600 hover:bg-red-50 rounded-xl"
+                >
+                  <LogOut size={20} />
+                  <span className="font-medium">Sign Out</span>
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  );
+
   return (
     <section className="flex flex-col min-h-screen bg-gray-50">
+      {/* Mobile Header */}
+      <header className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-40 md:hidden">
+        <div className="flex items-center justify-between p-4">
+          <div className="flex items-center space-x-4">
+            <button 
+              onClick={() => setIsMobileMenuOpen(true)}
+              className="p-2 hover:bg-gray-100 rounded-lg"
+            >
+              <Menu size={20} />
+            </button>
+            <h1 className="text-xl font-bold text-gray-800">Dashboard</h1>
+          </div>
+          
+          <div className="flex items-center space-x-3">
+            <button className="p-2 hover:bg-gray-100 rounded-lg relative">
+              <Bell size={20} className="text-gray-600" />
+              <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
+                4
+              </span>
+            </button>
+          </div>
+        </div>
+      </header>
+
       <div className="flex flex-col md:flex-row">
+        {/* Desktop Sidebar - unchanged */}
         <motion.nav 
           initial={{ x: -100, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 0.5 }}
-          className="w-full md:w-64 bg-white border-r border-gray-200 p-4 md:p-6 md:min-h-screen"
+          className="hidden md:block w-64 bg-white border-r border-gray-200 p-4 md:p-6 md:min-h-screen"
         >
           <div className="space-y-1 mt-9">
             {tabs.map(({ label, value, icon: Icon, color }) => (
@@ -138,7 +259,7 @@ export default function Page() {
                 >
                   <div className="px-4 py-3 border-b border-gray-100">
                     <p className="text-sm font-medium text-gray-900">Signed in as</p>
-                    <p className="text-sm text-gray-600 truncate">{user.email}</p>
+                    <p className="text-sm text-gray-600 truncate">{user?.email}</p>
                   </div>
                   
                   <div className="py-1">
@@ -196,6 +317,9 @@ export default function Page() {
           </AnimatePresence>
         </div>
       </div>
+
+      {/* Mobile Slide Drawer */}
+      <SlideDrawer />
     </section>
   );
 }
