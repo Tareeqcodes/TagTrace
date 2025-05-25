@@ -49,12 +49,6 @@ export default function page() {
       popular: true
     },
     { 
-      id: 'minimal', 
-      name: 'Minimal White', 
-      bg: 'from-gray-50 to-gray-100',
-      accent: 'from-gray-800 to-gray-600'
-    },
-    { 
       id: 'forest', 
       name: 'Forest Dark', 
       bg: 'from-green-900 via-emerald-800 to-teal-900',
@@ -65,6 +59,12 @@ export default function page() {
       name: 'Sunset Vibes', 
       bg: 'from-orange-600 via-pink-600 to-purple-600',
       accent: 'from-yellow-300 to-orange-300'
+    },
+    { 
+    id: 'coffee', 
+    name: 'Coffee Blend', 
+    bg: 'from-amber-200 to-amber-300',
+    accent: 'from-amber-950 to-amber-800'
     },
     { 
       id: 'arctic', 
@@ -159,7 +159,7 @@ export default function page() {
         languages={languages}
       />
 
-      <div className="relative z-10 max-w-7xl mx-auto p-8">
+      <div className="relative z-10 max-w-7xl mx-auto p-3 md:p-8">
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -210,7 +210,7 @@ export default function page() {
 
           {/* Right Panel - Preview */}
           <motion.div variants={itemVariants} className="lg:col-span-3">
-            <div className="sticky top-8 space-y-6">
+            <div className="sticky top-8 mb-6 md:mb-0 space-y-6">
               <QRPreview 
                 printRef={printRef}
                 styles={styles}

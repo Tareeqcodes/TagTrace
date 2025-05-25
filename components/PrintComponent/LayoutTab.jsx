@@ -21,7 +21,7 @@ const LayoutTab = ({ qrSize, setQrSize }) => {
       <h2 className="text-2xl font-bold text-white mb-6">Layout Options</h2>
       <div className="space-y-6">
         <div>
-          <label className="block text-sm font-medium text-gray-300 mb-3">QR Code Size</label>
+          <label className="block text-sm font-medium text-gray-300 mb-3">Trace size</label>
           <input
             type="range"
             min="100"

@@ -1,8 +1,9 @@
 'use client'
-import React from 'react';
+import { useRef } from 'react';
 import { motion } from 'framer-motion';
 import QRCode from "react-qr-code";
 import { Maximize2 } from 'lucide-react';
+import { toPng } from 'html-to-image';
 
 const QRPreview = ({ 
   printRef, 
@@ -14,6 +15,26 @@ const QRPreview = ({
   qrSize, 
   qrValue 
 }) => {
+  const qrRef = useRef(null);
+
+  const handleDownloadQR = async () => {
+    if (!qrRef.current || !qrValue) return;
+    
+    try {
+      const dataUrl = await toPng(qrRef.current, {
+        quality: 1,
+        pixelRatio: 3,
+        backgroundColor: 'white'
+      });
+      
+      const link = document.createElement('a');
+      link.download = `TagTrace-QR-${selectedItem || 'code'}.png`;
+      link.href = dataUrl;
+      link.click();
+    } catch (error) {
+      console.error('Error downloading QR code:', error);
+    }
+  };
   return (
     <div className="bg-white/5 backdrop-blur-xl rounded-2xl p-6 border border-white/10">
       <div className="flex items-center justify-between mb-4">
@@ -59,11 +80,12 @@ const QRPreview = ({
             <p className="text-white/70 text-xl">{languages[selectedLanguage].greeting}</p>
           </motion.div>
 
-          {/* Real QR Code */}
           <motion.div
-            className="bg-white rounded-xl p-3 mb-4 mx-auto flex items-center justify-center"
+             ref={qrRef}
+            className="bg-white rounded-xl p-3 mb-4 mx-auto flex items-center justify-center cursor-pointer"
             style={{ width: qrSize * 0.6, height: qrSize * 0.6 }}
             whileHover={{ scale: 1.05 }}
+            onClick={handleDownloadQR}
           >
             {qrValue ? (
               <QRCode

@@ -1,31 +1,22 @@
 'use client'
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Palette, RotateCcw, Star } from 'lucide-react';
+import { Palette, Star } from 'lucide-react';
 
 const StyleSelection = ({ styles, selectedStyle, setSelectedStyle }) => {
   return (
     <div className="bg-white/5 backdrop-blur-xl rounded-2xl p-8 border border-white/10">
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-4 mb-6">
           <div className="p-3 bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-xl">
             <Palette className="h-6 w-6 text-purple-400" />
           </div>
           <div>
-            <h2 className="text-2xl font-bold text-white">Design Style</h2>
-            <p className="text-gray-400">Pick your aesthetic</p>
+            <h2 className="text-md font-bold text-white">Design Style</h2>
+            <p className="text-gray-400 text-xs">Pick your aesthetic</p>
           </div>
         </div>
-        <motion.button
-          whileHover={{ rotate: 180 }}
-          transition={{ duration: 0.3 }}
-          className="p-2 bg-white/10 rounded-lg text-gray-400 hover:text-white"
-        >
-          <RotateCcw className="h-5 w-5" />
-        </motion.button>
-      </div>
 
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
         {styles.map((style, index) => (
           <motion.button
             key={style.id}

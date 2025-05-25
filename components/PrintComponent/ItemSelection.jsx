@@ -16,8 +16,8 @@ const ItemSelection = ({
           <Camera className="h-6 w-6 text-cyan-400" />
         </div>
         <div>
-          <h2 className="text-2xl font-bold text-white">Where will this tag be used</h2>
-          <p className="text-gray-400">Choose what item you want to tag</p>
+          <h2 className="text-sm md:text-xl font-bold text-white">Where will this tag be used</h2>
+          <p className="text-gray-400 text-xs">Choose what item you want to tag</p>
         </div>
       </div>
 

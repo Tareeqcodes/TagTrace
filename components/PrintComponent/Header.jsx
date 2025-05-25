@@ -1,5 +1,5 @@
 'use client'
-import React from 'react';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { QrCode, Settings, Globe } from 'lucide-react';
 
@@ -10,8 +10,8 @@ const Header = ({ selectedLanguage, setSelectedLanguage, languages }) => {
       animate={{ opacity: 1, y: 0 }}
       className="relative z-10 border-b border-white/10 backdrop-blur-xl bg-white/5"
     >
-      <div className="max-w-7xl mx-auto px-8 py-6">
-        <div className="flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-3 md:px-8 py-6">
+        <div className="flex flex-col md:flex-row space-y-6 md:space-y-0 items-start justify-between">
           <motion.div 
             className="flex items-center space-x-4"
             whileHover={{ scale: 1.02 }}
@@ -24,7 +24,7 @@ const Header = ({ selectedLanguage, setSelectedLanguage, languages }) => {
             </div>
             <div>
               <h1 className="text-xl font-bold bg-gradient-to-r from-white via-cyan-200 to-purple-200 bg-clip-text text-transparent">
-                QR Studio Pro
+                Trace Studio Pro
               </h1>
               <p className="text-gray-400 text-sm font-medium">Professional Tagtrace Designer</p>
             </div>
@@ -48,14 +48,15 @@ const Header = ({ selectedLanguage, setSelectedLanguage, languages }) => {
                 ))}
               </select>
             </motion.div>
-            
+            <Link href="/dashboard">
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="p-3 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-xl shadow-lg"
+              className="p-3 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-xl cursor-pointer shadow-lg"
             >
               <Settings className="h-5 w-5 text-white" />
             </motion.button>
+            </Link>
           </div>
         </div>
       </div>

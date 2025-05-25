@@ -1,8 +1,7 @@
 'use client'
-import React from 'react';
 import { motion } from 'framer-motion';
 import { Printer, Download, Share2 } from 'lucide-react';
-import { toPng, toJpeg, toSvg } from 'html-to-image';
+import { toPng } from 'html-to-image';
 
 const ActionButtons = ({ qrValue, printRef }) => {
   const handleDownload = async () => {
@@ -29,7 +28,7 @@ const ActionButtons = ({ qrValue, printRef }) => {
       <motion.button
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
-        className="w-full bg-gradient-to-r from-cyan-500 to-purple-600 text-white py-4 px-6 rounded-xl font-semibold flex items-center justify-center space-x-2 shadow-lg"
+        className="w-full bg-gradient-to-r from-cyan-500 to-purple-600 text-white py-4 px-6 rounded-xl font-semibold flex items-center cursor-pointer justify-center space-x-2 shadow-lg"
         disabled={!qrValue} 
       >
         <Printer className="h-5 w-5" />
@@ -39,7 +38,7 @@ const ActionButtons = ({ qrValue, printRef }) => {
       <div className="grid grid-cols-2 gap-3">
         <motion.button
           whileHover={{ scale: 1.02 }}
-          className="bg-white/10 backdrop-blur-sm text-white py-3 px-4 rounded-xl font-medium flex items-center justify-center space-x-2 border border-white/20"
+          className="bg-white/10 backdrop-blur-sm text-white py-3 px-4 rounded-xl font-medium flex items-center justify-center cursor-pointer space-x-2 border border-white/20"
           disabled={!qrValue}
           onClick={handleDownload}
         >
@@ -48,7 +47,7 @@ const ActionButtons = ({ qrValue, printRef }) => {
         </motion.button>
         <motion.button
           whileHover={{ scale: 1.02 }}
-          className="bg-white/10 backdrop-blur-sm text-white py-3 px-4 rounded-xl font-medium flex items-center justify-center space-x-2 border border-white/20"
+          className="bg-white/10 backdrop-blur-sm text-white py-3 px-4 rounded-xl font-medium flex items-center justify-center space-x-2 border border-white/20 cursor-pointer"
           disabled={!qrValue}
         >
           <Share2 className="h-4 w-4" />
