@@ -1,11 +1,10 @@
 'use client'
 import { useState } from "react";
-import Link from "next/link";
-import { QrCode, CheckCircle, Download, RotateCw } from "lucide-react";
+import { QrCode, CheckCircle, RotateCw } from "lucide-react";
 import { databases, ID } from "@/config/appwrite";
-import QRCode from "react-qr-code";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "@/context/Authcontext";
+import Link from "next/link";
 
 export default function CreateQr() {
   const [itemName, setItemName] = useState("");
@@ -14,25 +13,27 @@ export default function CreateQr() {
   const [contactInstructions, setContactInstructions] = useState("");
   const [reward, setReward] = useState("");
   const [status, setStatus] = useState("active");
-  const [qrValue, setQrValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const { user } = useAuth();
-
 
   const saveItem = async () => {
     if (!itemName || !contactInstructions) {
       setError("Please fill all required fields.");
       return;
     }
+
     setIsLoading(true);
     setError("");
+    setSuccess("");
+
     try {
       const userId = user.$id;
       const newItemId = ID.unique();
       const tagId = `${itemName.substring(0, 2).toUpperCase()}-${Math.floor(1000 + Math.random() * 9000)}`;
 
-       await databases.createDocument(
+      await databases.createDocument(
         process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
         process.env.NEXT_PUBLIC_APPWRITE_ITEMS_COLLECTION_ID,
         newItemId,
@@ -49,8 +50,8 @@ export default function CreateQr() {
         }
       );
 
-      const itemUrl = `${window.location.origin}/items/${newItemId}`;
-      setQrValue(itemUrl);
+      setSuccess("Item created successfully!");
+      handleReset();
     } catch (error) {
       console.error("Error saving item:", error);
       setError("Failed to save item. Please try again.");
@@ -59,7 +60,7 @@ export default function CreateQr() {
     }
   };
 
-  const handleGenerateQR = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     saveItem();
   };
@@ -71,33 +72,11 @@ export default function CreateQr() {
     setContactInstructions("");
     setReward("");
     setStatus("active");
-    setQrValue("");
     setError("");
   };
 
-  const downloadQR = () => {
-    const svg = document.getElementById("qr-code");
-    const svgData = new XMLSerializer().serializeToString(svg);
-    const canvas = document.createElement("canvas");
-    const ctx = canvas.getContext("2d");
-    const img = new Image();
-    
-    img.onload = () => {
-      canvas.width = img.width;
-      canvas.height = img.height;
-      ctx.drawImage(img, 0, 0);
-      const pngFile = canvas.toDataURL("image/png");
-      const downloadLink = document.createElement("a");
-      downloadLink.download = `${itemName}-QRCode.png`;
-      downloadLink.href = `${pngFile}`;
-      downloadLink.click();
-    };
-    
-    img.src = `data:image/svg+xml;base64,${btoa(unescape(encodeURIComponent(svgData)))}`;
-  };
-
   return (
-    <div className="max-w-6xl mx-auto p-1">
+    <div className="max-w-6xl mx-auto p-4">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -111,14 +90,11 @@ export default function CreateQr() {
           </h1>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 py-6 px-4">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.2 }}
-          >
-            <div className="space-y-5">
-              <motion.div whileHover={{ scale: 1.01 }}>
+        <div className="p-6">
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Item Name */}
+              <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Item Name <span className="text-red-500">*</span>
                 </label>
@@ -128,18 +104,19 @@ export default function CreateQr() {
                   placeholder="e.g. MacBook Pro"
                   value={itemName}
                   onChange={(e) => setItemName(e.target.value)}
-                  disabled={!!qrValue}
+                  required
                 />
-              </motion.div>
-              <motion.div whileHover={{ scale: 1.01 }}>
+              </div>
+
+              {/* Category */}
+              <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  For
+                  Category
                 </label>
                 <select
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
-                  disabled={!!qrValue}
                 >
                   <option>Electronics</option>
                   <option>Bags & Luggage</option>
@@ -147,230 +124,168 @@ export default function CreateQr() {
                   <option>Wallet & Documents</option>
                   <option>Everything else</option>
                 </select>
-              </motion.div>
-
-              <motion.div whileHover={{ scale: 1.01 }}>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Description <span className="text-gray-500">(Optional)</span>
-                </label>
-                <textarea
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg h-24 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-                  placeholder="Add details about your item..."
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                  disabled={!!qrValue}
-                />
-              </motion.div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Status
-                </label>
-                <div className="flex flex-wrap gap-2">
-                  {['active', 'lost', 'returned'].map((stat) => (
-                    <motion.button
-                      key={stat}
-                      whileHover={{ scale: qrValue ? 1 : 1.05 }}
-                      whileTap={{ scale: qrValue ? 1 : 0.95 }}
-                      className={`px-4 py-2 rounded-lg text-sm font-medium flex items-center transition-all ${
-                        status === stat
-                          ? stat === 'active'
-                            ? 'bg-green-100 text-green-800 border border-green-300 shadow-inner'
-                            : stat === 'lost'
-                              ? 'bg-red-100 text-red-800 border border-red-300 shadow-inner'
-                              : 'bg-blue-100 text-blue-800 border border-blue-300 shadow-inner'
-                          : 'bg-gray-50 text-gray-700 border border-gray-200 hover:bg-gray-100'
-                      } ${qrValue ? 'opacity-70 cursor-not-allowed' : ''}`}
-                      onClick={() => !qrValue && setStatus(stat)}
-                      disabled={!!qrValue}
-                    >
-                      <motion.span
-                        animate={{ scale: status === stat ? 1 : 0 }}
-                        className={`w-2 h-2 rounded-full mr-2 ${
-                          stat === 'active' ? 'bg-green-500' :
-                          stat === 'lost' ? 'bg-red-500' : 'bg-blue-500'
-                        }`}
-                      />
-                      {stat.charAt(0).toUpperCase() + stat.slice(1)}
-                    </motion.button>
-                  ))}
-                </div>
               </div>
-
-              <motion.div whileHover={{ scale: 1.01 }}>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Reward if Found <span className="text-gray-500">(Optional)</span>
-                </label>
-                <input
-                  type="text"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-                  placeholder="e.g. $20 or 'A token of appreciation'"
-                  value={reward}
-                  onChange={(e) => setReward(e.target.value)}
-                  disabled={!!qrValue}
-                />
-                <p className="text-xs text-gray-500 mt-1">
-                  Optional reward information visible to finders.
-                </p>
-              </motion.div>
-
-              <motion.div whileHover={{ scale: 1.01 }}>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Contact Instructions <span className="text-red-500">*</span>
-                </label>
-                <textarea
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg h-20 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-                  placeholder="Instructions for finder if item is lost..."
-                  value={contactInstructions}
-                  onChange={(e) => setContactInstructions(e.target.value)}
-                  disabled={!!qrValue}
-                  required
-                />
-                <p className="text-xs text-gray-500 mt-1">
-                  This will be visible when someone scans your item's QR code.
-                </p>
-              </motion.div>
-
-              <AnimatePresence>
-                {error && (
-                  <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: 'auto' }}
-                    exit={{ opacity: 0, height: 0 }}
-                    className="p-3 bg-red-50 text-red-600 rounded-lg text-sm"
-                  >
-                    {error}
-                  </motion.div>
-                )}
-              </AnimatePresence>
             </div>
-          </motion.div>
 
-          {/* QR Code Column */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.3 }}
-            className="flex flex-col items-center"
-          >
-            <motion.div
-              whileHover={{ scale: 1.02 }}
-              className="w-full max-w-xs bg-white rounded-xl p-6 border-2 border-dashed border-gray-200 flex flex-col items-center justify- cursor-pointer mb-6"
-            >
-              {qrValue ? (
-                <>
-                  <QRCode
-                    id="qr-code"
-                    value={qrValue}
-                    size={200}
-                    level="H"
-                    className="p-2"
-                  />
-                  <motion.p
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.5 }}
-                    className="mt-4 text-sm text-gray-600 text-center"
+            {/* Description */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Description <span className="text-gray-500">(Optional)</span>
+              </label>
+              <textarea
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg h-24 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                placeholder="Add details about your item..."
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+              />
+            </div>
+
+            {/* Status */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Status
+              </label>
+              <div className="flex flex-wrap gap-2">
+                {['active', 'lost', 'returned'].map((stat) => (
+                  <motion.button
+                    key={stat}
+                    type="button"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className={`px-4 py-2 rounded-lg text-sm font-medium flex items-center transition-all ${
+                      status === stat
+                        ? stat === 'active'
+                          ? 'bg-green-100 text-green-800 border border-green-300 shadow-inner'
+                          : stat === 'lost'
+                            ? 'bg-red-100 text-red-800 border border-red-300 shadow-inner'
+                            : 'bg-blue-100 text-blue-800 border border-blue-300 shadow-inner'
+                        : 'bg-gray-50 text-gray-700 border border-gray-200 hover:bg-gray-100'
+                    }`}
+                    onClick={() => setStatus(stat)}
                   >
-                    Scan this code to view item details
-                  </motion.p>
-                </>
-              ) : (
+                    <motion.span
+                      animate={{ scale: status === stat ? 1 : 0 }}
+                      className={`w-2 h-2 rounded-full mr-2 ${
+                        stat === 'active' ? 'bg-green-500' :
+                        stat === 'lost' ? 'bg-red-500' : 'bg-blue-500'
+                      }`}
+                    />
+                    {stat.charAt(0).toUpperCase() + stat.slice(1)}
+                  </motion.button>
+                ))}
+              </div>
+            </div>
+
+            {/* Reward */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Reward if Found <span className="text-gray-500">(Optional)</span>
+              </label>
+              <input
+                type="text"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                placeholder="e.g. $20 or 'A token of appreciation'"
+                value={reward}
+                onChange={(e) => setReward(e.target.value)}
+              />
+              <p className="text-xs text-gray-500 mt-1">
+                Optional reward information visible to finders.
+              </p>
+            </div>
+
+            {/* Contact Instructions */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Contact Instructions <span className="text-red-500">*</span>
+              </label>
+              <textarea
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg h-20 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                placeholder="Instructions for finder if item is lost..."
+                value={contactInstructions}
+                onChange={(e) => setContactInstructions(e.target.value)}
+                required
+              />
+              <p className="text-xs text-gray-500 mt-1">
+                This will be visible when someone scans your item's QR code.
+              </p>
+            </div>
+
+            {/* Error/Success Messages */}
+            <AnimatePresence>
+              {error && (
                 <motion.div
-                  animate={{
-                    rotate: [0, 5, -5, 0],
-                    scale: [1, 1.05, 1]
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    repeatType: "reverse",
-                    ease: "easeInOut"
-                  }}
-                  className="flex flex-col items-center justify-center p-4"
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  className="p-3 bg-red-50 text-red-600 rounded-lg text-sm"
                 >
-                  <QrCode size={80} className="text-gray-300 mb-4" />
-                  <p className="text-sm text-gray-500 text-center">
-                    QR code will appear here after creation
-                  </p>
+                  {error}
                 </motion.div>
               )}
-            </motion.div>
+              {success && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  className="p-3 bg-green-50 text-green-600 rounded-lg text-sm"
+                >
+                  {success}
+                </motion.div>
+              )}
+            </AnimatePresence>
 
-            <div className="w-full max-w-xs space-y-3">
-              <AnimatePresence mode="wait">
-                {!qrValue ? (
-                  <motion.button
-                    key="generate"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    whileHover={{ scale: 1.03 }}
-                    whileTap={{ scale: 0.97 }}
-                    className={`w-full py-3 rounded-xl font-medium flex items-center justify-center cursor-pointer ${
-                      isLoading
-                        ? 'bg-blue-400 cursor-not-allowed'
-                        : 'bg-blue-600 hover:bg-blue-700 shadow-md'
-                    } text-white transition-all`}
-                    onClick={handleGenerateQR}
-                    disabled={isLoading}
-                  >
-                    {isLoading ? (
-                      <>
-                        <motion.div
-                          animate={{ rotate: 360 }}
-                          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                          className="w-5 h-5 border-2 border-white border-t-transparent rounded-full mr-2"
-                        />
-                        Generating...
-                      </>
-                    ) : (
-                      <>
-                        <QrCode size={18} className="mr-2" />
-                        Generate QR Tag
-                      </>
-                    )}
-                  </motion.button>
+            {/* Form Actions */}
+            <div className="flex flex-wrap gap-4 pt-4">
+              <motion.button
+                type="submit"
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                disabled={isLoading}
+                className={`px-6 py-3 rounded-xl font-medium flex items-center ${
+                  isLoading
+                    ? 'bg-blue-400 cursor-not-allowed'
+                    : 'bg-blue-600 hover:bg-blue-700'
+                } text-white shadow-md`}
+              >
+                {isLoading ? (
+                  <>
+                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Saving...
+                  </>
                 ) : (
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ staggerChildren: 0.1 }}
-                    className="space-y-3"
-                  >
-                    <motion.button
-                      whileHover={{ scale: 1.03 }}
-                      whileTap={{ scale: 0.97 }}
-                      onClick={downloadQR}
-                      className="w-full py-3 bg-green-600 hover:bg-green-700 text-white rounded-xl font-medium flex items-center cursor-pointer justify-center shadow-md"
-                    >
-                      <Download size={18} className="mr-2" />
-                      Download QR Code
-                    </motion.button>
-                    <Link href="/print">
-                    <motion.div
-                      whileHover={{ scale: 1.03 }}
-                      whileTap={{ scale: 0.97 }}
-                      className="w-full py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-xl font-medium flex items-center cursor-pointer justify-center shadow-md"
-                    >
-                      <CheckCircle size={18} className="mr-2" />
-                      Print QR Code
-                    </motion.div>
-                      </Link>
-                    <motion.button
-                      whileHover={{ scale: 1.03 }}
-                      whileTap={{ scale: 0.97 }}
-                      onClick={handleReset}
-                      className="w-full py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl font-medium flex items-center justify-center border border-gray-200 cursor-pointer"
-                    >
-                      <RotateCw size={18} className="mr-2" />
-                      Create New QR Tag
-                    </motion.button>
-                  </motion.div>
+                  <>
+                    <CheckCircle className="mr-2" size={18} />
+                    Save Item
+                  </>
                 )}
-              </AnimatePresence>
+              </motion.button>
+
+              <motion.button
+                type="button"
+                onClick={handleReset}
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                className="px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl font-medium flex items-center border border-gray-200"
+              >
+                <RotateCw className="mr-2" size={18} />
+                Reset Form
+              </motion.button>
+
+              <Link href="/print" className="ml-auto">
+                <motion.div
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                  className="px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-xl font-medium flex items-center shadow-md"
+                >
+                  <QrCode className="mr-2" size={18} />
+                  View My Items
+                </motion.div>
+              </Link>
             </div>
-          </motion.div>
+          </form>
         </div>
       </motion.div>
     </div>

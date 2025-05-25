@@ -10,7 +10,7 @@ export default function Navbar() {
   return (
     <header className="bg-white shadow-md sticky top-0 z-50">
         <div className="container mx-auto  px-4 flex justify-between items-center">
-            <Link href="/"
+            <Link href="/print"
              className="flex items-center">
               <FiTag className='text-blue-500 text-sm mr-2' />
                 <h1 className="text-sm font-bold text-blue-600">Tagtrace</h1>
