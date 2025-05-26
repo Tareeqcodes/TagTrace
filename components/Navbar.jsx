@@ -10,20 +10,31 @@ export default function Navbar() {
   return (
     <header className="bg-white shadow-md sticky top-0 z-50">
         <div className="container mx-auto py-3 px-4 flex justify-between items-center">
-            <Link href="/print"
-             className="flex items-center">
-              <FiTag className='text-blue-500 text-sm mr-2' />
-                <h1 className="text-sm font-bold text-blue-600">Tagtrace</h1>
-            </Link>
+            <Link href="/" className="flex items-center group">
+                                    <motion.div 
+                                       className="relative mr-3"
+                                        whileHover={{ scale: 1.1 }}
+                                        transition={{ type: "spring", stiffness: 300 }}
+                                    >
+                                        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 via-purple-500 to-indigo-600 p-2 shadow-lg">
+                                            <FiTag className="w-full h-full text-white" />
+                                        </div>
+                                        <div className="absolute inset-0 w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 via-purple-500 to-indigo-600 opacity-0 group-hover:opacity-20 blur-xl transition-opacity duration-300"></div>
+                                    </motion.div>
+                                    <motion.h1 
+                                        className="text-xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent"
+                                        whileHover={{ scale: 1.05 }}
+                                    >
+                                        TagTrace
+                                    </motion.h1>
+                                </Link>
             
             <nav className="desktop-menu hidden md:block">
                <div className="container mx-auto px-4 py-1">
                 <div className="flex space-x-6">
-                    <Link href="/features" className="block text-gray-600 text-sm hover:text-blue-600 transition py-2">Features</Link>
-                    <Link href="/how-it-works" className="block text-gray-600 hover:text-blue-600 text-sm transition py-2">How It Works</Link>
-                    <Link href="/pricing" className="block text-gray-600 hover:text-blue-600 text-sm transition py-2">Pricing</Link>
+                    <Link href="#how-it-works" className="block text-gray-600 hover:text-blue-600 text-sm font-medium transition py-2">How It Works</Link>
+                    <Link href="#pricing" className="block text-gray-600 hover:text-blue-600 font-medium text-sm transition py-2">Pricing</Link>
                 </div>
-                
             </div>
             </nav>
              <div className="flex items-center space-x-4">

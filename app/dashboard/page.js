@@ -306,7 +306,7 @@ export default function Page() {
               transition={{ duration: 0.3 }}
               className="h-full"
             >
-              {activeTab === 'main' && <Main />}
+              {activeTab === 'main' && <Main setActiveTab={setActiveTab} />}
               {activeTab === 'items' && <Items />}
               {activeTab === 'create' && <CreateQr />}
               {activeTab === 'logs' && <Scan />}

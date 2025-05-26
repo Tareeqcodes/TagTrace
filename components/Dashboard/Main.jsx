@@ -1,5 +1,6 @@
 'use client'
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { Package, QrCode, Check, AlertCircle, RefreshCw, Plus } from 'lucide-react';
 import { databases, Query } from '@/config/appwrite';
 import { useAuth } from '@/context/Authcontext';
@@ -7,7 +8,7 @@ import { motion } from 'framer-motion';
 import { fadeIn, staggerContainer, textVariant, slideIn } from '@/utils/motion';
 import { formatDistanceToNow } from 'date-fns';
 
-export default function Main() {
+export default function Main({ setActiveTab }) {
   const { user } = useAuth();
   const [userData, setUserData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -87,7 +88,7 @@ export default function Main() {
       variants={staggerContainer}
       className="p-0 md:p-6"
     >
-      <div className="flex flex-col space-y-4 md:flex-row items-center justify-between mt-5 mb-8">
+      <div className="flex flex-col space-y-4 md:flex-row items-center justify-between text-justify mt-8 md:mt-4 mb-8">
         <motion.h1 variants={textVariant(0.1)} className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
           Welcome back, {user?.name || 'User'}!
         </motion.h1>
@@ -95,19 +96,22 @@ export default function Main() {
           <motion.button 
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.98 }}
-            className="px-4 py-2 text-sm bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg flex items-center shadow-lg hover:shadow-xl transition-all duration-300"
+            onClick={() => setActiveTab('create')}
+            className="px-4 py-2 text-sm bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg flex items-center shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer"
           >
             <QrCode size={18} className="mr-2 text-" />
             Create Trace
           </motion.button>
+          <Link href="/print">
           <motion.button 
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.98 }}
-            className="px-4 py-2 bg-white border border-gray-200 text-gray-700 rounded-lg flex items-center shadow-sm hover:shadow-md transition-all duration-300 hover:border-blue-300"
+            className="px-4 py-2 bg-white border border-gray-200 text-gray-700 rounded-lg flex items-center shadow-sm hover:shadow-md transition-all duration-300 hover:border-blue-300 cursor-pointer hover:bg-gray-50"
           >
             <Package size={18} className="mr-2" />
-            Add Item
+            Trace Studio
           </motion.button>
+          </Link>
         </div>
       </div>
       
@@ -228,7 +232,6 @@ export default function Main() {
                      </div>
                   </motion.div>
                 ))
-
                 }
               </div>
             </>

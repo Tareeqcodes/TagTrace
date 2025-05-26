@@ -42,7 +42,7 @@ export default function How() {
           className="text-center mb-20"
         >
           <h2 className="text-xl md:text-4xl font-bold mb-6 text-gray-900">
-            How <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">TagTrace</span> Works
+            How <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">Tagtrace</span> Works
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
             Protect your valuables in just a few simple steps
