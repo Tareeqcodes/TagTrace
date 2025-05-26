@@ -9,7 +9,7 @@ export default function Navbar() {
     const { user } = useAuth();
   return (
     <header className="bg-white shadow-md sticky top-0 z-50">
-        <div className="container mx-auto  px-4 flex justify-between items-center">
+        <div className="container mx-auto py-3 px-4 flex justify-between items-center">
             <Link href="/print"
              className="flex items-center">
               <FiTag className='text-blue-500 text-sm mr-2' />
