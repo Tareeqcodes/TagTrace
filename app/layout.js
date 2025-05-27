@@ -11,6 +11,7 @@ const poppins = Poppins({
 });
 
 export const metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://tagtrace.online'),
   title: "TagTrace | Never Lose Your Items Again",
   description: "Tag your belongings with smart QR codes. Get lost items returned instantly with our scan-to-contact system. Free to start, premium durable tags available.",
   keywords: [
@@ -29,7 +30,7 @@ export const metadata = {
     siteName: "TagTrace",
     images: [
       {
-        url: "https://tagtrace.online/header.png",
+        url: "/header.png",
         width: 1200,
         height: 630,
         alt: "TagTrace QR tag on a wallet",
