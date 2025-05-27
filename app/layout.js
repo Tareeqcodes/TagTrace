@@ -64,7 +64,7 @@ export const metadata = {
   },
   manifest: "/site.webmanifest",
   verification: {
-    google: "google-site-verification=your_verification_code",
+    google: "FI3_J6nBXuOK_M0yf3myv56EAcAzukUGjOVSPexpIiw",
   },
 };
 
