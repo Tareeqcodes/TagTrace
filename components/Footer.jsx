@@ -1,3 +1,5 @@
+
+import Link from 'next/link';
 import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
 import { FiTag } from 'react-icons/fi'
 
@@ -15,15 +17,18 @@ export default function Footer() {
             <p className="text-gray-400 text-sm">The smart way to protect your belongings and get them back if lost.</p>
           </div>
           <div className="flex flex-col md:flex-row gap-8 md:items-center">
-            <div>
-              <ul className="grid grid-cols-2 gap-x-6 gap-y-2">
-                <li><a href="#" className="text-gray-400 hover:text-white transition text-sm">Help Center</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-white transition text-sm">Contact Us</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-white transition text-sm">Privacy Policy</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-white transition text-sm">Terms of Service</a></li>
-              </ul>
+            <div className='grid grid-cols-2 gap-x-6 gap-y-2'>
+                <Link href="/">Help Center</Link>
+                <Link href="/about">About Us</Link>
+                <Link href="/https://app.termly.io/dashboard/website/375da13b-42a4-4b65-aaf0-ee476cd04a27/privacy-policy"
+                  target='_blank'
+                  rel="noopener noreferrer"
+                > 
+                Privacy Policy
+                </Link> 
+                <Link href="/">Terms of Service</Link> 
             </div>
-              <div className="flex space-x-4">
+              <div className="flex space-x-4"> 
                 <a href="#" className="text-gray-400 hover:text-white transition p-2 bg-gray-700 rounded-full">
                   <FaFacebookF size={16} />
                 </a>
