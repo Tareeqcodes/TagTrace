@@ -1,6 +1,6 @@
 'use client'
 import { useState } from "react";
-import { QrCode, CheckCircle, RotateCw } from "lucide-react";
+import { QrCode, CheckCircle } from "lucide-react";
 import { databases, ID } from "@/config/appwrite";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "@/context/Authcontext";

@@ -1,5 +1,6 @@
 'use client';
 import { useState, useRef, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { Home, Package, QrCode, Clock, BadgeCheck, MessageCircle, Settings, LogOut, HelpCircle, Menu, X, ChevronRight, User, Bell
 } from 'lucide-react';
 import Main from '@/components/Dashboard/Main';
@@ -25,9 +26,17 @@ export default function Page() {
   const [activeTab, setActiveTab] = useState('main');
   const [hoveredTab, setHoveredTab] = useState(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const { logout, user } = useAuth();
+  const { logout, user, loading } = useAuth();
+  const router = useRouter();
   const dropdownRef = useRef(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  // Handle authentication redirect
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push('/login');
+    }
+  }, [user, loading, router]);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -43,6 +52,23 @@ export default function Page() {
     };
   }, []);
 
+  // Show loading state while checking authentication
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gray-50">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading dashboard...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Don't render dashboard if user is not authenticated
+  if (!user) {
+    return null;
+  }
+
   const tabVariants = {
     hidden: { opacity: 0, x: -20 },
     visible: { opacity: 1, x: 0 },
@@ -56,12 +82,16 @@ export default function Page() {
     exit: { opacity: 0, y: -20 }
   };
 
-  const handleLogout = () => {
-    logout();
-    setIsDropdownOpen(false);
+  const handleLogout = async () => {
+    try {
+      await logout();
+      setIsDropdownOpen(false);
+      router.push('/login');
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
   };
 
-  // Slide-out Drawer Component for Mobile
   const SlideDrawer = () => (
     <>
       <AnimatePresence>
@@ -92,8 +122,8 @@ export default function Page() {
                     <User className="text-white" size={20} />
                   </div>
                   <div>
-                    <p className="font-semibold text-gray-800">Tareeq</p>
-                    <p className="text-sm text-gray-500">{user?.email || 'tareeqcodes@gmail.com'}</p>
+                    <p className="font-semibold text-gray-800">{user?.name || 'User'}</p>
+                    <p className="text-sm text-gray-500">{user?.email}</p>
                   </div>
                 </div>
                 <button onClick={() => setIsMobileMenuOpen(false)}>
@@ -183,7 +213,7 @@ export default function Page() {
       </header>
 
       <div className="flex flex-col md:flex-row">
-        {/* Desktop Sidebar - unchanged */}
+        {/* Desktop Sidebar */}
         <motion.nav 
           initial={{ x: -100, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
@@ -239,11 +269,11 @@ export default function Page() {
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
             >
               <div className="w-10 h-10 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center text-white font-bold">
-                {typeof window !== 'undefined' && localStorage.getItem('user')?.charAt(0).toUpperCase() || 'T'}
+                {user?.name?.charAt(0)?.toUpperCase() || user?.email?.charAt(0)?.toUpperCase() || 'U'}
               </div>
               <div className="ml-3">
                 <p className="font-medium text-gray-800">
-                  Tareeq
+                  {user?.name || 'User'}
                 </p>
               </div>
             </motion.div>
