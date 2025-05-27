@@ -133,7 +133,7 @@ export default function Pricing() {
           viewport={{ once: true }}
           className="text-center mb-20"
         >
-          <h2 className="text-4xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-700">
+          <h2 className="text-2xl md:text-4xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-700">
            Pricing Plans
           </h2>
           <div className="h-1 w-24 bg-blue-500 mx-auto rounded-full mb-6"></div>

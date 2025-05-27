@@ -27,7 +27,7 @@ export default function How() {
   ]
 
   return (
-    <section id="how-it-works" className="relative py-20 overflow-hidden bg-gradient-to-br from-gray-50 to-blue-50">
+    <section id="how-it-works" className="relative py-10 overflow-hidden bg-gradient-to-br from-gray-50 to-blue-50">
       {/* Decorative elements */}
       <div className="absolute top-0 left-0 w-32 h-32 bg-blue-100 rounded-full opacity-20 -translate-x-16 -translate-y-16"></div>
       <div className="absolute bottom-0 right-0 w-64 h-64 bg-purple-100 rounded-full opacity-20 translate-x-32 translate-y-32"></div>
@@ -41,7 +41,7 @@ export default function How() {
           viewport={{ once: true }}
           className="text-center mb-20"
         >
-          <h2 className="text-xl md:text-4xl font-bold mb-6 text-gray-900">
+          <h2 className="text-2xl md:text-4xl font-bold mb-6 text-gray-900">
             How <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">Tagtrace</span> Works
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">

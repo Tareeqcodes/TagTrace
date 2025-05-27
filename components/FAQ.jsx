@@ -43,7 +43,7 @@ export default function FAQ() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl font-bold mb-6 text-gray-900">
+          <h2 className="text-2xl md:text-4xl font-bold mb-6 text-gray-900">
             Frequently Asked <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">Questions</span>
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
