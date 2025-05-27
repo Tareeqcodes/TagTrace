@@ -50,7 +50,7 @@ export default function Navbar() {
             <nav className="desktop-menu hidden md:block">
                <div className="container mx-auto px-4 py-1">
                 <div className="flex space-x-6">
-                    <Link href="/ds" className="block text-gray-600 hover:text-blue-600 text-sm font-medium transition py-2">How It Works</Link>
+                    <Link href="/" className="block text-gray-600 hover:text-blue-600 text-sm font-medium transition py-2">How It Works</Link>
                     <Link href="#pricing" className="block text-gray-600 hover:text-blue-600 font-medium text-sm transition py-2">Pricing</Link>
                 </div>
             </div>
