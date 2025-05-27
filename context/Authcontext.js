@@ -49,7 +49,7 @@ export const AuthProvider = ({ children }) => {
 
   const loginWithGoogle = async () => {
     try {
-      const redirectUrl = 'http://localhost:3000/verify || https://tagtrace.online/verify';
+      const redirectUrl = 'https://tagtrace.online/verify';
       account.createOAuth2Session('google', 
         "https://tagtrace.online", redirectUrl);
     } catch (error) {

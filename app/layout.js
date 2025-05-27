@@ -63,9 +63,6 @@ export const metadata = {
     apple: "/60.png",
   },
   manifest: "/site.webmanifest",
-  verification: {
-    google: "FI3_J6nBXuOK_M0yf3myv56EAcAzukUGjOVSPexpIiw",
-  },
 };
 
 export default function RootLayout({ children }) {
