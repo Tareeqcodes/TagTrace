@@ -70,7 +70,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={poppins.className}>
         <AuthProvider>
-          <main>
+          <main className='h-screen'>
             {children}
             <Footer />
           </main>
