@@ -45,7 +45,7 @@ export default function ItemDetailPage() {
   if (error) return <div className="p-6 text-red-500">{error}</div>;
 
   return (
-    <section className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
+    <section className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 px-4">
 
       <header className="sticky top-0 z-40 backdrop-blur-lg bg-white/80 border-b border-white/20 shadow-sm">
         <div className="flex items-center space-x-3">
