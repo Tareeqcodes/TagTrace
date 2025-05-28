@@ -4,8 +4,10 @@ import {
   Phone, 
   Mail, 
   ChevronRight,
-  Copy
+  Copy,
+  MessageCircle
 } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { databases, Query } from '@/config/appwrite';
 
 export default function Contact({ Id }) {
@@ -50,7 +52,10 @@ export default function Contact({ Id }) {
       <h3 className="text-lg font-semibold text-gray-900 px-2">Return Options</h3>
       <div className="space-y-3">
          {user?.phone && (
-          <div className="bg-white/70 backdrop-blur-lg rounded-xl border border-white/20 shadow-lg overflow-hidden">
+          <motion.div 
+           whileHover={{ scale: 1.02 }}
+           whileTap={{ scale: 0.98 }}
+          className="bg-white/70 backdrop-blur-lg rounded-xl border border-white/20 shadow-lg overflow-hidden">
            <a
             href={`tel:${user.phone}`}
             className="flex items-center p-4 hover:bg-blue-50/50 transition-colors duration-200"
@@ -75,10 +80,13 @@ export default function Contact({ Id }) {
                     <ChevronRight className="w-5 h-5 text-gray-400" />
              </div>
            </a>
-          </div>
+          </motion.div>
          )}
          {user.email && (
-          <div className="bg-white/70 backdrop-blur-lg rounded-xl border border-white/20 shadow-lg overflow-hidden">
+          <motion.div 
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          className="bg-white/70 backdrop-blur-lg rounded-xl border border-white/20 shadow-lg overflow-hidden">
            <a
             href={`mailto:${user.email}?subject=Found your Lost item &body=Hi, I found your item. Let me know how we can arrange the return.`}
             className="flex items-center p-4 hover:bg-green-50/50 transition-colors duration-200"
@@ -92,9 +100,26 @@ export default function Contact({ Id }) {
                   </div>
                   <ChevronRight className="w-5 h-5 text-gray-400" />
            </a>
-          </div>
+          </motion.div>
          )}
-
+         <motion.div
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          className="bg-white/70 backdrop-blur-lg rounded-xl border border-white/20 shadow-lg overflow-hidden">
+           <button
+                onClick={() => setShowAnonymousModal(true)}
+                className="w-full flex items-center p-4 hover:bg-purple-50/50 transition-colors duration-200"
+              >
+                <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg mr-4">
+                  <MessageCircle className="w-5 h-5 text-white" />
+                </div>
+                <div className="flex-1 text-left">
+                  <p className="font-semibold text-gray-900">Message Anonymously</p>
+                  <p className="text-gray-600 text-sm">Keep your identity private</p>
+                </div>
+                <ChevronRight className="w-5 h-5 text-gray-400" />
+              </button>
+         </motion.div>
       </div>
       
     </section>
