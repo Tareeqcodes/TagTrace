@@ -6,6 +6,7 @@ import { Award } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { databases } from '@/config/appwrite';
 import Contact from '@/components/FoundItem/Contact';
+import Safety from '@/components/FoundItem/Safety';
 
 export default function page() {
   const { id } = useParams();
@@ -159,6 +160,7 @@ export default function page() {
           </div>
         </div>
         {item?.userId && <Contact Id={item.userId} />}
+        <Safety />
       </main>
     </section>
   );
