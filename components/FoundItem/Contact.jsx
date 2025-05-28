@@ -14,7 +14,11 @@ export default function Contact({ Id }) {
           process.env.NEXT_PUBLIC_APPWRITE_USERS_ID,
           [Query.equal('userId', Id)]
         );
-        setUser(response);
+        if(response.documents > 0) {
+          setUser(response.documents[0]);
+        } else{
+           alert("No user found with userId:", Id)
+        }
       } catch (err) {
         console.error("Error fetching user info:", err);
       } finally {
