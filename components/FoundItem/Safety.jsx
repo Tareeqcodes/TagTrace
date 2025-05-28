@@ -1,7 +1,12 @@
 'use client'
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { CheckCircle2, ExternalLink, Heart } from "react-icons/fa"
+import { 
+  CheckCircle2,
+  ExternalLink,
+  Heart,
+  ChevronDown,
+} from 'lucide-react';
 
 export default function Safety() {
       const [showSafetyTips, setShowSafetyTips] = useState(false);
