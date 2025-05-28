@@ -85,7 +85,7 @@ export default function Safety() {
             <span className="text-sm text-gray-600">Powered by TagTrace</span>
           </div>
           <div className="space-y-1">
-            <p className="text-xs text-gray-500">Connecting lost items since 2024</p>
+            <p className="text-xs text-gray-500">Connecting lost items since 2025</p>
           </div>
         </div>
     </>

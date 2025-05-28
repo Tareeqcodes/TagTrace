@@ -16,7 +16,7 @@ import { databases, Query } from '@/config/appwrite';
 export default function Contact({ Id }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null); // Added missing error state
+  const [error, setError] = useState(null);
   const [copiedPhone, setCopiedPhone] = useState(false);
   const [showAnonymousModal, setShowAnonymousModal] = useState(false);
   const [message, setMessage] = useState('');
