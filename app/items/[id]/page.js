@@ -7,7 +7,7 @@ import { databases } from '@/config/appwrite';
 
 export default function ItemDetailPage() {
   const { id } = useParams(); // get the item ID from the route
-  const [item, setItem] = useState(null);
+  const [itemData, setItemData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -19,7 +19,7 @@ export default function ItemDetailPage() {
           process.env.NEXT_PUBLIC_APPWRITE_ITEMS_COLLECTION_ID,
           id
         );
-        setItem(response);
+        setItemData(response);
       } catch (err) {
         console.error("Error fetching item:", err);
         setError("Item not found or has been removed.");
@@ -42,7 +42,6 @@ export default function ItemDetailPage() {
     }
   };
 
-  if (loading) return <div className="p-6">Loading item details...</div>;
   if (error) return <div className="p-6 text-red-500">{error}</div>;
 
   return (
@@ -70,7 +69,7 @@ export default function ItemDetailPage() {
               <div className="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500 mb-2"></div>
               <p>Loading items...</p>
             </div>
-        ) : item && item.length > 0 ? (
+        ) : itemData && itemData.length > 0 ? (
           <main className="max-w-md mx-auto px-4 py-6 space-y-6">
           <div className="bg-white/70 backdrop-blur-lg rounded-2xl shadow-xl border border-white/20 overflow-hidden">
            {/* image */}
