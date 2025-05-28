@@ -158,7 +158,7 @@ export default function ItemDetailPage() {
             )}
           </div>
         </div>
-        <Contact userId={item?.userId || id} />
+        <Contact userId={id} />
       </main>
     </section>
   );
