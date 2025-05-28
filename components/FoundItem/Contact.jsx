@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import { databases } from '@/config/appwrite';
 
-export default function Contact({ Id }) {
+export default function Contact({ userId }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -12,7 +12,7 @@ export default function Contact({ Id }) {
         const response = await databases.getDocument(
           process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
           process.env.NEXT_PUBLIC_APPWRITE_USERS_ID,
-          Id
+          userId
         );
         setUser(response);
       } catch (err) {
@@ -22,10 +22,10 @@ export default function Contact({ Id }) {
       }
     };
 
-    if (Id) {
+    if (userId) {
       fetchUserInfo();
     }
-  }, [Id]);
+  }, [userId]);
 
   if (loading) return <div>Loading contact info...</div>;
 
