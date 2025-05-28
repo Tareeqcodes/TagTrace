@@ -15,18 +15,18 @@ export default function Testimonials() {
     },
     {
       id: 2,
-      name: "Sarah Peterson",
+      name: "Brad Peterson",
       role: "Parent & Teacher",
-      initials: "SP",
+      initials: "BP",
       content: "As a mother of three kids who constantly lose things, TagTrace has been a game-changer. I've labeled everything from lunchboxes to jackets and we've had multiple items returned!",
       rating: 5,
       bgGradient: "from-purple-500 to-purple-600"
     },
     {
       id: 3,
-      name: "Michael Johnson",
+      name: "Tariq",
       role: "IT Manager",
-      initials: "MJ",
+      initials: "T",
       content: "We use TagTrace for all our company equipment. It's saved us thousands in replacement costs and the dashboard makes it easy to manage everything.",
       rating: 5,
       bgGradient: "from-emerald-500 to-emerald-600"

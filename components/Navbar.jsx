@@ -12,16 +12,16 @@ export default function Navbar() {
     <>
       <header className="bg-white shadow-sm sticky top-0 z-50 md:hidden">
         <div className="container mx-auto px-4 py-3 space-x-2 flex justify-start items-center">
-          <Link href="/td" className="flex items-center">
-            <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 p-1.5">
-              <FiTag className="w-full h-full text-white" />
+          <Link href="/" className="flex space-x-2 items-center">
+            <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold text-xl">TT</span>
             </div>
-          </Link>
           <motion.h1 
                className="text-2xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent"
                whileHover={{ scale: 1.05 }} >
                 TagTrace
               </motion.h1>                        
+          </Link>
         </div> 
       </header>
 
@@ -34,9 +34,9 @@ export default function Navbar() {
           whileHover={{ scale: 1.1 }}
           transition={{ type: "spring", stiffness: 300 }}
            >
-           <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 via-purple-500 to-indigo-600 p-2 shadow-lg">
-           <FiTag className="w-full h-full text-white" />
-             </div>
+           <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold text-xl">TT</span>
+            </div>
             <div className="absolute inset-0 w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 via-purple-500 to-indigo-600 opacity-0 group-hover:opacity-20 blur-xl transition-opacity duration-300"></div>
              </motion.div>
                <motion.h1 
