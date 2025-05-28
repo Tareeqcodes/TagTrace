@@ -3,11 +3,12 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Image from 'next/image';
 import { Award } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { databases } from '@/config/appwrite';
 
 export default function ItemDetailPage() {
-  const { id } = useParams(); // get the item ID from the route
-  const [itemData, setItemData] = useState(null);
+  const { id } = useParams();
+  const [item, setItem] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -19,7 +20,7 @@ export default function ItemDetailPage() {
           process.env.NEXT_PUBLIC_APPWRITE_ITEMS_COLLECTION_ID,
           id
         );
-        setItemData(response);
+        setItem(response);
       } catch (err) {
         console.error("Error fetching item:", err);
         setError("Item not found or has been removed.");
@@ -33,7 +34,7 @@ export default function ItemDetailPage() {
     }
   }, [id]);
 
-   const getStatusColor = (status) => {
+  const getStatusColor = (status) => {
     switch(status) {
       case 'active': return 'bg-green-100 text-green-600';
       case 'lost': return 'bg-red-100 text-red-600';
@@ -42,63 +43,90 @@ export default function ItemDetailPage() {
     }
   };
 
-  if (error) return <div className="p-6 text-red-500">{error}</div>;
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center py-8">
+          <div className="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500 mb-2"></div>
+          <p>Loading item details...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="p-6 text-red-500 max-w-md text-center">{error}</div>
+      </div>
+    );
+  }
+
+  if (!item) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <p>No item found with this ID</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <section className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 px-4">
-
-      <header className="sticky top-0 z-40 backdrop-blur-lg bg-white/80 border-b border-white/20 shadow-sm">
+      <header className="sticky top-0 z-40 backdrop-blur-lg bg-white/80 border-b border-white/20 shadow-sm py-4 px-6">
         <div className="flex items-center space-x-3">
-            <div className="relative">
-              <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
-            <span className="text-white font-bold text-sm">TT</span>
+          <div className="relative">
+            <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold text-sm">TT</span>
             </div>
-              <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white"></div>
-            </div>
-            <div>
-              <h1 className="text-lg font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
-                Found Item
-              </h1>
-              <p className="text-xs text-gray-500">TagTrace Secure</p>
-            </div>
+            <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white"></div>
           </div>
+          <div>
+            <h1 className="text-lg font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
+              Found Item
+            </h1>
+            <p className="text-xs text-gray-500">TagTrace Secure</p>
+          </div>
+        </div>
       </header>
         
-        { loading ? (
-          <div className="text-center py-8">
-              <div className="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500 mb-2"></div>
-              <p>Loading items...</p>
-            </div>
-        ) : itemData && itemData.length > 0 ? (
-          <main className="max-w-md mx-auto px-4 py-6 space-y-6">
-          <div className="bg-white/70 backdrop-blur-lg rounded-2xl shadow-xl border border-white/20 overflow-hidden">
-           {/* image */}
-           <div className="relative h-48 bg-gradient-to-br from-gray-100 to-gray-200">
-           <Image 
-            src={item.image}
-            alt={item.name}
-            className="w-full h-full object-cover"
-           />
+      <main className="max-w-md mx-auto px-4 py-6 space-y-6">
+        <div className="bg-white/70 backdrop-blur-lg rounded-2xl shadow-xl border border-white/20 overflow-hidden">
+          {/* Image */}
+          <div className="relative h-48 bg-gradient-to-br from-gray-100 to-gray-200">
+            {item.image && (
+              <Image 
+                src={item.image}
+                alt={item.name}
+                fill
+                className="object-cover"
+              />
+            )}
             <div className="absolute top-4 left-4">
               <span className={`px-3 py-1 rounded-md text-xs font-medium ${getStatusColor(item.status)}`}>
-                {item.status.charAt(0).toUpperCase() + item.status.slice(1)}
+                {item.status?.charAt(0).toUpperCase() + item.status?.slice(1)}
               </span>
             </div>
-             <div className="absolute top-4 right-4">
+            <div className="absolute top-4 right-4">
               <div className="bg-black/20 backdrop-blur-sm rounded-lg px-2 py-1">
-                <span className="text-white text-xs font-medium">{item.tagId}</span>
+                <span className="text-white text-xs font-medium">{item.tagId || 'N/A'}</span>
               </div>
             </div>
-           </div>
-             {/* items details */}
-             <div className="p-6 space-y-4">
-               <div>
-              <h2 className="text-xl font-bold text-gray-900 mb-2">{item.name}</h2>
-              <p className="text-gray-600 text-sm leading-relaxed">{item.description}</p>
+          </div>
+
+          {/* Item details */}
+          <div className="p-6 space-y-4">
+            <div>
+              <h2 className="text-xl font-bold text-gray-900 mb-2">{item.name || 'Untitled Item'}</h2>
+              <p className="text-gray-600 text-sm leading-relaxed">
+                {item.description || 'No description provided.'}
+              </p>
             </div>
-             </div>
-             {item.reward ? (
-                <motion.div
+
+            {/* Reward section */}
+            {item.reward ? (
+              <motion.div
                 initial={{ scale: 0.95, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ delay: 0.3 }}
@@ -114,25 +142,22 @@ export default function ItemDetailPage() {
                   </div>
                 </div>
               </motion.div>
-             ) : (
-                <div className="flex items-start space-x-3">
-              <div className="flex-shrink-0 w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center">
-                <Award className="w-4 h-4 text-amber-600" />
+            ) : (
+              <div className="flex items-start space-x-3">
+                <div className="flex-shrink-0 w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center">
+                  <Award className="w-4 h-4 text-amber-600" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-semibold text-amber-900 mb-2">Owner's Message</h3>
+                  <p className="text-amber-800 text-sm leading-relaxed">
+                    {item.message || `This ${item.name || 'item'} contains important documents. Please contact me to return it safely.`}
+                  </p>
+                </div>
               </div>
-            <div className="flex-1">
-              <h3 className="font-semibold text-amber-900 mb-2">Owner's Message</h3>
-              <p className="text-amber-800 text-sm leading-relaxed">This {item.name} contains important documents. Please contact me to return it safely</p>
-            </div>
-             </div>
-             )}
+            )}
           </div>
+        </div>
       </main>
-        ) : (
-          <div className='h-screen text-center justify-center'>
-            No items found
-          </div>
-        )}
-      
     </section>
   );
 }
