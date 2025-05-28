@@ -6,6 +6,7 @@ import {
   CheckCircle2,
   ExternalLink,
   Heart,
+  Info,
   ChevronDown,
 } from 'lucide-react';
 
