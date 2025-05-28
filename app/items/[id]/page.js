@@ -36,9 +36,9 @@ export default function ItemDetailPage() {
 
   const getStatusColor = (status) => {
     switch(status) {
-      case 'active': return 'bg-green-100 text-green-600';
-      case 'lost': return 'bg-red-100 text-red-600';
-      case 'returned': return 'bg-blue-100 text-blue-600';
+      case 'active': return 'bg-green-500 text-white';
+      case 'lost': return 'bg-red-500 text-white';
+      case 'returned': return 'bg-blue-500 text-white';
       default: return 'bg-gray-100 text-gray-600';
     }
   };
@@ -73,7 +73,7 @@ export default function ItemDetailPage() {
   }
 
   return (
-    <section className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 px-2">
+    <section className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
       <header className="sticky top-0 z-40 backdrop-blur-lg bg-white/80 border-b border-white/20 shadow-sm py-4 px-6">
         <div className="flex items-center space-x-3">
           <div className="relative">
