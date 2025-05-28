@@ -9,11 +9,17 @@ const pwaConfig = withPWA({
 });
 
 const nextConfig = {
-  reactStrictMode: true, 
+  reactStrictMode: true,
   images: {
-    domains: ['https://www.tagtrace.online'], // If using external images
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'www.tagtrace.online',
+        port: '',
+        pathname: '/**',
+      },
+    ],
   },
-  // Other config...
 };
 
 export default pwaConfig(nextConfig);
