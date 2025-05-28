@@ -53,7 +53,7 @@ export default function Contact({ Id }) {
         </div>
         <div>
           <p className="font-medium">Email Owner</p>
-          <p className="text-gray-600">{user?.email || 'Email not available'}</p>
+          <p className="text-gray-600">{user?.email || 'Email not availables'}</p>
         </div>
       </div>
     </div>
