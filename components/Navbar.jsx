@@ -12,7 +12,7 @@ export default function Navbar() {
     <>
       <header className="bg-white shadow-sm sticky top-0 z-50 md:hidden">
         <div className="container mx-auto px-4 py-3 space-x-2 flex justify-start items-center">
-          <Link href="/" className="flex items-center">
+          <Link href="/td" className="flex items-center">
             <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 p-1.5">
               <FiTag className="w-full h-full text-white" />
             </div>

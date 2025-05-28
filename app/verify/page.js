@@ -29,9 +29,7 @@ export default function Confirm() {
         secret
       );    
       console.log('Session created:', session);
-
        await  checkSession(); 
-
         router.push('/dashboard');
       } catch (error) {
         console.error('Verification failed:', error.message);
