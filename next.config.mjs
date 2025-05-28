@@ -11,7 +11,7 @@ const pwaConfig = withPWA({
 const nextConfig = {
   reactStrictMode: true, 
   images: {
-    domains: ['your-cdn-domain.com'], // If using external images
+    domains: ['https://www.tagtrace.online'], // If using external images
   },
   // Other config...
 };
