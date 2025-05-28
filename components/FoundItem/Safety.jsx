@@ -1,5 +1,6 @@
 'use client'
 import { useState } from "react"
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion"
 import { 
   CheckCircle2,
@@ -66,16 +67,16 @@ export default function Safety() {
           <p className="text-blue-100 text-sm mb-4 leading-relaxed">
             Join thousands who've safely recovered their belongings with TagTrace.
           </p>
-          
+          <Link href="https://www.tagtrace.online/">
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="bg-white text-blue-600 font-semibold py-2 px-6 rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center space-x-2 mx-auto"
-            onClick={() => window.open('https://www.tagtrace.online/', '_blank')}
           >
             <span>Get TagTrace</span>
             <ExternalLink className="w-4 h-4" />
           </motion.button>
+          </Link>
         </motion.div>
         <div className="text-center py-4 space-y-2">
           <div className="flex items-center justify-center space-x-2">
