@@ -13,18 +13,18 @@ export default function Setting() {
     name: "",
     email: "",
     phone:"",
-    user_id: "",
+    userId: "",
   })
 
   useEffect( () => {
     if (!user || !user.email) return;
     const fetchData = async () => {
       try {
-        const userId = user.$id
+        
          const response = await databases.listDocuments(
           db,
           cll,
-          [Query.equal("user_id", userId)]
+          [Query.equal("userId", user.$id)]
          )
         if( response.total > 0 ){
           const doc = response.documents[0]
@@ -33,14 +33,14 @@ export default function Setting() {
             name: doc.name || "",
             email: doc.email || "",
             phone: doc.phone || "",
-            user_id: doc.user_id || "",
+            userId: doc.userId || "",
           })
         } else{
           setFormData({
             ...formData,
             email: user.email,
             name: user.name,
-            user_id: user.$id,
+            userId: user.$id,
           })
         }
       } catch (err) {
@@ -57,7 +57,7 @@ export default function Setting() {
   const handleSave = async () => {
     const payload = {
       ...formData,
-      user_id: user.$id,
+      userId: user.$id,
     }
     try {
       if (docId) {
@@ -159,7 +159,7 @@ export default function Setting() {
                       <div>
                         <p className="font-medium">Marketing Updates</p>
                         <p className="text-sm text-gray-500">Receive product news and updates</p>
-                      </div>
+                      </div> 
                       <div className="relative inline-block w-10 align-middle select-none">
                         <input type="checkbox" name="toggle" id="toggle-updates" className="sr-only" readOnly />
                         <label htmlFor="toggle-updates" className="block h-6 overflow-hidden bg-gray-300 rounded-full cursor-pointer">
