@@ -158,8 +158,8 @@ export default function ItemDetailPage() {
             )}
           </div>
         </div>
-        <Contact userId={item.userId} />
       </main>
+        <Contact Id={item.userId} />
     </section>
   );
 }

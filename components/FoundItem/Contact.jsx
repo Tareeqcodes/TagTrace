@@ -1,18 +1,18 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { databases } from '@/config/appwrite';
+import { databases, Query } from '@/config/appwrite';
 
-export default function Contact({ userId }) {
+export default function Contact({ Id }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
-        const response = await databases.getDocument(
+        const response = await databases.listDocuments(
           process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
           process.env.NEXT_PUBLIC_APPWRITE_USERS_ID,
-          userId
+          [Query.equal('userId', Id)]
         );
         setUser(response);
       } catch (err) {
@@ -22,10 +22,10 @@ export default function Contact({ userId }) {
       }
     };
 
-    if (userId) {
+    if (Id) {
       fetchUserInfo();
     }
-  }, [userId]);
+  }, [Id]);
 
   if (loading) return <div>Loading contact info...</div>;
 
