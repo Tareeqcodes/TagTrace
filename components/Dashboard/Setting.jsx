@@ -7,7 +7,7 @@ const db = process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID
 const cll = process.env.NEXT_PUBLIC_APPWRITE_USERS_ID
 
 export default function Setting() {
-  const { user, loading } =useAuth();
+  const { user } =useAuth();
    const [docId, setDocId] = useState(null)
   const [formData, setFormData] = useState({
     name: "",

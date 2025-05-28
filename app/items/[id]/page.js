@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { Award } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { databases } from '@/config/appwrite';
+import Contact from '@/components/FoundItem/Contact';
 
 export default function ItemDetailPage() {
   const { id } = useParams();
@@ -157,6 +158,7 @@ export default function ItemDetailPage() {
             )}
           </div>
         </div>
+        <Contact userId={item?.userId || id} />
       </main>
     </section>
   );
