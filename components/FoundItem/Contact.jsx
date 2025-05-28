@@ -6,29 +6,37 @@ export default function Contact({ Id }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
+        if (!Id) {
+          setError('No user ID provided');
+          return;
+        }
+
         const response = await databases.listDocuments(
           process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
           process.env.NEXT_PUBLIC_APPWRITE_USERS_ID,
           [Query.equal('userId', Id)]
         );
-        if(response.documents > 0) {
+
+        // CORRECTED: Check documents array length
+        if (response.documents.length > 0) {
           setUser(response.documents[0]);
-        } else{
-           alert("No user found with userId:", Id)
+        } else {
+          setError('No user found with this ID');
+          console.log('Full response:', response); // For debugging
         }
       } catch (err) {
         console.error("Error fetching user info:", err);
+        setError('Failed to fetch user information');
       } finally {
         setLoading(false);
       }
     };
 
-    if (Id) {
-      fetchUserInfo();
-    }
+    fetchUserInfo();
   }, [Id]);
 
   if (loading) return <div>Loading contact info...</div>;
