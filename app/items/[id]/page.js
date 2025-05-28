@@ -123,7 +123,6 @@ export default function ItemDetailPage() {
               <p className="text-gray-600 text-sm leading-relaxed">
                 {item.description || 'No description provided.'}
               </p>
-              {item.userId}
             </div>
 
             {/* Reward section */}
@@ -159,7 +158,7 @@ export default function ItemDetailPage() {
             )}
           </div>
         </div>
-        <Contact Id={item.userId} />
+        {item?.userId && <Contact Id={item.userId} />}
       </main>
     </section>
   );
