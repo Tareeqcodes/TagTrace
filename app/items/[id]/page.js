@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Image from 'next/image';
+import { Award } from 'lucide-react';
 import { databases } from '@/config/appwrite';
 
 export default function ItemDetailPage() {
@@ -45,7 +46,7 @@ export default function ItemDetailPage() {
   if (error) return <div className="p-6 text-red-500">{error}</div>;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
+    <section className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
 
       <header className="sticky top-0 z-40 backdrop-blur-lg bg-white/80 border-b border-white/20 shadow-sm">
         <div className="flex items-center space-x-3">
@@ -84,24 +85,43 @@ export default function ItemDetailPage() {
               </div>
             </div>
            </div>
-
-           
+             {/* items details */}
+             <div className="p-6 space-y-4">
+               <div>
+              <h2 className="text-xl font-bold text-gray-900 mb-2">{item.name}</h2>
+              <p className="text-gray-600 text-sm leading-relaxed">{item.description}</p>
+            </div>
+             </div>
+             {item.reward ? (
+                <motion.div
+                initial={{ scale: 0.95, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ delay: 0.3 }}
+                className="bg-gradient-to-r from-amber-50 to-yellow-50 border border-amber-200 rounded-xl p-4"
+              >
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 bg-amber-100 rounded-full flex items-center justify-center">
+                    <Award className="w-5 h-5 text-amber-600" />
+                  </div>
+                  <div>
+                    <p className="font-semibold text-amber-900">Reward Offered</p>
+                    <p className="text-amber-800 text-sm">{item.reward}</p>
+                  </div>
+                </div>
+              </motion.div>
+             ) : (
+                <div className="flex items-start space-x-3">
+              <div className="flex-shrink-0 w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center">
+                <Award className="w-4 h-4 text-amber-600" />
+              </div>
+            <div className="flex-1">
+              <h3 className="font-semibold text-amber-900 mb-2">Owner's Message</h3>
+              <p className="text-amber-800 text-sm leading-relaxed">This {item.name} contains important documents. Please contact me to return it safely</p>
+            </div>
+             </div>
+             )}
           </div>
       </main>
-      <h1 className="text-2xl font-bold mb-4">{item.name}</h1>
-      <div className="mb-2 text-gray-700">
-        <strong>Category:</strong> {item.category}
-      </div>
-      {item.description && (
-        <div className="mb-4 text-gray-600">
-          <strong>Description:</strong> {item.description}
-        </div>
-      )}
-      <div className="p-4 bg-blue-50 border-l-4 border-blue-400 rounded">
-        <p className="text-blue-800">
-          <strong>Contact Instructions:</strong> {item.contactInstructions}
-        </p>
-      </div>
-    </div>
+    </section>
   );
 }
