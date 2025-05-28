@@ -49,10 +49,10 @@ export default function LoginForm() {
           <hr className="absolute top-3 w-full border-t border-b-gray-100" />
           <span className="relative text-xs bg-white px-3">Or continue with</span>
         </div>
-        <div className="">
+        
           <button
             onClick={handleGoogleLogin}
-            className="w-full border border-gray-300 py-2 rounded-xl flex items-center justify-center gap-2 hover:bg-gray-100 transition"
+            className="w-full border border-gray-300 py-2 rounded-xl flex items-center justify-center gap-2 hover:bg-gray-100 cursor-pointer transition"
           >
             <Image
               src="/google.svg"
@@ -61,7 +61,6 @@ export default function LoginForm() {
               height={25}
             />Google
           </button>
-        </div>
       </div>
     </div>
   );
