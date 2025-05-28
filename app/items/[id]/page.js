@@ -64,8 +64,14 @@ export default function ItemDetailPage() {
             </div>
           </div>
       </header>
-
-      <main className="max-w-md mx-auto px-4 py-6 space-y-6">
+        
+        { loading ? (
+          <div className="text-center py-8">
+              <div className="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500 mb-2"></div>
+              <p>Loading items...</p>
+            </div>
+        ) : item && item.length > 0 ? (
+          <main className="max-w-md mx-auto px-4 py-6 space-y-6">
           <div className="bg-white/70 backdrop-blur-lg rounded-2xl shadow-xl border border-white/20 overflow-hidden">
            {/* image */}
            <div className="relative h-48 bg-gradient-to-br from-gray-100 to-gray-200">
@@ -122,6 +128,12 @@ export default function ItemDetailPage() {
              )}
           </div>
       </main>
+        ) : (
+          <div className='h-screen text-center justify-center'>
+            No items found
+          </div>
+        )}
+      
     </section>
   );
 }
