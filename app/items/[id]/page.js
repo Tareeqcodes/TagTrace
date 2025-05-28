@@ -73,7 +73,7 @@ export default function ItemDetailPage() {
   }
 
   return (
-    <section className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 px-4">
+    <section className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 px-2">
       <header className="sticky top-0 z-40 backdrop-blur-lg bg-white/80 border-b border-white/20 shadow-sm py-4 px-6">
         <div className="flex items-center space-x-3">
           <div className="relative">
