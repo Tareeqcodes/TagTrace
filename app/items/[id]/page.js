@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 import { databases } from '@/config/appwrite';
 import Contact from '@/components/FoundItem/Contact';
 
-export default function ItemDetailPage() {
+export default function page() {
   const { id } = useParams();
   const [item, setItem] = useState(null);
   const [loading, setLoading] = useState(true);
