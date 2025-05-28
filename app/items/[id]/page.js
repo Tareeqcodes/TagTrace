@@ -104,7 +104,7 @@ export default function ItemDetailPage() {
               />
             )}
             <div className="absolute top-4 left-4">
-              <span className={`px-3 py-1 rounded-md text-xs font-medium ${getStatusColor(item.status)}`}>
+              <span className={`px-3 py-1 rounded-md text-xs font-semibold shadow-lg ${getStatusColor(item.status)}`}>
                 {item.status?.charAt(0).toUpperCase() + item.status?.slice(1)}
               </span>
             </div>
