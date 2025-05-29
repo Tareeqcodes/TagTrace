@@ -23,6 +23,7 @@ export const metadata = {
     "contactless return",
     "NFC lost and found"
   ],
+  authors: [{ name: "Tagtrace Team" }],
   openGraph: {
     title: "TagTrace | Never Lose Your Items Again",
     description: "Get your lost items returned with smart QR tags. Works for wallets, phones, luggage, and more.",
@@ -44,7 +45,6 @@ export const metadata = {
     title: "TagTrace | Never Lose Your Items Again",
     description: "The smart way to protect your belongings. Free QR tags, premium NFC options.",
     images: ["/header.jpg"],
-    creator: "@tagtrace",
   },
   robots: {
     index: true,
@@ -63,6 +63,12 @@ export const metadata = {
     apple: "/apple-touch-icon.png",
   },
   manifest: "/site.webmanifest",
+  alternates: {
+    canonical: "https://www.tagtrace.online",
+    languages: {
+      en: "https://www.tagtrace.online",
+    },
+  },
 };
 
 export default function RootLayout({ children }) {
