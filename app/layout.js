@@ -10,6 +10,12 @@ const poppins = Poppins({
   display: "swap",
 });
 
+export const viewport = {
+  themeColor: '#B45309',
+  width: 'device-width',
+  initialScale: 1,
+}
+
 export const metadata = {
   metadataBase: new URL( 'https://www.tagtrace.online'), 
   title: "TagTrace | Never Lose Your Items Again",
@@ -37,7 +43,7 @@ export const metadata = {
         alt: "TagTrace QR tag on a wallet",
       },
     ],
-    locale: "en_US",
+    locale: "en_NG",
     type: "website",
   },
   twitter: {
