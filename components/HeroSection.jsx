@@ -23,7 +23,7 @@ export default function HeroSection() {
         <div className="lg:w-1/2 flex justify-center w-full">
           <div className="relative w-full h-48 sm:h-64 md:h-80 lg:h-96">
             <Image 
-              src="/1.jpg" 
+              src="/images/1.jpg" 
               alt="Dashboard and QR code mockup" 
               className="rounded-lg shadow-xl object-cover"
               fill

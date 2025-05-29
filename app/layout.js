@@ -31,7 +31,7 @@ export const metadata = {
     siteName: "TagTrace",
     images: [
       {
-        url: "/header.webp",
+        url: "/images/header.webp",
         width: 1200,
         height: 630,
         alt: "TagTrace QR tag on a wallet",
@@ -44,7 +44,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "TagTrace | Never Lose Your Items Again",
     description: "The smart way to protect your belongings. Free QR tags, premium NFC options.",
-    images: ["/header.webp"],
+    images: ["/images/header.webp"],
   },
   robots: {
     index: true,
@@ -58,9 +58,9 @@ export const metadata = {
     },
   },
   icons: {
-    icon: "/favicon16.png",
-    shortcut: "/favicon32.png",
-    apple: "/apple-touch-icon.png",
+    icon: "/images/favicon16.png",
+    shortcut: "/images/favicon32.png",
+    apple: "/images/apple-touch-icon.png",
   },
   manifest: "/site.webmanifest",
   alternates: {
