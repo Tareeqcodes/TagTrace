@@ -11,12 +11,9 @@ import {
   Star,
   Zap,
   Shield,
-  Clock,
-  FileText
 } from 'lucide-react';
 
 const Subscription = () => {
-  const [currentPlan, setCurrentPlan] = useState('Personal');
   const [showCancelModal, setShowCancelModal] = useState(false);
   const [showUpgradeModal, setShowUpgradeModal] = useState(false);
 
@@ -24,7 +21,7 @@ const Subscription = () => {
   const subscriptionData = {
     plan: 'Personal',
     status: 'active',
-    price: 9.99,
+    price: 20,
     billingPeriod: 'monthly',
     renewalDate: '2025-06-22',
     itemLimit: 100,
@@ -37,33 +34,36 @@ const Subscription = () => {
       name: 'Free',
       price: 0,
       period: 'forever',
-      itemLimit: 10,
-      features: ['10 Items', 'Basic QR Codes', 'Standard Support'],
+       features: [
+        'Up to 3 tagged items',
+        'Basic QR code generator', 
+        'Email notifications only',
+        'Standard scan tracking',
+        'Basic dashboard access'
+      ],
       icon: Shield,
       color: 'text-gray-600',
       bgColor: 'bg-gray-100'
     },
     {
-      name: 'Personal',
-      price: 9.99,
-      period: 'month',
-      itemLimit: 100,
-      features: ['100 Items', 'Advanced QR Codes', 'Priority Support', 'Analytics'],
+      name: 'Premium',
+      price: 20,
+      period: 'Year',
+      features: [
+        'Unlimited tagged items',
+        'Trace Studio Pro access',
+        'Custom QR code designs & themes',
+        'SMS + Email notifications',
+        'Advanced analytics & reports',
+        'Priority customer support',
+        'Bulk QR code generation',
+        'Lost item recovery assistance'
+      ],
       icon: Star,
       color: 'text-blue-600',
       bgColor: 'bg-blue-100',
       popular: true
     },
-    {
-      name: 'Premium',
-      price: 19.99,
-      period: 'month',
-      itemLimit: 1000,
-      features: ['1000 Items', 'Custom Branding', '24/7 Support', 'Advanced Analytics', 'API Access'],
-      icon: Crown,
-      color: 'text-purple-600',
-      bgColor: 'bg-purple-100'
-    }
   ];
 
   const invoices = [
@@ -92,84 +92,6 @@ const Subscription = () => {
     return badges[status] || 'bg-gray-100 text-gray-800';
   };
 
-  const CancelModal = () => (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
-        <div className="flex items-center mb-4">
-          <AlertTriangle className="text-red-500 mr-3" size={24} />
-          <h3 className="text-lg font-semibold">Cancel Subscription</h3>
-        </div>
-        <p className="text-gray-600 mb-6">
-          Are you sure you want to cancel your subscription? You'll lose access to premium features at the end of your billing period.
-        </p>
-        <div className="flex space-x-3">
-          <button 
-            onClick={() => setShowCancelModal(false)}
-            className="flex-1 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50"
-          >
-            Keep Subscription
-          </button>
-          <button className="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
-            Cancel Subscription
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-
-  const UpgradeModal = () => (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg p-6 max-w-2xl w-full mx-4 max-h-96 overflow-y-auto">
-        <div className="flex items-center justify-between mb-6">
-          <h3 className="text-lg font-semibold">Choose Your Plan</h3>
-          <button onClick={() => setShowUpgradeModal(false)} className="text-gray-400 hover:text-gray-600">
-            <X size={20} />
-          </button>
-        </div>
-        <div className="grid md:grid-cols-3 gap-4">
-          {plans.map((plan) => {
-            const IconComponent = plan.icon;
-            return (
-              <div key={plan.name} className={`border rounded-lg p-4 relative ${plan.popular ? 'border-blue-500' : 'border-gray-200'}`}>
-                {plan.popular && (
-                  <div className="absolute -top-2 left-1/2 transform -translate-x-1/2">
-                    <span className="bg-blue-500 text-white text-xs px-2 py-1 rounded-full">Popular</span>
-                  </div>
-                )}
-                <div className={`w-10 h-10 rounded-lg ${plan.bgColor} flex items-center justify-center mb-3`}>
-                  <IconComponent className={plan.color} size={20} />
-                </div>
-                <h4 className="font-semibold mb-2">{plan.name}</h4>
-                <p className="text-2xl font-bold mb-1">
-                  ${plan.price}
-                  <span className="text-sm font-normal text-gray-600">/{plan.period}</span>
-                </p>
-                <p className="text-sm text-gray-600 mb-4">{plan.itemLimit} items included</p>
-                <ul className="space-y-2 mb-4">
-                  {plan.features.map((feature, index) => (
-                    <li key={index} className="flex items-center text-sm">
-                      <Check className="text-green-500 mr-2" size={16} />
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-                <button 
-                  className={`w-full py-2 px-4 rounded-lg ${
-                    currentPlan === plan.name 
-                      ? 'bg-gray-100 text-gray-600 cursor-not-allowed' 
-                      : 'bg-blue-600 text-white hover:bg-blue-700'
-                  }`}
-                  disabled={currentPlan === plan.name}
-                >
-                  {currentPlan === plan.name ? 'Current Plan' : 'Select Plan'}
-                </button>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    </div>
-  );
 
   return (
     <div className="max-w-6xl mx-auto space-y-8">
@@ -286,11 +208,11 @@ const Subscription = () => {
       {/* Plan Comparison */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
         <h3 className="text-lg font-semibold mb-6">Available Plans</h3>
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {plans.map((plan) => {
             const IconComponent = plan.icon;
             return (
-              <div key={plan.name} className={`border rounded-lg p-6 relative ${currentPlan === plan.name ? 'border-blue-500 bg-blue-50' : 'border-gray-200'}`}>
+              <div key={plan.name} className={`border rounded-lg p-6 relative $`}>
                 {plan.popular && (
                   <div className="absolute -top-2 left-1/2 transform -translate-x-1/2">
                     <span className="bg-blue-500 text-white text-xs px-2 py-1 rounded-full">Most Popular</span>
@@ -304,7 +226,6 @@ const Subscription = () => {
                   ${plan.price}
                   <span className="text-sm font-normal text-gray-600">/{plan.period}</span>
                 </p>
-                <p className="text-gray-600 mb-4">{plan.itemLimit} items included</p>
                 <ul className="space-y-2 mb-6">
                   {plan.features.map((feature, index) => (
                     <li key={index} className="flex items-center text-sm">
@@ -313,7 +234,7 @@ const Subscription = () => {
                     </li>
                   ))}
                 </ul>
-                {currentPlan === plan.name && (
+                {plan.name && (
                   <div className="bg-blue-100 text-blue-800 text-sm py-2 px-3 rounded-lg text-center font-medium">
                     Current Plan
                   </div>
@@ -324,9 +245,6 @@ const Subscription = () => {
         </div>
       </div>
 
-      {/* Modals */}
-      {showCancelModal && <CancelModal />}
-      {showUpgradeModal && <UpgradeModal />}
     </div>
   );
 };

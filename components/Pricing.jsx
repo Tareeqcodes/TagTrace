@@ -1,7 +1,7 @@
 'use client'
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Check, Crown, Star, ArrowRight, Shield } from 'lucide-react';
+import { Check, Crown, ArrowRight, Shield } from 'lucide-react';
 
 export default function Pricing() {
   const pricingPlans = [
@@ -11,10 +11,11 @@ export default function Pricing() {
       period: '/forever',
       description: 'Get started with essential features at no cost.',
       features: [
-        'Up to 3 items',
-        'Standard QR codes',
-        'Email notifications',
-        'Basic web dashboard'
+        'Up to 3 tagged items',
+        'Basic QR code generator',
+        'Email notifications only',
+        'Standard scan tracking',
+        'Basic dashboard access'
       ],
       buttonText: 'Get Started Free',
       buttonColor: 'from-gray-500 to-gray-600',
@@ -22,40 +23,24 @@ export default function Pricing() {
       icon: <Shield size={18} />
     },
     {
-      name: 'Personal',
-      price: '$3',
-      period: '/month',
-      description: 'Perfect for individuals with several important items.',
-      features: [
-        'Up to 10 items',
-        'Basic QR code design',
-        'Email notifications',
-        'Enhanced web dashboard',
-        '5 free standard stickers'
-      ],
-      buttonText: 'Choose Personal',
-      buttonColor: 'from-blue-500 to-blue-600',
-      highlight: false,
-      icon: <Star size={18} />
-    },
-    {
       name: 'Premium',
-      price: '$29',
+      price: '$20',
       period: '/year',
-      description: 'Great for families or people with many valuables.',
+      description: 'Unlock the full power of Tagtrace for complete item protection.',
       features: [
-        'Unlimited items',
-        'Custom QR designs',
+        'Unlimited tagged items',
+        'Trace Studio Pro access',
+        'Custom QR code designs & themes',
         'SMS + Email notifications',
-        '10 free premium stickers',
-        'Branded QR codes',
-        'Priority support',
-        'Team accounts'
+        'Advanced analytics & reports',
+        'Priority customer support',
+        'Bulk QR code generation',
+        'Lost item recovery assistance'
       ],
-      buttonText: 'Choose Premium',
+      buttonText: 'Upgrade to Premium',
       buttonColor: 'from-blue-500 to-indigo-600',
       highlight: true,
-      ribbonText: 'BEST VALUE',
+      ribbonText: 'MOST POPULAR',
       icon: <Crown size={18} />
     }
   ];
@@ -147,7 +132,7 @@ export default function Pricing() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.1 }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto"
+          className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto"
         >
           {pricingPlans.map((plan) => (
             <motion.div
@@ -232,7 +217,7 @@ export default function Pricing() {
                     transition={{ delay: 0.5, duration: 0.3 }}
                     className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-4 mt-6 text-center text-sm font-medium cursor-pointer text-blue-700 border border-blue-100"
                   >
-                    Save 20% compared to monthly billing
+                    Best value for unlimited item protection & advanced features
                   </motion.div>
                 )}
               </div>

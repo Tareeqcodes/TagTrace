@@ -27,7 +27,7 @@ export default function How() {
   ]
 
   return (
-    <section id="how-it-works" className="relative py-10 overflow-hidden bg-gradient-to-br from-gray-50 to-blue-50">
+    <section id="demo" className="relative py-10 overflow-hidden bg-gradient-to-br from-gray-50 to-blue-50">
       {/* Decorative elements */}
       <div className="absolute top-0 left-0 w-32 h-32 bg-blue-100 rounded-full opacity-20 -translate-x-16 -translate-y-16"></div>
       <div className="absolute bottom-0 right-0 w-64 h-64 bg-purple-100 rounded-full opacity-20 translate-x-32 translate-y-32"></div>
@@ -99,7 +99,7 @@ export default function How() {
             <video 
               controls 
               className="w-full aspect-video"
-              poster="/video-poster.jpg"
+              poster="/header.jpg"
             >
               <source src="/2.mp4" type="video/mp4" />
               Your browser does not support HTML5 video.
