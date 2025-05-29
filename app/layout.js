@@ -31,7 +31,7 @@ export const metadata = {
     siteName: "TagTrace",
     images: [
       {
-        url: "/header.jpg",
+        url: "/header.webp",
         width: 1200,
         height: 630,
         alt: "TagTrace QR tag on a wallet",
@@ -44,7 +44,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "TagTrace | Never Lose Your Items Again",
     description: "The smart way to protect your belongings. Free QR tags, premium NFC options.",
-    images: ["/header.jpg"],
+    images: ["/header.webp"],
   },
   robots: {
     index: true,

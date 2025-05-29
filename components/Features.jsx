@@ -16,11 +16,11 @@ export default function Features() {
       description: "of lost items with TagTrace codes get returned to their owners"
     },
     {
-      value: "15,000+",
+      value: "1,000+",
       description: "happy users protecting their valuables"
     },
     {
-      value: "$250k+",
+      value: "$25k+",
       description: "worth of items recovered by our community"
     }
   ];
