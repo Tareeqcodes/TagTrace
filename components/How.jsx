@@ -99,7 +99,7 @@ export default function How() {
             <video 
               controls 
               className="w-full aspect-video"
-              poster="/header.jpg"
+              poster="images/header.webp"
             >
               <source src="/2.mp4" type="video/mp4" />
               Your browser does not support HTML5 video.
