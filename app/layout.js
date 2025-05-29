@@ -11,7 +11,7 @@ const poppins = Poppins({
 });
 
 export const metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://tagtrace.online'),
+  metadataBase: new URL( 'https://www.tagtrace.online'), 
   title: "TagTrace | Never Lose Your Items Again",
   description: "Tag your belongings with smart QR codes. Get lost items returned instantly with our scan-to-contact system. Free to start, premium durable tags available.",
   keywords: [
@@ -26,11 +26,11 @@ export const metadata = {
   openGraph: {
     title: "TagTrace | Never Lose Your Items Again",
     description: "Get your lost items returned with smart QR tags. Works for wallets, phones, luggage, and more.",
-    url: "https://tagtrace.online",
+    url: "https://www.tagtrace.online",
     siteName: "TagTrace",
     images: [
       {
-        url: "/header.png",
+        url: "/header.jpg",
         width: 1200,
         height: 630,
         alt: "TagTrace QR tag on a wallet",
@@ -43,7 +43,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "TagTrace | Never Lose Your Items Again",
     description: "The smart way to protect your belongings. Free QR tags, premium NFC options.",
-    images: ["/header.png"],
+    images: ["/header.jpg"],
     creator: "@tagtrace",
   },
   robots: {
@@ -58,9 +58,9 @@ export const metadata = {
     },
   },
   icons: {
-    icon: "/32.png",
-    shortcut: "/32.png",
-    apple: "/60.png",
+    icon: "/favicon16.png",
+    shortcut: "/favicon32.png",
+    apple: "/apple-touch-icon.png",
   },
   manifest: "/site.webmanifest",
 };
