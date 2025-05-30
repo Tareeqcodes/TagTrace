@@ -32,10 +32,10 @@ export default function Page() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    if (!loading && !user) {
+    if (!user) {
       router.push('/login');
     }
-  }, [user, loading, router]);
+  }, [user, router]);
 
   // Close dropdown when clicking outside
   useEffect(() => {
