@@ -81,7 +81,7 @@ const MessageBubble = ({ message, isOwner }) => {
           ? 'bg-blue-500 text-white rounded-br-md' 
           : 'bg-gray-100 text-gray-800 rounded-bl-md'
       }`}>
-        <p className="text-sm leading-relaxed">{message.message}</p>
+        <p className="text-xs leading-relaxed">{message.message}</p>
         <div className={`flex items-center justify-end mt-2 ${
           isOwner ? 'text-blue-100' : 'text-gray-500'
         }`}>
