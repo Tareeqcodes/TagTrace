@@ -40,6 +40,6 @@ export default function Confirm() {
     verifySession();
   }, [router]);
 
-  return <div className='h-screen text-xl p-20 items-center justify-center'>
+  return <div className='h-screen text-sm text-green-400 p-20 text-center items-center justify-center'>
     Verifying please wait...</div>;
 }

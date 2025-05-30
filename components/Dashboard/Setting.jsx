@@ -89,8 +89,8 @@ export default function Setting() {
     
    return (
           <div>
-            <h1 className="text-2xl font-bold mb-6">Settings</h1>
-            <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-6">
+            <h1 className="text-2xl p-5 font-bold mb-3">Settings</h1>
+            <div className="bg-white rounded-lg shadow-sm border border-gray-100 mb-5 p-6">
               <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-10">
                 <div>
                   <h2 className="text-lg font-semibold mb-4">Account Settings</h2>

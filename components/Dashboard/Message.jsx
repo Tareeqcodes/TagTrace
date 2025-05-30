@@ -227,7 +227,7 @@ export default function Message() {
   // Show inbox list matching your existing design
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-6">Messages & Return Requests</h1>
+      <h1 className="text-xl p-5 font-bold mb-6">Return Requests</h1>
       <div className="bg-white rounded-lg shadow-sm border border-gray-100">
         {mockConversations.map((message, idx) => (
           <div 
@@ -235,7 +235,7 @@ export default function Message() {
             className={`p-4 border-b border-gray-100 last:border-0 flex cursor-pointer hover:bg-gray-50 ${message.unread ? 'bg-blue-50' : ''}`}
             onClick={() => handleSelectConversation(message)}
           >
-            <div className="mr-4 bg-gray-200 rounded-full w-10 h-10 flex items-center justify-center">
+            <div className="mr-4 bg-gray-200 rounded-full w-9 h-9 flex items-center justify-center">
               <User size={20} className="text-gray-500" />
             </div>
             <div className="flex-grow">
