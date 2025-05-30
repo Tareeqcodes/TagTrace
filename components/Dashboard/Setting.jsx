@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { databases, Query, ID } from "@/config/appwrite";
 import { useAuth } from "@/context/Authcontext";
+import { motion, AnimatePresence } from "framer-motion";
 
 const db = process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID
 const cll = process.env.NEXT_PUBLIC_APPWRITE_USERS_ID
@@ -9,6 +10,9 @@ const cll = process.env.NEXT_PUBLIC_APPWRITE_USERS_ID
 export default function Setting() {
   const { user } =useAuth();
    const [docId, setDocId] = useState(null)
+    const [success, setSuccess] = useState("");
+     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -45,6 +49,7 @@ export default function Setting() {
         }
       } catch (err) {
         console.error("Error fetching user data", err)
+        setError('Error occurs while fetching data')
       }
     }
     fetchData();
@@ -55,9 +60,19 @@ export default function Setting() {
     setFormData(prev => ({ ...prev, [name]: value }))
   }
   const handleSave = async () => {
+
+    setError("");
+    setSuccess("");
+    setLoading(true);
+    
     const payload = {
       ...formData,
       userId: user.$id,
+    }
+      if (!formData.phone) {
+      setError("Please enter your phone number");
+      setLoading(false);
+      return;
     }
     try {
       if (docId) {
@@ -65,10 +80,10 @@ export default function Setting() {
       } else {
         await databases.createDocument(db, cll, ID.unique(), payload)
       }
-      alert("User data saved successfully")
+     setSuccess("Saved successfully")
     } catch (err) {
       console.error("Error saving user data", err)
-      alert("Something went wrong while saving")
+      setError("Something went wrong while saving")
     }
   }
     
@@ -96,6 +111,7 @@ export default function Setting() {
                      value={user.email}
                      readOnly
                     className="w-full p-2 border border-gray-300 rounded-lg" />
+                     <p className="text-xs text-gray-500 mt-1">Email cannot be changed</p>
                   </div>
                   
                   <div className="mb-4">
@@ -106,7 +122,28 @@ export default function Setting() {
                     value={formData.phone}
                     className="w-full p-2 border border-gray-300 rounded-lg"/>
                   </div>
-                  
+                   <AnimatePresence>
+              {error && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  className="p-3 bg-red-50 text-red-600 rounded-lg text-sm"
+                >
+                  {error}
+                </motion.div>
+              )}
+              {success && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  className="p-3 bg-green-50 text-green-600 rounded-lg text-sm"
+                >
+                  {success}
+                </motion.div>
+              )}
+            </AnimatePresence>
                   <div className="mt-6">
                     <button onClick={handleSave} className="px-4 py-2 bg-blue-500 text-white rounded-lg cursor-pointer">Save Changes</button>
                   </div>

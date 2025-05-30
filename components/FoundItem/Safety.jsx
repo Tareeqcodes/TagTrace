@@ -68,7 +68,9 @@ export default function Safety() {
           <p className="text-blue-100 text-sm mb-4 leading-relaxed">
             Join thousands who've safely recovered their belongings with TagTrace.
           </p>
-          <Link href="https://www.tagtrace.online/">
+          <Link href="https://www.tagtrace.online/"
+          target="_blank"
+          >
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}

@@ -23,7 +23,7 @@ export default function LoginForm() {
       <div className="w-full max-w-md text-justify rounded-xl bg-white p-10 shadow-xl">
         <h1 className="mb-6 text-xl text-center font-medium">Sign in to your account</h1>
         {sent ? (
-          <p className="text-green-600 text-center">Magic link sent! Check your inbox.</p>
+          <p className="text-green-600 text-sm font-light text-center">Magic link sent! Check your inbox.</p>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-4">
             <label className="text-sm py-5">

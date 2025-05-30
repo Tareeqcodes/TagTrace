@@ -43,7 +43,7 @@ export default function CreateQr() {
           description,
           contactInstructions,
           createdAt: new Date().toISOString(),
-          status,
+          status, 
           reward,
           tagId,
           userId,

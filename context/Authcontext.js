@@ -38,9 +38,7 @@ export const AuthProvider = ({ children }) => {
         ID.unique(),
         email,
         'https://www.tagtrace.online/verify'
-      ); 
-       alert(' Check your email for the magic link!');
-     
+      );    
     } catch (error) {
       alert(error.message);
     }

@@ -23,7 +23,7 @@ const tabs = [
 ];
 
 export default function Page() {
-  const [activeTab, setActiveTab] = useState('main');
+  const [activeTab, setActiveTab] = useState('settings');
   const [hoveredTab, setHoveredTab] = useState(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { logout, user, loading } = useAuth();
@@ -31,7 +31,6 @@ export default function Page() {
   const dropdownRef = useRef(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  // Handle authentication redirect
   useEffect(() => {
     if (!loading && !user) {
       router.push('/login');
@@ -58,13 +57,12 @@ export default function Page() {
       <div className="flex items-center justify-center min-h-screen bg-gray-50">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading dashboard...</p>
+          <p className="text-gray-600">Please wait...</p>
         </div>
       </div>
     );
   }
 
-  // Don't render dashboard if user is not authenticated
   if (!user) {
     return null;
   }
