@@ -1,8 +1,7 @@
 'use client'
 import { useState } from 'react';
-import { Send, ArrowLeft, User, Package, Clock, CheckCheck } from 'lucide-react';
+import { Send, ArrowLeft, User, Package, CheckCheck } from 'lucide-react';
 
-// Mock data for conversations
 const mockConversations = [
   {
     id: 1,
