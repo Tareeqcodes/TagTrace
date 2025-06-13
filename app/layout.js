@@ -1,3 +1,4 @@
+import { Analytics } from '@vercel/analytics/next';
 import '../assets/globals.css';
 import { Poppins } from 'next/font/google';
 import { AuthProvider } from '@/context/Authcontext';
@@ -87,6 +88,7 @@ export default function RootLayout({ children }) {
             <Footer />
           </main>
         </AuthProvider>
+         <Analytics />
       </body>
     </html>
   );
