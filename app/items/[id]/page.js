@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Image from 'next/image';
-import { Award, Clock } from 'lucide-react';
+import { Award } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { databases, ID } from '@/config/appwrite';
 import Contact from '@/components/FoundItem/Contact';
@@ -13,9 +13,8 @@ export default function page() {
   const [item, setItem] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [scanLogged, setScanLogged] = useState(false);
+  // const [scanLogged, setScanLogged] = useState(false);
 
-  // Function to get user's location
   const getUserLocation = () => {
     return new Promise((resolve) => {
       if (navigator.geolocation) {
@@ -47,7 +46,7 @@ export default function page() {
   const getAddressFromCoords = async (lat, lng) => {
     try {
       const response = await fetch(
-        `https://api.opencagedata.com/geocode/v1/json?q=${lat}+${lng}&key=${process.env.NEXT_PUBLIC_OPENCAGE_API_KEY}`
+        `https://api.opencagedata.com/geocode/v1/json?q=${lat}+${lng}&key=${process.env.NEXT_PUBLIC_OPENCAGE_API}`
       );
       const data = await response.json();
       if (data.results && data.results[0]) {
@@ -83,11 +82,8 @@ export default function page() {
         ID.unique(),
         scanData
       );
-
-      // Create notification for item owner
-      await createNotification(itemData, scanLog, location);
-      
-      setScanLogged(true);
+      await createNotification(itemData, scanLog, location);  
+      // setScanLogged(true);
       console.log('Scan logged successfully');
     } catch (error) {
       console.error('Failed to log scan:', error);
