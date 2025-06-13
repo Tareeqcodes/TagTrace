@@ -2,9 +2,9 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Image from 'next/image';
-import { Award, Clock } from 'lucide-react';
+import { Award } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { databases, ID } from '@/config/appwrite';
+import { databases } from '@/config/appwrite';
 import Contact from '@/components/FoundItem/Contact';
 import Safety from '@/components/FoundItem/Safety';
 
@@ -13,164 +13,16 @@ export default function page() {
   const [item, setItem] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [scanLogged, setScanLogged] = useState(false);
-
-  // Function to get user's location
-  const getUserLocation = () => {
-    return new Promise((resolve) => {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            resolve({
-              latitude: position.coords.latitude,
-              longitude: position.coords.longitude,
-              accuracy: position.coords.accuracy
-            });
-          },
-          (error) => {
-            console.log('Location access denied:', error);
-            resolve(null); // Continue without location
-          },
-          {
-            enableHighAccuracy: true,
-            timeout: 10000,
-            maximumAge: 300000 // 5 minutes
-          }
-        );
-      } else {
-        resolve(null);
-      }
-    });
-  };
-
-  // Function to reverse geocode coordinates to address
-  const getAddressFromCoords = async (lat, lng) => {
-    try {
-      const response = await fetch(
-        `https://api.opencagedata.com/geocode/v1/json?q=${lat}+${lng}&key=${process.env.NEXT_PUBLIC_OPENCAGE_API_KEY}`
-      );
-      const data = await response.json();
-      if (data.results && data.results[0]) {
-        return data.results[0].formatted;
-      }
-    } catch (error) {
-      console.log('Geocoding failed:', error);
-    }
-    return null;
-  };
-
-  // Function to log the scan
-  const logScan = async (itemData, location) => {
-    try {
-      const scanData = {
-        itemId: id,
-        scannedAt: new Date().toISOString(),
-        userId: itemData.userId,
-      };
-        if (location) {
-        scanData.latitude = location.latitude;
-        scanData.longitude = location.longitude;
-        const address = await getAddressFromCoords(location.latitude, location.longitude);
-        if (address) {
-          scanData.address = address;
-        }
-      }
-
-      // Create scan log
-      const scanLog = await databases.createDocument(
-        process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
-        process.env.NEXT_PUBLIC_APPWRITE_SCAN_LOG_ID,
-        ID.unique(),
-        scanData
-      );
-
-      // Create notification for item owner
-      await createNotification(itemData, scanLog, location);
-      
-      setScanLogged(true);
-      console.log('Scan logged successfully');
-    } catch (error) {
-      console.error('Failed to log scan:', error);
-    }
-  };
-
-  // Function to create notification
-  const createNotification = async (itemData, scanLog, location) => {
-    try {
-      const locationText = location && scanLog.location?.address 
-        ? ` near ${scanLog.location.address}`
-        : location 
-        ? ` at coordinates ${location.latitude.toFixed(4)}, ${location.longitude.toFixed(4)}`
-        : '';
-
-      const notification = {
-        userId: itemData.userId,
-        itemId: id,
-        scanId: scanLog.$id,
-        type: 'scan_alert',
-        title: `Your ${itemData.name} was found!`,
-        message: `Someone scanned the QR code for "${itemData.name}"${locationText} at ${new Date().toLocaleString()}.`,
-        isRead: false,
-        createdAt: new Date().toISOString()
-      };
-
-      await databases.createDocument(
-        process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
-        process.env.NEXT_PUBLIC_APPWRITE_NOTIFY_ID,
-        ID.unique(),
-        notification
-      );
-
-      // Optional: Send email notification
-      await sendEmailNotification(itemData, notification);
-    } catch (error) {
-      console.error('Failed to create notification:', error);
-    }
-  };
-
-  // Function to send email notification
-  const sendEmailNotification = async (itemData, notification) => {
-    try {
-      // Using a service like Resend, EmailJS, or your own API
-      const response = await fetch('/api/notify', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          to: itemData.ownerEmail, // Make sure you have this field
-          subject: notification.title,
-          message: notification.message,
-          itemName: itemData.name,
-          scanTime: new Date().toLocaleString()
-        }),
-      });
-
-      if (response.ok) {
-        console.log('Email notification sent');
-      }
-    } catch (error) {
-      console.error('Failed to send email notification:', error);
-    }
-  };
 
   useEffect(() => {
-    const fetchItemAndLogScan = async () => {
+    const fetchItem = async () => {
       try {
-        // Fetch the item
         const response = await databases.getDocument(
           process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
           process.env.NEXT_PUBLIC_APPWRITE_ITEMS_COLLECTION_ID,
           id
         );
         setItem(response);
-
-        // Get user location (with permission)
-        const location = await getUserLocation();
-        
-        // Log the scan event
-        await logScan(response, location);
-
       } catch (err) {
         console.error("Error fetching item:", err);
         setError("Item not found or has been removed.");
@@ -180,7 +32,7 @@ export default function page() {
     };
 
     if (id) {
-      fetchItemAndLogScan();
+      fetchItem();
     }
   }, [id]);
 
@@ -241,25 +93,6 @@ export default function page() {
       </header>
         
       <main className="max-w-md mx-auto px-4 py-6 space-y-6">
-        {/* Scan confirmation banner */}
-        {scanLogged && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="bg-green-50 border border-green-200 rounded-xl p-4"
-          >
-            <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-                <Clock className="w-4 h-4 text-green-600" />
-              </div>
-              <div>
-                <p className="font-semibold text-green-900">Scan Logged</p>
-                <p className="text-green-700 text-sm">Owner has been notified!</p>
-              </div>
-            </div>
-          </motion.div>
-        )}
-
         <div className="bg-white/70 backdrop-blur-lg rounded-2xl shadow-xl border border-white/20 overflow-hidden">
           {/* Image */}
           <div className="relative h-48 bg-gradient-to-br from-gray-100 to-gray-200">

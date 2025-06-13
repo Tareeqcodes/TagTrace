@@ -1,7 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Package, QrCode, Check, AlertCircle, RefreshCw, Plus } from 'lucide-react';
+import { Package, QrCode, Check, AlertCircle } from 'lucide-react';
 import { databases, Query } from '@/config/appwrite';
 import { useAuth } from '@/context/Authcontext';
 import { motion } from 'framer-motion';
@@ -63,13 +63,6 @@ export default function Main({ setActiveTab }) {
       icon: <Check size={20} />,
       color: "bg-green-100 text-green-600"
     }
-  ];
-
-  const activityFeed = [
-    { item: "MacBook Pro", action: "was scanned", location: "Lagos, Nigeria", time: "2 hours ago", icon: <QrCode size={16} /> },
-    { item: "Backpack", action: "returned by", who: "anonymous finder", time: "Yesterday", icon: <RefreshCw size={16} /> },
-    { item: "Wallet", action: "marked as", status: "lost", time: "3 days ago", icon: <AlertCircle size={16} /> },
-    { item: "Keys", action: "new tag created", time: "1 week ago", icon: <Plus size={16} /> }
   ];
   
   const getStatusColor = (status) => {
@@ -146,32 +139,21 @@ export default function Main({ setActiveTab }) {
         ))}
       </motion.div>
       
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1">
         <motion.div 
           variants={slideIn('left', 'tween', 0.2, 1)}
           className="lg:col-span-2 bg-white rounded-xl shadow-sm border border-gray-100 p-6"
         >
           <div className="flex items-center justify-between mb-5">
             <h2 className="text-xl font-semibold">Tagged Items</h2>
-            <motion.button 
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="text-sm text-blue-500 hover:text-blue-600 font-medium flex items-center"
-            >
-              View All
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </motion.button>
           </div>
           
           {loading ? (
             <div className="text-center py-8">
               <div className="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500 mb-2"></div>
-              <p>Loading items...</p>
+              <p>Loading...</p>
             </div>
           ) : userData && userData.length > 0 ? (
-
             <>
             <div className="hidden md:block">
               <table className="w-full">
@@ -249,42 +231,6 @@ export default function Main({ setActiveTab }) {
               <p className="text-sm text-gray-400">Create a QR tag to get started</p>
             </motion.div>
           )}
-        </motion.div>
-        
-        <motion.div 
-          variants={slideIn('right', 'tween', 0.2, 1)}
-          className="bg-white rounded-xl shadow-sm border border-gray-100 p-6"
-        >
-          <h2 className="text-xl font-semibold mb-5">Recent Activity</h2>
-          <div className="space-y-4">
-            {activityFeed.map((activity, idx) => (
-              <motion.div 
-                key={idx}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: idx * 0.1 }}
-                whileHover={{ x: 5 }}
-                className="flex pb-4 border-b border-gray-50 last:border-0 group"
-              >
-                <div className="mt-1 mr-3 p-2 bg-gray-50 rounded-full group-hover:bg-blue-50 group-hover:text-blue-500 transition-colors">
-                  {activity.icon}
-                </div>
-                <div>
-                  <div className="text-sm">
-                    <span className="font-medium text-gray-800 group-hover:text-blue-600 transition-colors">{activity.item}</span> {activity.action} {activity.who || activity.location || activity.status}
-                  </div>
-                  <div className="text-xs text-gray-500 group-hover:text-gray-600 transition-colors">{activity.time}</div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-          <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            className="mt-4 w-full py-2 text-sm text-center text-gray-500 hover:text-gray-700 border border-gray-200 rounded-lg hover:border-gray-300 transition-all"
-          >
-            Show More Activity
-          </motion.button>
         </motion.div>
       </div>
     </motion.div>

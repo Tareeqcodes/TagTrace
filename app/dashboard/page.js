@@ -10,8 +10,11 @@ import Scan from '@/components/Dashboard/Scan';
 import Message from '@/components/Dashboard/Message';
 import Setting from '@/components/Dashboard/Setting';
 import Subscription from '@/components/Dashboard/Subscription';
+import Desktop from '@/components/Dashboard/notification/Desktop';
+import Mobile from '@/components/Dashboard/notification/Mobile';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '@/context/Authcontext';
+import { NotificationHooks } from '@/components/Dashboard/notification/NotificationHooks';
 
 const tabs = [
   { label: 'Dashboard', value: 'main', icon: Home, color: 'bg-blue-100 text-blue-600' },
@@ -23,13 +26,15 @@ const tabs = [
 ];
 
 export default function Page() {
-  const [activeTab, setActiveTab] = useState('settings');
+  const [activeTab, setActiveTab] = useState('main');
   const [hoveredTab, setHoveredTab] = useState(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMobileNotificationsOpen, setIsMobileNotificationsOpen] = useState(false);
   const { logout, user, loading } = useAuth();
+  const { unreadCount } = NotificationHooks();
   const router = useRouter();
   const dropdownRef = useRef(null);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     if (!user) {
@@ -200,12 +205,24 @@ export default function Page() {
           </div>
           
           <div className="flex items-center space-x-3">
-            <button className="p-2 hover:bg-gray-100 rounded-lg relative">
+            {/* Mobile Notification Bell */}
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => setIsMobileNotificationsOpen(true)}
+              className="relative p-2 hover:bg-gray-100 rounded-lg"
+            >
               <Bell size={20} className="text-gray-600" />
-              <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
-                4
-              </span>
-            </button>
+              {unreadCount > 0 && (
+                <motion.span
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-medium"
+                >
+                  {unreadCount > 99 ? '99+' : unreadCount}
+                </motion.span>
+              )}
+            </motion.button>
           </div>
         </div>
       </header>
@@ -218,7 +235,13 @@ export default function Page() {
           transition={{ duration: 0.5 }}
           className="hidden md:block w-64 bg-white border-r border-gray-200 p-4 md:p-6 md:min-h-screen"
         >
-          <div className="space-y-1 mt-9">
+          {/* Desktop Header with Notifications */}
+          <div className="flex items-center justify-between mb-8">
+            <h2 className="text-xl font-bold text-gray-800">Menu</h2>
+            <Desktop />
+          </div>
+
+          <div className="space-y-1">
             {tabs.map(({ label, value, icon: Icon, color }) => (
               <motion.div
                 key={value}
@@ -260,6 +283,7 @@ export default function Page() {
             ))}
           </div>
 
+          {/* User Profile Section */}
           <div className="relative mt-8" ref={dropdownRef}>
             <motion.div 
               whileHover={{ scale: 1.02 }}
@@ -323,6 +347,7 @@ export default function Page() {
           </div>
         </motion.nav>
 
+        {/* Main Content */}
         <div className="flex-1 p-1 md:p-3 lg:p-8">
           <AnimatePresence mode="wait">
             <motion.div
@@ -345,9 +370,11 @@ export default function Page() {
           </AnimatePresence>
         </div>
       </div>
-
-      {/* Mobile Slide Drawer */}
       <SlideDrawer />
+      <Mobile 
+        isOpen={isMobileNotificationsOpen} 
+        onClose={() => setIsMobileNotificationsOpen(false)} 
+      />
     </section>
   );
 }
