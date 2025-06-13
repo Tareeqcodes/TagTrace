@@ -113,7 +113,7 @@ export default function Items() {
 
   return (
     <div>
-        <h1 className="text-2xl ml-5 mb-6 font-bold">My Items</h1>
+        <h1 className="text-2xl pt-5 ml-5 mb-6 font-bold">My Items</h1>
       <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-4">
         {loading ? (
           <div className="text-center py-8">
