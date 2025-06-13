@@ -68,7 +68,7 @@ export default function Safety() {
           <p className="text-blue-100 text-sm mb-4 leading-relaxed">
             Join thousands who've safely recovered their belongings with TagTrace.
           </p>
-          <Link href="https://www.tagtrace.online/"
+          <Link href="https://www.tagtrace.online/login"
           target="_blank"
           >
           <motion.button

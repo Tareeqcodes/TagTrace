@@ -198,7 +198,7 @@ export default function page() {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center py-8">
           <div className="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500 mb-2"></div>
-          <p>Loading item details...</p>
+          <p>please wait...</p>
         </div>
       </div>
     );
@@ -241,7 +241,7 @@ export default function page() {
       </header>
         
       <main className="max-w-md mx-auto px-4 py-6 space-y-6">
-        {/* Scan confirmation banner */}
+        {/* Scan confirmation banner
         {scanLogged && (
           <motion.div
             initial={{ opacity: 0, y: -20 }}
@@ -258,10 +258,9 @@ export default function page() {
               </div>
             </div>
           </motion.div>
-        )}
+        )} */}
 
         <div className="bg-white/70 backdrop-blur-lg rounded-2xl shadow-xl border border-white/20 overflow-hidden">
-          {/* Image */}
           <div className="relative h-48 bg-gradient-to-br from-gray-100 to-gray-200">
             {item.image && (
               <Image 
@@ -283,7 +282,6 @@ export default function page() {
             </div>
           </div>
 
-          {/* Item details */}
           <div className="p-6 space-y-4">
             <div>
               <h2 className="text-xl font-bold text-gray-900 mb-2">{item.name || 'Untitled Item'}</h2>
@@ -292,7 +290,6 @@ export default function page() {
               </p>
             </div>
 
-            {/* Reward section */}
             {item.reward ? (
               <motion.div
                 initial={{ scale: 0.95, opacity: 0 }}
