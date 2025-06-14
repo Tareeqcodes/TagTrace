@@ -43,38 +43,38 @@ export default function page() {
   const styles = [
     { 
       id: 'cyberpunk', 
-      name: 'Cyberpunk Neon', 
+      name: '1', 
       bg: 'from-purple-900 via-blue-900 to-indigo-900',
       accent: 'from-cyan-400 to-purple-400',
       popular: true
     },
     { 
       id: 'forest', 
-      name: 'Forest Dark', 
+      name: '2', 
       bg: 'from-green-900 via-emerald-800 to-teal-900',
       accent: 'from-green-400 to-emerald-400'
     },
     { 
       id: 'sunset', 
-      name: 'Sunset Vibes', 
+      name: '3', 
       bg: 'from-orange-600 via-pink-600 to-purple-600',
       accent: 'from-yellow-300 to-orange-300'
     },
     { 
     id: 'coffee', 
-    name: 'Coffee Blend', 
+    name: '4', 
     bg: 'from-amber-200 to-amber-300',
     accent: 'from-amber-950 to-amber-800'
     },
     { 
       id: 'arctic', 
-      name: 'Arctic Blue', 
+      name: '5', 
       bg: 'from-blue-200 via-cyan-200 to-teal-200',
       accent: 'from-blue-700 to-cyan-700'
     },
     { 
       id: 'noir', 
-      name: 'Noir Classic', 
+      name: '6', 
       bg: 'from-gray-900 via-gray-800 to-black',
       accent: 'from-gray-300 to-white'
     }
@@ -83,8 +83,8 @@ export default function page() {
   const tabs = [
     { id: 'design', label: 'Design', icon: Palette },
     { id: 'layout', label: 'Layout', icon: Grid3X3 },
-    { id: 'typography', label: 'Text', icon: Type },
-    { id: 'export', label: 'Export', icon: Download }
+    // { id: 'typography', label: 'Text', icon: Type },
+    // { id: 'export', label: 'Export', icon: Download }
   ];
 
   const containerVariants = {

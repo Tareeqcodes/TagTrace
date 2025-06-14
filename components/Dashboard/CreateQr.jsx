@@ -8,7 +8,6 @@ import Link from "next/link";
 
 export default function CreateQr() {
   const [itemName, setItemName] = useState("");
-  const [category, setCategory] = useState("Electronics");
   const [description, setDescription] = useState("");
   const [contactInstructions, setContactInstructions] = useState("");
   const [reward, setReward] = useState("");
@@ -39,7 +38,6 @@ export default function CreateQr() {
         newItemId,
         {
           name: itemName,
-          category,
           description,
           contactInstructions,
           createdAt: new Date().toISOString(),
@@ -67,7 +65,6 @@ export default function CreateQr() {
 
   const handleReset = () => {
     setItemName("");
-    setCategory("Electronics");
     setDescription("");
     setContactInstructions("");
     setReward("");
@@ -96,7 +93,7 @@ export default function CreateQr() {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Item Name <span className="text-red-500">*</span>
+                   Name <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
@@ -107,38 +104,7 @@ export default function CreateQr() {
                   required
                 />
               </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Category
-                </label>
-                <select
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-                  value={category}
-                  onChange={(e) => setCategory(e.target.value)}
-                >
-                  <option>Electronics</option>
-                  <option>Bags & Luggage</option>
-                  <option>Keys & Access</option>
-                  <option>Wallet & Documents</option>
-                  <option>Everything else</option>
-                </select>
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Description <span className="text-gray-500">(Optional)</span>
-              </label>
-              <textarea
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg h-24 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-                placeholder="Add details about your item..."
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-              />
-            </div>
-
-            <div>
+               <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Status
               </label>
@@ -172,8 +138,20 @@ export default function CreateQr() {
                 ))}
               </div>
             </div>
+            </div>
 
-            {/* Reward */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Description <span className="text-gray-500">(Optional)</span>
+              </label>
+              <textarea
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg h-24 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                placeholder="Add details about your item..."
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+              />
+            </div>
+
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Reward if Found <span className="text-gray-500">(Optional)</span>
@@ -190,7 +168,6 @@ export default function CreateQr() {
               </p>
             </div>
 
-            {/* Contact Instructions */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Contact Instructions <span className="text-red-500">*</span>
@@ -207,7 +184,6 @@ export default function CreateQr() {
               </p>
             </div>
 
-            {/* Error/Success Messages */}
             <AnimatePresence>
               {error && (
                 <motion.div
@@ -231,14 +207,13 @@ export default function CreateQr() {
               )}
             </AnimatePresence>
 
-            {/* Form Actions */}
             <div className="flex gap-4 pt-4 justify-between">
               <motion.button
                 type="submit"
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
                 disabled={isLoading}
-                className={`px-2 py-3 rounded-xl font-medium flex items-center ${
+                className={`p-2 rounded-xl font-medium flex items-center ${
                   isLoading
                     ? 'bg-blue-400 cursor-not-allowed'
                     : 'bg-blue-600 hover:bg-blue-700'
@@ -264,9 +239,9 @@ export default function CreateQr() {
                 <motion.div
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
-                  className="px-2 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-xl font-medium text-sm flex items-center shadow-md"
+                  className="p-2 bg-purple-600 hover:bg-purple-700 text-white rounded-xl font-medium text-sm flex items-center shadow-md"
                 >
-                  View My Items
+                  View Item
                 </motion.div>
               </Link>
             </div>

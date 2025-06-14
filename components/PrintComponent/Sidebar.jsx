@@ -1,7 +1,7 @@
 'use client'
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ChevronRight, Zap, Shield, Eye, Globe, Sparkles } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 
 const Sidebar = ({ tabs, activeTab, setActiveTab }) => {
   const itemVariants = {
@@ -40,7 +40,7 @@ const Sidebar = ({ tabs, activeTab, setActiveTab }) => {
         </div>
 
         {/* Quick Stats */}
-        <div className="bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-xl rounded-2xl p-6 border border-white/10">
+        {/* <div className="bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-xl rounded-2xl p-6 border border-white/10">
           <h3 className="text-lg font-semibold mb-4 text-white">Statistics</h3>
           <div className="space-y-3">
             {[
@@ -60,34 +60,7 @@ const Sidebar = ({ tabs, activeTab, setActiveTab }) => {
               </motion.div>
             ))}
           </div>
-        </div>
-      
-        {/* Features */}
-        <div className="bg-gradient-to-br from-emerald-500/10 to-teal-500/10 rounded-2xl p-6 border border-emerald-500/20">
-          <h4 className="font-semibold text-emerald-400 mb-3 flex items-center">
-            <Zap className="h-5 w-5 mr-2" />
-            Premium Features
-          </h4>
-          <div className="space-y-2">
-            {[
-              { icon: Shield, text: '256-bit encryption' },
-              { icon: Eye, text: 'Real-time analytics' },
-              { icon: Globe, text: 'Multi-language' },
-              { icon: Sparkles, text: 'AI optimization' }
-            ].map((feature, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: index * 0.1 }}
-                className="flex items-center space-x-3 text-sm"
-              >
-                <feature.icon className="h-4 w-4 text-emerald-400" />
-                <span className="text-gray-300">{feature.text}</span>
-              </motion.div>
-            ))}
-          </div>
-        </div>
+        </div> */}
       </div>
     </motion.div>
   );

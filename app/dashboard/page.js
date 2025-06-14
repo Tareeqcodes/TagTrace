@@ -235,9 +235,7 @@ export default function Page() {
           transition={{ duration: 0.5 }}
           className="hidden md:block w-64 bg-white border-r border-gray-200 p-4 md:p-6 md:min-h-screen"
         >
-          {/* Desktop Header with Notifications */}
           <div className="flex items-center justify-between mb-8">
-            <h2 className="text-xl font-bold text-gray-800">Menu</h2>
             <Desktop />
           </div>
 
@@ -283,7 +281,6 @@ export default function Page() {
             ))}
           </div>
 
-          {/* User Profile Section */}
           <div className="relative mt-8" ref={dropdownRef}>
             <motion.div 
               whileHover={{ scale: 1.02 }}

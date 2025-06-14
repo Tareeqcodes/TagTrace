@@ -30,20 +30,19 @@ const ActionButtons = ({ qrValue, printRef }) => {
         whileTap={{ scale: 0.98 }}
         className="w-full bg-gradient-to-r from-cyan-500 to-purple-600 text-white py-4 px-6 rounded-xl font-semibold flex items-center cursor-pointer justify-center space-x-2 shadow-lg"
         disabled={!qrValue} 
+        onClick={handleDownload}
       >
-        <Printer className="h-5 w-5" />
-        <span>Print Premium</span>
+        <Download className="h-5 w-5" />
+          <span>Download</span>
       </motion.button>
 
       <div className="grid grid-cols-2 gap-3">
         <motion.button
           whileHover={{ scale: 1.02 }}
           className="bg-white/10 backdrop-blur-sm text-white py-3 px-4 rounded-xl font-medium flex items-center justify-center cursor-pointer space-x-2 border border-white/20"
-          disabled={!qrValue}
-          onClick={handleDownload}
         >
-          <Download className="h-4 w-4" />
-          <span>Download</span>
+          <Printer className="h-4 w-4" />
+        <span>Print</span>
         </motion.button>
         <motion.button
           whileHover={{ scale: 1.02 }}

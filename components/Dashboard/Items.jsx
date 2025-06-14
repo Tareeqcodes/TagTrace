@@ -127,9 +127,9 @@ export default function Items() {
               <table className="w-full">
                 <thead>
                   <tr className="text-left text-gray-500 text-sm border-b">
-                    <th className="pb-3 font-medium">Item Name</th>
+                    <th className="pb-3 font-medium">Name</th>
                     <th className="pb-3 font-medium">Tag ID</th>
-                    <th className="pb-3 font-medium">Last Scan</th>
+                    <th className="pb-3 font-medium">Created</th>
                     <th className="pb-3 font-medium">Status</th>
                     <th className="pb-3 font-medium">Actions</th>
                   </tr>

@@ -17,16 +17,14 @@ const Header = ({ selectedLanguage, setSelectedLanguage, languages }) => {
             whileHover={{ scale: 1.02 }}
           >
             <div className="relative">
-              <div className="w-12 h-12 bg-gradient-to-br from-cyan-400 to-purple-500 rounded-2xl flex items-center justify-center">
+              <div className="w-10 h-10 bg-gradient-to-br from-cyan-400 to-purple-500 rounded-xl flex items-center justify-center">
                 <QrCode className="h-6 w-6 text-white" />
               </div>
-              <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-400 rounded-full animate-pulse" />
             </div>
             <div>
               <h1 className="text-xl font-bold bg-gradient-to-r from-white via-cyan-200 to-purple-200 bg-clip-text text-transparent">
-                Trace Studio Pro
+                 Tagtrace Designer
               </h1>
-              <p className="text-gray-400 text-sm font-medium">Professional Tagtrace Designer</p>
             </div>
           </motion.div>
 
@@ -52,9 +50,9 @@ const Header = ({ selectedLanguage, setSelectedLanguage, languages }) => {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="p-3 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-xl cursor-pointer shadow-lg"
+              className="p-2 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-xl cursor-pointer shadow-lg"
             >
-              <Settings className="h-5 w-5 text-white" />
+              <Settings className="h-6 w-6 text-white" />
             </motion.button>
             </Link>
           </div>

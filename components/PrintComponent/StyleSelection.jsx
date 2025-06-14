@@ -1,7 +1,7 @@
 'use client'
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Palette, Star } from 'lucide-react';
+import { Palette } from 'lucide-react';
 
 const StyleSelection = ({ styles, selectedStyle, setSelectedStyle }) => {
   return (
@@ -11,8 +11,8 @@ const StyleSelection = ({ styles, selectedStyle, setSelectedStyle }) => {
             <Palette className="h-6 w-6 text-purple-400" />
           </div>
           <div>
-            <h2 className="text-md font-bold text-white">Design Style</h2>
-            <p className="text-gray-400 text-xs">Pick your aesthetic</p>
+            <h2 className="text-md font-bold text-white">Choose sticker style</h2>
+            <p className="text-gray-400 text-xs"></p>
           </div>
         </div>
 
@@ -32,8 +32,8 @@ const StyleSelection = ({ styles, selectedStyle, setSelectedStyle }) => {
             <div className={`h-16 rounded-lg bg-gradient-to-br ${style.bg} mb-3`} />
             <div className="text-sm font-medium text-white">{style.name}</div>
             {style.popular && (
-              <div className="absolute -top-2 -right-2 bg-gradient-to-r from-orange-400 to-pink-400 text-white text-xs px-2 py-1 rounded-full">
-                <Star className="h-3 w-3 inline" />
+              <div className="absolute -top-2 -right-2 p-1 text-white bg-green-400 text-xs font-semibold rounded">
+                popular
               </div>
             )}
           </motion.button>

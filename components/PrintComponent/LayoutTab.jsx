@@ -18,10 +18,9 @@ const LayoutTab = ({ qrSize, setQrSize }) => {
       exit="exit"
       className="bg-white/5 backdrop-blur-xl rounded-2xl p-8 border border-white/10"
     >
-      <h2 className="text-2xl font-bold text-white mb-6">Layout Options</h2>
+      <h2 className="text-2xl font-bold text-white mb-6">Trace size</h2>
       <div className="space-y-6">
         <div>
-          <label className="block text-sm font-medium text-gray-300 mb-3">Trace size</label>
           <input
             type="range"
             min="100"
