@@ -127,14 +127,13 @@ export default function page() {
   // Function to send email notification
   const sendEmailNotification = async (itemData, notification) => {
     try {
-      // Using a service like Resend, EmailJS, or your own API
       const response = await fetch('/api/notify', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          to: itemData.ownerEmail, // Make sure you have this field
+          to: itemData.ownerEmail,
           subject: notification.title,
           message: notification.message,
           itemName: itemData.name,
@@ -153,7 +152,6 @@ export default function page() {
   useEffect(() => {
     const fetchItemAndLogScan = async () => {
       try {
-        // Fetch the item
         const response = await databases.getDocument(
           process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
           process.env.NEXT_PUBLIC_APPWRITE_ITEMS_COLLECTION_ID,
@@ -161,10 +159,8 @@ export default function page() {
         );
         setItem(response);
 
-        // Get user location (with permission)
         const location = await getUserLocation();
-        
-        // Log the scan event
+      
         await logScan(response, location);
 
       } catch (err) {

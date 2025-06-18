@@ -29,12 +29,10 @@
 ## 🛠️ Tech Stack (Example)
 
 - **Frontend**: Next.js + Tailwind CSS
-- **Backend**: Appwrite / Firebase / Supabase
-- **Database**: PostgreSQL / Firestore
-- **Authentication**: Appwrite Auth / Firebase Auth
+- **Backend**: Appwrite 
+- **Authentication**: Appwrite Auth
 - **Messaging**: In-app chat using WebSockets or third-party APIs
-- **QR Code**: `qrcode.react` or `react-qr-code`
-- **NFC**: Web NFC API (experimental support)
+- **QR Code**: `qrcode.react`
 
 ## 🌐 Live Demo
 

@@ -1,6 +1,6 @@
 'use client'
 import Link from 'next/link'
-import { FiTag, FiHome, FiUser } from 'react-icons/fi'
+import { FiHome, FiUser } from 'react-icons/fi'
 import { useAuth } from '@/context/Authcontext'
 import { motion, AnimatePresence } from 'framer-motion'
 
