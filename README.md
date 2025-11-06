@@ -37,11 +37,3 @@
 ## 🌐 Live Demo
 
 > [https://www.tagtrace.online](#)
-
-## 📦 Installation
-
-```bash
-git clone https://github.com/yourusername/tag-and-return.git
-cd tag-and-return
-npm install
-npm run dev
