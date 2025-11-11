@@ -37,7 +37,7 @@ export const AuthProvider = ({ children }) => {
       await account.createMagicURLToken(
         ID.unique(),
         email,
-        'https://www.tagtrace.online/verify'
+        'http://localhost:3000/verify'
       );    
     } catch (error) {
       alert(error.message);
@@ -46,7 +46,7 @@ export const AuthProvider = ({ children }) => {
 
   const loginWithGoogle = async () => {
     try {
-      const redirectUrl = 'https://www.tagtrace.online/verify';
+      const redirectUrl = 'http://localhost:3000/verify';
       account.createOAuth2Session('google', "https://www.tagtrace.online", redirectUrl);
     } catch (error) {
       alert('Failed to login with Google: ' + error.message);
