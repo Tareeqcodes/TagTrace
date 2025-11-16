@@ -2,7 +2,7 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import { redirect } from 'next/navigation';
 import { account, ID } from '../config/appwrite';
-import Spinner from '@/components/Spinner';
+
 
 const AuthContext = createContext();
 
@@ -62,7 +62,15 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider value={{ user, loading, login, loginWithGoogle, logout, checkSession }}>
-      {loading ? <Spinner /> : children}
+     {loading ? (
+      <div className="min-h-screen bg-white">
+        {children}
+        
+        <div className="fixed top-4 right-4">
+          <div className="w-6 h-6 border-2 border-gray-300 border-t-blue-600 rounded-full animate-spin"></div>
+        </div>
+      </div>
+    ) : children}
     </AuthContext.Provider>
   );
 };

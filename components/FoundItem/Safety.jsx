@@ -42,15 +42,15 @@ export default function Safety() {
               >
                 <div className="p-4 space-y-2 text-sm text-gray-600">
                   <div className="flex items-start space-x-2">
-                    <CheckCircle2 className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-green-500 mt-0.5 shrink-0" />
                     <span>Meet in public places during daylight hours</span>
                   </div>
                   <div className="flex items-start space-x-2">
-                    <CheckCircle2 className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-green-500 mt-0.5 shrink-0" />
                     <span>Never share personal financial information</span>
                   </div>
                   <div className="flex items-start space-x-2">
-                    <CheckCircle2 className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-green-500 mt-0.5 shrink-0" />
                     <span>Trust your instincts and report suspicious requests</span>
                   </div>
                 </div>
@@ -72,7 +72,7 @@ export default function Safety() {
           target="_blank"
           >
           <motion.button
-            whileHover={{ scale: 1.05 }}
+            whileHover={{ scale: 1.05 }} 
             whileTap={{ scale: 0.95 }}
             className="bg-white text-blue-600 font-semibold py-2 px-6 rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center space-x-2 mx-auto"
           >

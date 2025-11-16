@@ -255,7 +255,7 @@ export default function Page() {
                   activeTab === value ? color : 'text-gray-600 hover:bg-gray-100'
                 }`}
               >
-                <Icon size={20} className="flex-shrink-0" />
+                <Icon size={20} className="shrink-0" />
                 <span className="ml-3 font-medium">{label}</span>
                 
                 {hoveredTab === value && activeTab !== value && (

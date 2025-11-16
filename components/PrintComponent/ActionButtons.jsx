@@ -4,14 +4,21 @@ import { Printer, Download, Share2 } from 'lucide-react';
 import { toPng } from 'html-to-image';
 
 const ActionButtons = ({ qrValue, printRef }) => {
+
   const handleDownload = async () => {
     if (!printRef.current) return;
     
     try {
+      // Wait for fonts to load before generating image 
+      await document.fonts.ready;
+      
       const dataUrl = await toPng(printRef.current, {
         quality: 1,
-        pixelRatio: 3, // Higher resolution
-        backgroundColor: 'transparent'
+        pixelRatio: 3,
+        backgroundColor: 'transparent',
+        fontEmbedCSS: '', // Skip font embedding to avoid the error
+        skipFonts: false,
+        cacheBust: true
       });
       
       const link = document.createElement('a');
@@ -20,6 +27,7 @@ const ActionButtons = ({ qrValue, printRef }) => {
       link.click();
     } catch (error) {
       console.error('Error generating image:', error);
+      alert('Failed to download image. Please try again.');
     }
   };
 
@@ -28,7 +36,7 @@ const ActionButtons = ({ qrValue, printRef }) => {
       <motion.button
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
-        className="w-full bg-gradient-to-r from-cyan-500 to-purple-600 text-white py-4 px-6 rounded-xl font-semibold flex items-center cursor-pointer justify-center space-x-2 shadow-lg"
+        className="w-full bg-linear-to-r from-cyan-500 to-purple-600 text-white py-4 px-6 rounded-xl font-semibold flex items-center cursor-pointer justify-center space-x-2 shadow-lg"
         disabled={!qrValue} 
         onClick={handleDownload}
       >
