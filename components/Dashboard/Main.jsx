@@ -7,12 +7,14 @@ import { useAuth } from '@/context/Authcontext';
 import { motion } from 'framer-motion';
 import { fadeIn, staggerContainer, textVariant, slideIn } from '@/utils/motion';
 import { formatDistanceToNow } from 'date-fns';
-
+import { useUserdata } from '@/hooks/useUserdata'; 
 export default function Main({ setActiveTab }) {
   const { user } = useAuth();
-  const [userData, setUserData] = useState([]);
+  const { userData: profileName } = useUserdata(); 
+  const [itemsData, setItemsData] = useState([]); 
   const [loading, setLoading] = useState(true);
   const [hoveredStat, setHoveredStat] = useState(null);
+  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,7 +28,7 @@ export default function Main({ setActiveTab }) {
           process.env.NEXT_PUBLIC_APPWRITE_ITEMS_COLLECTION_ID,
           [Query.equal('userId', user.$id)]
         );
-        setUserData(response.documents);
+        setItemsData(response.documents); 
         setLoading(false);
         
       } catch (error) {
@@ -37,23 +39,23 @@ export default function Main({ setActiveTab }) {
     fetchData();
   }, [user]);
   
-  // Calculate stats based on actual data
+  
   const stats = [
     { 
       label: "Total Items Tagged", 
-      value: userData ? userData.length : 0, 
+      value: itemsData ? itemsData.length : 0, 
       icon: <Package size={20} />,
       color: "bg-indigo-100 text-indigo-600"
     },
     { 
       label: "Items Marked as Lost", 
-      value: userData ? userData.filter(item => item.status === 'lost').length : 0, 
+      value: itemsData ? itemsData.filter(item => item.status === 'lost').length : 0, 
       icon: <AlertCircle size={20} />,
       color: "bg-red-100 text-red-600"
     },
     { 
       label: "Successfully Returned", 
-      value: userData ? userData.filter(item => item.status === 'returned').length : 0, 
+      value: itemsData ? itemsData.filter(item => item.status === 'returned').length : 0, 
       icon: <Check size={20} />,
       color: "bg-green-100 text-green-600"
     }
@@ -76,15 +78,15 @@ export default function Main({ setActiveTab }) {
       className="p-0 md:p-6"
     >
       <div className="flex flex-col space-y-4 md:flex-row items-center justify-between text-justify mt-8 md:mt-4 mb-8">
-        <motion.h1 variants={textVariant(0.1)} className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-          Welcome back, {user?.name || 'User'}!
+        <motion.h1 variants={textVariant(0.1)} className="text-2xl md:text-3xl font-bold bg-purple-500 bg-clip-text text-transparent">
+          Welcome back, {profileName?.name || user?.name || 'User'}!
         </motion.h1>
         <div className="flex space-x-3">
           <motion.button 
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.98 }}
             onClick={() => setActiveTab('create')}
-            className="px-4 py-2 text-sm bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg flex items-center shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer"
+            className="px-4 py-2 text-sm bg-blue-600 text-white rounded-lg flex items-center shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer"
           >
             <QrCode size={18} className="mr-2 text-" />
             Create Trace
@@ -147,7 +149,7 @@ export default function Main({ setActiveTab }) {
               <div className="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500 mb-2"></div>
               <p>Loading...</p>
             </div>
-          ) : userData && userData.length > 0 ? (
+          ) : itemsData && itemsData.length > 0 ? (
             <>
             <div className="hidden md:block">
               <table className="w-full">
@@ -160,7 +162,7 @@ export default function Main({ setActiveTab }) {
                   </tr>
                 </thead>
                 <tbody>
-                  {userData.slice(0, 4).map((item, idx) => (
+                  {itemsData.slice(0, 4).map((item, idx) => (
                     <motion.tr 
                       key={idx} 
                       initial={{ opacity: 0, y: 20 }}
@@ -185,7 +187,7 @@ export default function Main({ setActiveTab }) {
               </table>
             </div>
               <div className='md:hidden space-y-4'>
-                {userData.slice(0, 4).map( (item, idx) => (
+                {itemsData.slice(0, 4).map( (item, idx) => (
                   <motion.div
                    key={idx} 
                       initial={{ opacity: 0, y: 20 }}
