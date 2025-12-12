@@ -18,7 +18,7 @@ export const viewport = {
 }
 
 export const metadata = {
-  metadataBase: new URL( 'https://www.tagtrace.online'), 
+  metadataBase: new URL( 'https://tagtrace.online'), 
   title: "TagTrace | Never Lose Your Items Again",
   description: "Tag your belongings with smart QR codes. Get lost items returned instantly with our scan-to-contact system. Free to start, premium durable tags available.",
   keywords: [
@@ -34,7 +34,7 @@ export const metadata = {
   openGraph: {
     title: "TagTrace | Never Lose Your Items Again",
     description: "Get your lost items returned with smart QR tags. Works for wallets, phones, luggage, and more.",
-    url: "https://www.tagtrace.online",
+    url: "https://tagtrace.online",
     siteName: "TagTrace",
     images: [
       {
@@ -71,9 +71,9 @@ export const metadata = {
   },
   manifest: "/site.webmanifest",
   alternates: {
-    canonical: "https://www.tagtrace.online",
+    canonical: "https://tagtrace.online",
     languages: {
-      en: "https://www.tagtrace.online",
+      en: "https://tagtrace.online",
     },
   },
 };
