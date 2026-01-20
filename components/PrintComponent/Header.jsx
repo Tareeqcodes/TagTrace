@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { QrCode, Settings, Globe } from 'lucide-react';
 
-const Header = ({ selectedLanguage, setSelectedLanguage, languages }) => {
+const Header = () => {
   return (
     <motion.header 
       initial={{ opacity: 0, y: -20 }}
