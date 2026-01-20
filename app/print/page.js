@@ -9,7 +9,7 @@ import {
 } from 'lucide-react';
 import { databases, Query } from '@/config/appwrite'
 import { useAuth } from '@/context/Authcontext';
-// import Header from '@/components/PrintComponent/Header';
+import Header from '@/components/PrintComponent/Header';
 import Sidebar from '@/components/PrintComponent/Sidebar';
 import ItemSelection from '@/components/PrintComponent/ItemSelection';
 import LayoutTab from '@/components/PrintComponent/LayoutTab';
@@ -33,12 +33,12 @@ export default function page() {
     const printRef = useRef(null);
   const { user } = useAuth()
 
-  // const languages = {
-  //   en: { name: 'English', flag: '🇺🇸', greeting: 'Scan If Found' },
-  //   es: { name: 'Español', flag: '🇪🇸', greeting: 'Escanear Si Se Encuentra' },
-  //   fr: { name: 'Français', flag: '🇫🇷', greeting: 'Scanner Si Trouvé' },
-  //   ar: { name: 'العربية', flag: '🇸🇦', greeting: 'امسح إذا وُجد' }
-  // };
+  const languages = {
+    en: { name: 'English', flag: '🇺🇸', greeting: 'Scan If Found' },
+    es: { name: 'Español', flag: '🇪🇸', greeting: 'Escanear Si Se Encuentra' },
+    fr: { name: 'Français', flag: '🇫🇷', greeting: 'Scanner Si Trouvé' },
+    ar: { name: 'العربية', flag: '🇸🇦', greeting: 'امسح إذا وُجد' }
+  };
   
   const styles = [
     { 
@@ -153,11 +153,11 @@ export default function page() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_70%,rgba(147,51,234,0.1),transparent_50%)]" />
       </div>
 
-      {/* <Header 
+      <Header 
         selectedLanguage={selectedLanguage}
         setSelectedLanguage={setSelectedLanguage}
         languages={languages}
-      /> */}
+      />
 
       <div className="relative z-10 max-w-7xl mx-auto p-3 md:p-8">
         <motion.div
