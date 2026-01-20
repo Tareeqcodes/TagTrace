@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }) => {
       await account.createMagicURLToken(
         ID.unique(),
         email,
-        'https://www.tagtrace.online/verify'
+        'http://localhost:3000/verify'
       );    
     } catch (error) {
       alert(error.message);

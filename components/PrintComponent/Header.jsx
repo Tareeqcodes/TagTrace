@@ -17,19 +17,19 @@ const Header = ({ selectedLanguage, setSelectedLanguage, languages }) => {
             whileHover={{ scale: 1.02 }}
           >
             <div className="relative">
-              <div className="w-10 h-10 bg-gradient-to-br from-cyan-400 to-purple-500 rounded-xl flex items-center justify-center">
+              <div className="w-10 h-10 bg-linear-to-br from-cyan-400 to-purple-500 rounded-xl flex items-center justify-center">
                 <QrCode className="h-6 w-6 text-white" />
               </div>
             </div>
             <div>
-              <h1 className="text-xl font-bold bg-gradient-to-r from-white via-cyan-200 to-purple-200 bg-clip-text text-transparent">
+              <h1 className="text-xl font-bold bg-linear-to-r from-white via-cyan-200 to-purple-200 bg-clip-text text-transparent">
                  Tagtrace Designer
               </h1>
             </div>
           </motion.div>
 
           <div className="flex items-center space-x-4">
-            <motion.div 
+            {/* <motion.div 
               className="flex items-center space-x-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20"
               whileHover={{ backgroundColor: 'rgba(255,255,255,0.15)' }}
             >
@@ -45,12 +45,12 @@ const Header = ({ selectedLanguage, setSelectedLanguage, languages }) => {
                   </option>
                 ))}
               </select>
-            </motion.div>
+            </motion.div> */}
             <Link href="/dashboard">
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="p-2 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-xl cursor-pointer shadow-lg"
+              className="p-2 bg-linear-to-r from-cyan-500 to-purple-500 rounded-xl cursor-pointer shadow-lg"
             >
               <Settings className="h-6 w-6 text-white" />
             </motion.button>
