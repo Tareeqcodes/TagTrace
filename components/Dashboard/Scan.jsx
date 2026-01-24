@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { MapPin, Package, ExternalLink, Tag, Calendar } from 'lucide-react';
-import { databases } from '@/config/appwrite';
+import { tablesDB } from '@/config/appwrite';
 
 export default function Scan() {
   const [scanLogs, setScanLogs] = useState([]);
@@ -12,19 +12,19 @@ export default function Scan() {
     const fetchScanLogs = async () => {
       try {
         // Fetch scan logs from Appwrite
-        const response = await databases.listDocuments(
-          process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
-          process.env.NEXT_PUBLIC_APPWRITE_SCAN_LOG_ID
-        );
-        
+        const response = await tablesDB.listRows({
+          databaseId: process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
+          tableId: process.env.NEXT_PUBLIC_APPWRITE_SCAN_LOG_ID
+        });
+
         const logsWithItems = await Promise.all(
-          response.documents.map(async (log) => {
+          response.rows.map(async (log) => {
             try {
-              const item = await databases.getDocument(
-                process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
-                process.env.NEXT_PUBLIC_APPWRITE_ITEMS_COLLECTION_ID,
-                log.itemId
-              );
+              const item = await tablesDB.getRow({
+                databaseId: process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
+                tableId: process.env.NEXT_PUBLIC_APPWRITE_ITEMS_COLLECTION_ID,
+                rowId: log.itemId
+              });
               return {
                 id: log.$id,
                 item: item.name || 'Unknown Item',
@@ -96,7 +96,7 @@ export default function Scan() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
+      <div className="min-h-screen bg-linear-to-br from-slate-50 via-blue-50 to-indigo-100">
         <div className="flex items-center justify-center min-h-screen">
           <div className="text-center py-8">
             <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-blue-500 border-t-transparent mb-4"></div>
@@ -109,7 +109,7 @@ export default function Scan() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
+      <div className="min-h-screen bg-linear-to-br from-slate-50 via-blue-50 to-indigo-100">
         <div className="flex items-center justify-center min-h-screen">
           <div className="bg-white rounded-2xl shadow-xl p-8 mx-4 max-w-md text-center">
             <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -124,7 +124,7 @@ export default function Scan() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
+    <div className="min-h-screen bg-linear-to-br from-slate-50 via-blue-50 to-indigo-100">
         <div className="px-4 py-4 sm:px-6">
             <div>
               <h1 className="text-2xl font-bold text-gray-900">Scan Logs</h1>
@@ -155,7 +155,7 @@ export default function Scan() {
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex-1">
                     <div className="flex items-center space-x-3 mb-2">
-                      <div className="w-10 h-10 bg-gradient-to-r from-gray-500 to-gray-300 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <div className="w-10 h-10 bg-linear-to-r from-gray-500 to-gray-300 rounded-xl flex items-center justify-center shrink-0">
                         <Tag className="w-5 h-5 text-white" />
                       </div>
                       <div className="flex-1 min-w-0">
@@ -172,7 +172,7 @@ export default function Scan() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {/* Date & Time */}
                   <div className="flex items-center space-x-3 p-3 bg-blue-50/50 rounded-xl border border-blue-100/50">
-                    <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center shrink-0">
                       <Calendar className="w-4 h-4 text-blue-600" />
                     </div>
                     <div className="flex-1 min-w-0">
@@ -184,7 +184,7 @@ export default function Scan() {
 
                   {/* Location */}
                   <div className="flex items-center space-x-3 p-3 bg-green-50/50 rounded-xl border border-green-100/50">
-                    <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center shrink-0">
                       <MapPin className="w-4 h-4 text-green-600" />
                     </div>
                     <div className="flex-1 min-w-0">
@@ -212,7 +212,7 @@ export default function Scan() {
                   <div className="mt-4 sm:hidden">
                     <button
                       onClick={() => openInGoogleMaps(log.latitude, log.longitude, log.location)}
-                      className="w-full flex items-center justify-center space-x-2 bg-gradient-to-r from-green-500 to-emerald-500 text-white py-3 px-4 rounded-xl font-medium hover:from-green-600 hover:to-emerald-600 transition-all duration-200 shadow-lg"
+                      className="w-full flex items-center justify-center space-x-2 bg-linear-to-r from-green-500 to-emerald-500 text-white py-3 px-4 rounded-xl font-medium hover:from-green-600 hover:to-emerald-600 transition-all duration-200 shadow-lg"
                     >
                       <MapPin className="w-4 h-4" />
                       <span>View Maps</span>

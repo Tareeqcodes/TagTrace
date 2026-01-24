@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect } from "react";
-import { databases, Query, ID } from "@/config/appwrite";
+import { tablesDB, Query, ID } from "@/config/appwrite";
 import { useAuth } from "@/context/Authcontext";
 
 const db = process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID;
@@ -26,12 +26,16 @@ export function useUserdata() {
     const fetchUserData = async () => {
       try {
         setLoading(true);
-        const response = await databases.listDocuments(db, cll, [
-          Query.equal("userId", user.$id),
-        ]);
-        
+        const response = await tablesDB.listRows({
+          databaseId: db,
+          tableId: cll,
+          queries: [
+            Query.equal("userId", user.$id),
+          ]
+        });
+
         if (response.total > 0) {
-          const doc = response.documents[0];
+          const doc = response.rows[0];
           setDocId(doc.$id);
           setUserData({
             name: doc.name || "",
@@ -74,10 +78,20 @@ export function useUserdata() {
 
       if (docId) {
         // Update existing document
-        await databases.updateDocument(db, cll, docId, payload);
+        await tablesDB.updateRow({
+          databaseId: db,
+          tableId: cll,
+          rowId: docId,
+          data: payload
+        });
       } else {
         // Create new document
-        const result = await databases.createDocument(db, cll, ID.unique(), payload);
+        const result = await tablesDB.createRow({
+          databaseId: db,
+          tableId: cll,
+          documentId: ID.unique(),
+          data: payload
+        });
         setDocId(result.$id);
       }
 

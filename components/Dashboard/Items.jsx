@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { X, Edit, Package, CheckCircle, Save } from "lucide-react";
-import { databases, Query } from "@/config/appwrite";
+import { Query, tablesDB } from "@/config/appwrite";
 import { useAuth } from "@/context/Authcontext";
 import { motion } from "framer-motion";
 import { formatDistanceToNow } from "date-fns";
@@ -35,12 +35,12 @@ export default function Items() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await databases.listDocuments(
-          process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
-          process.env.NEXT_PUBLIC_APPWRITE_ITEMS_COLLECTION_ID,
-          [Query.equal("userId", user.$id)]
-        );
-        setUserData(response.documents);
+        const response = await tablesDB.listRows({
+          databaseId: process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
+          tableId: process.env.NEXT_PUBLIC_APPWRITE_ITEMS_COLLECTION_ID,
+          queries: [Query.equal("userId", user.$id)]
+        });
+        setUserData(response.rows);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching items:", error);
@@ -78,12 +78,12 @@ export default function Items() {
     if (!currentItem) return;
 
     try {
-      await databases.updateDocument(
-        process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
-        process.env.NEXT_PUBLIC_APPWRITE_ITEMS_COLLECTION_ID,
-        currentItem.$id,
-        editFormData
-      );
+      await tablesDB.updateRow({
+        databaseId: process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
+        tableId: process.env.NEXT_PUBLIC_APPWRITE_ITEMS_COLLECTION_ID,
+        rowId: currentItem.$id,
+        data: editFormData
+      });
 
       setUserData((prev) =>
         prev.map((item) =>
@@ -108,12 +108,11 @@ export default function Items() {
     }
 
     try {
-      await databases.deleteDocument(
-        process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
-        process.env.NEXT_PUBLIC_APPWRITE_ITEMS_COLLECTION_ID,
-        itemId
-      );
-
+      await tablesDB.deleteRow({
+        databaseId: process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
+        tableId: process.env.NEXT_PUBLIC_APPWRITE_ITEMS_COLLECTION_ID,
+        rowId: itemId
+      });
       setUserData((prev) => prev.filter((item) => item.$id !== itemId));
     } catch (error) {
       console.error("Error deleting item:", error);

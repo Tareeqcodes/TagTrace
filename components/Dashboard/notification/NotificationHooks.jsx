@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { databases, Query } from '@/config/appwrite';
+import { tablesDB, Query } from '@/config/appwrite';
 import { useAuth } from '@/context/Authcontext';
 
 export const NotificationHooks = () => {
@@ -18,17 +18,17 @@ export const NotificationHooks = () => {
 
     try {
       setLoading(true);
-      const response = await databases.listDocuments(
-        process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
-        process.env.NEXT_PUBLIC_APPWRITE_NOTIFY_ID,
-        [
+      const response = await tablesDB.listRows({
+        databaseId: process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
+        tableId: process.env.NEXT_PUBLIC_APPWRITE_NOTIFY_ID,
+        queries: [
           Query.equal('userId', user.$id),
           Query.orderDesc('createdAt'),
           Query.limit(10)
         ]
-      );
+    });
       
-      const notificationData = response.documents;
+      const notificationData = response.rows;
       setNotifications(notificationData);
       
       // Calculate unread count
@@ -46,12 +46,12 @@ export const NotificationHooks = () => {
 
   const markAsRead = async (notificationId) => {
     try {
-      await databases.updateDocument(
-        process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
-        process.env.NEXT_PUBLIC_APPWRITE_NOTIFY_ID,
-        notificationId,
-        { isRead: true }
-      );
+      await tablesDB.updateRow({
+        databaseId: process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
+        tableId: process.env.NEXT_PUBLIC_APPWRITE_NOTIFY_ID,
+        rowId: notificationId,
+        data: { isRead: true }
+      });
 
       // Update local state
       setNotifications(prev => 
@@ -73,14 +73,13 @@ export const NotificationHooks = () => {
     try {
       const unreadNotifications = notifications.filter(n => !n.isRead);
       
-      // Update all unread notifications in parallel
       const updatePromises = unreadNotifications.map(notification =>
-        databases.updateDocument(
-          process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
-          process.env.NEXT_PUBLIC_APPWRITE_NOTIFY_ID,
-          notification.$id,
-          { isRead: true }
-        )
+        tablesDB.updateRow({
+          databaseId: process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
+          tableId: process.env.NEXT_PUBLIC_APPWRITE_NOTIFY_ID,
+          rowId: notification.$id,
+          data: { isRead: true }
+        })
       );
 
       await Promise.all(updatePromises);
@@ -97,11 +96,11 @@ export const NotificationHooks = () => {
 
   const deleteNotification = async (notificationId) => {
     try {
-      await databases.deleteDocument(
-        process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
-        process.env.NEXT_PUBLIC_APPWRITE_NOTIFY_ID,
-        notificationId
-      );
+      await tablesDB.deleteRow({
+        databaseId: process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
+        tableId: process.env.NEXT_PUBLIC_APPWRITE_NOTIFY_ID,
+        rowId: notificationId
+      });
 
       // Update local state
       setNotifications(prev => prev.filter(n => n.$id !== notificationId));
@@ -119,11 +118,11 @@ export const NotificationHooks = () => {
   const clearAllNotifications = async () => {
     try {
       const deletePromises = notifications.map(notification =>
-        databases.deleteDocument(
-          process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
-          process.env.NEXT_PUBLIC_APPWRITE_NOTIFY_ID,
-          notification.$id
-        )
+        tablesDB.deleteRow({
+          databaseId: process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
+          tableId: process.env.NEXT_PUBLIC_APPWRITE_NOTIFY_ID,
+          rowId: notification.$id
+        })
       );
 
       await Promise.all(deletePromises);

@@ -62,7 +62,7 @@ export default function Safety() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
-          className="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl shadow-xl p-6 text-white text-center"
+          className="bg-linear-to-r from-blue-600 to-indigo-600 rounded-2xl shadow-xl p-6 text-white text-center"
         >
           <h3 className="text-lg font-bold mb-2">Protect Your Items</h3>
           <p className="text-blue-100 text-sm mb-4 leading-relaxed">

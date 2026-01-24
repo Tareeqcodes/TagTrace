@@ -32,6 +32,14 @@ export default function page() {
 
     const printRef = useRef(null);
   const { user } = useAuth()
+  
+  if (!user) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gray-900 text-white">
+        <p className="text-xl">Please log in to access the QR Code Printer.</p>
+      </div>
+    );
+  }
 
   const languages = {
     en: { name: 'English', flag: '🇺🇸', greeting: 'Scan If Found' },

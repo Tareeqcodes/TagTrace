@@ -33,12 +33,17 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // login function
+
   const login = async (email) => {
     try {
-      await account.createMagicURLToken(
-        ID.unique(),
-        email,
-        'https://www.tagtrace.online/verify'
+      await account.createMagicURLToken( {
+        ID:  ID.unique(),
+        email: email,
+        url: 'https://www.tagtrace.online/verify',
+      }
+       
+       
       );    
     } catch (error) {
       alert(error.message);
@@ -54,9 +59,11 @@ export const AuthProvider = ({ children }) => {
     }
   };
   
-
+//  logout function
   const logout = async () => {
-    await account.deleteSession('current');
+    await account.deleteSession( {
+      sessionId: 'current'
+    });
     setUser(null);
     redirect('/');
   };

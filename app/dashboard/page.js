@@ -5,7 +5,7 @@ import { Home, Package, QrCode, Clock, BadgeCheck, MessageCircle, Settings, LogO
 } from 'lucide-react';
 import Main from '@/components/Dashboard/Main';
 import Items from '@/components/Dashboard/Items';
-import CreateQr from '@/components/Dashboard/CreateQr';
+import CreateQr from '@/components/Dashboard/CreateQr'; 
 import Scan from '@/components/Dashboard/Scan';
 import Message from '@/components/Dashboard/Message';
 import Setting from '@/components/Dashboard/Setting';

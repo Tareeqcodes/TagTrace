@@ -237,7 +237,7 @@ export default function Message() {
             <div className="mr-4 bg-gray-200 rounded-full w-9 h-9 flex items-center justify-center">
               <User size={20} className="text-gray-500" />
             </div>
-            <div className="flex-grow">
+            <div className="grow">
               <div className="flex justify-between items-center mb-1">
                 <h3 className="font-medium">{message.from}</h3>
                 <span className="text-xs text-gray-500">{message.time}</span>

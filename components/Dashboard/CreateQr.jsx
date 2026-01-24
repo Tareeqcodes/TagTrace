@@ -1,20 +1,34 @@
-'use client'
+"use client";
 import { useState } from "react";
-import { QrCode, CheckCircle, Upload, X, Laptop, Smartphone, Headphones, Watch, Camera, Tablet, HardDrive, Monitor } from "lucide-react";
-import { databases, ID, storage } from "@/config/appwrite";
+import {
+  QrCode,
+  CheckCircle,
+  Upload,
+  X,
+  Laptop,
+  Smartphone,
+  Headphones,
+  Watch,
+  Camera,
+  Tablet,
+  Backpack,
+  Monitor,
+  BookOpen
+} from "lucide-react";
+import { tablesDB, ID, storage } from "@/config/appwrite";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "@/context/Authcontext";
 import Link from "next/link";
 
 const GADGET_CATEGORIES = [
-  { id: 'laptop', name: 'Laptop', icon: Laptop },
-  { id: 'smartphone', name: 'Smartphone', icon: Smartphone },
-  { id: 'headphones', name: 'Headphones', icon: Headphones },
-  { id: 'smartwatch', name: 'Smartwatch', icon: Watch },
-  { id: 'camera', name: 'Camera', icon: Camera },
-  { id: 'tablet', name: 'Tablet', icon: Tablet },
-  { id: 'storage', name: 'Storage Device', icon: HardDrive },
-  { id: 'monitor', name: 'Monitor', icon: Monitor },
+  { id: "laptop", name: "Laptop", icon: Laptop },
+  { id: "smartphone", name: "Smartphone", icon: Smartphone },
+  { id: "headphones", name: "Headphones", icon: Headphones },
+  { id: "smartwatch", name: "Smartwatch", icon: Watch },
+  { id: "camera", name: "Camera", icon: Camera },
+  { id: "tablet", name: "Tablet", icon: Tablet },
+  { id: "book", name: "My Book", icon: BookOpen },
+  { id: "bag", name: "Bag", icon: Backpack },
 ];
 
 export default function CreateQr() {
@@ -38,8 +52,8 @@ export default function CreateQr() {
         setError("Image size should be less than 5MB");
         return;
       }
-      
-      if (!file.type.startsWith('image/')) {
+
+      if (!file.type.startsWith("image/")) {
         setError("Please upload a valid image file");
         return;
       }
@@ -60,20 +74,20 @@ export default function CreateQr() {
   };
 
   const uploadImage = async () => {
-    if (!imageFile) return null;
+  if (!imageFile) return null;
 
-    try {
-      const response = await storage.createFile(
-        process.env.NEXT_PUBLIC_APPWRITE_BUCKET_ID,
-        ID.unique(),
-        imageFile
-      );
-      return response.$id;
-    } catch (error) {
-      console.error("Error uploading image:", error);
-      throw new Error("Failed to upload image");
-    }
-  };
+  try {
+    const response = await storage.createFile({
+      bucketId: process.env.NEXT_PUBLIC_APPWRITE_BUCKET_ID,
+      fileId: ID.unique(),
+      file: imageFile
+    });
+    return response.$id;
+  } catch (error) {
+    console.error("Error uploading image:", error);
+    throw new Error("Failed to upload image");
+  }
+};
 
   const saveItem = async () => {
     if (!itemName || !contactInstructions || !category) {
@@ -95,23 +109,22 @@ export default function CreateQr() {
         imageId = await uploadImage();
       }
 
-      await databases.createDocument(
-        process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
-        process.env.NEXT_PUBLIC_APPWRITE_ITEMS_COLLECTION_ID,
-        newItemId,
-        {
+      await tablesDB.createRow({
+        databaseId: process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
+        tableId: process.env.NEXT_PUBLIC_APPWRITE_ITEMS_COLLECTION_ID,
+        rowId: newItemId,
+        data: {
           name: itemName,
           description,
           contactInstructions,
-          createdAt: new Date().toISOString(),
-          status, 
+          status,
           reward,
           tagId,
           userId,
           category,
           imageId,
-        }
-      );
+        },
+      });
 
       setSuccess("Item created successfully!");
       handleReset();
@@ -123,10 +136,10 @@ export default function CreateQr() {
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    saveItem();
-  };
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   saveItem();
+  // };
 
   const handleReset = () => {
     setItemName("");
@@ -173,13 +186,18 @@ export default function CreateQr() {
                       whileTap={{ scale: 0.95 }}
                       className={`p-4 rounded-lg border-2 transition-all ${
                         category === cat.id
-                          ? 'border-blue-500 bg-blue-50 shadow-md'
-                          : 'border-gray-200 bg-white hover:border-gray-300'
+                          ? "border-blue-500 bg-blue-50 shadow-md"
+                          : "border-gray-200 bg-white hover:border-gray-300"
                       }`}
                       onClick={() => setCategory(cat.id)}
                     >
-                      <Icon className={`mx-auto mb-2 ${category === cat.id ? 'text-blue-600' : 'text-gray-600'}`} size={24} />
-                      <p className={`text-xs font-medium ${category === cat.id ? 'text-blue-700' : 'text-gray-700'}`}>
+                      <Icon
+                        className={`mx-auto mb-2 ${category === cat.id ? "text-blue-600" : "text-gray-600"}`}
+                        size={24}
+                      />
+                      <p
+                        className={`text-xs font-medium ${category === cat.id ? "text-blue-700" : "text-gray-700"}`}
+                      >
                         {cat.name}
                       </p>
                     </motion.button>
@@ -193,15 +211,18 @@ export default function CreateQr() {
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Item Image <span className="text-gray-500">(Optional)</span>
               </label>
-              
+
               {!imagePreview ? (
                 <label className="flex flex-col items-center justify-center w-full h-48 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-blue-400 hover:bg-blue-50 transition-all">
                   <div className="flex flex-col items-center justify-center pt-5 pb-6">
                     <Upload className="w-10 h-10 mb-3 text-gray-400" />
                     <p className="mb-2 text-sm text-gray-500">
-                      <span className="font-semibold">Click to upload</span> or drag and drop
+                      <span className="font-semibold">Click to upload</span> or
+                      drag and drop
                     </p>
-                    <p className="text-xs text-gray-500">PNG, JPG, GIF up to 5MB</p>
+                    <p className="text-xs text-gray-500">
+                      PNG, JPG, GIF up to 5MB
+                    </p>
                   </div>
                   <input
                     type="file"
@@ -231,7 +252,7 @@ export default function CreateQr() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                   Name <span className="text-red-500">*</span>
+                  Name <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
@@ -241,13 +262,13 @@ export default function CreateQr() {
                   onChange={(e) => setItemName(e.target.value)}
                 />
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Status
                 </label>
                 <div className="flex flex-wrap gap-2">
-                  {['active', 'lost', 'returned'].map((stat) => (
+                  {["active", "lost", "returned"].map((stat) => (
                     <motion.button
                       key={stat}
                       type="button"
@@ -255,20 +276,23 @@ export default function CreateQr() {
                       whileTap={{ scale: 0.95 }}
                       className={`px-4 py-2 rounded-lg text-sm font-medium flex items-center transition-all ${
                         status === stat
-                          ? stat === 'active'
-                            ? 'bg-green-100 text-green-800 border border-green-300 shadow-inner'
-                            : stat === 'lost'
-                              ? 'bg-red-100 text-red-800 border border-red-300 shadow-inner'
-                              : 'bg-blue-100 text-blue-800 border border-blue-300 shadow-inner'
-                          : 'bg-gray-50 text-gray-700 border border-gray-200 hover:bg-gray-100'
+                          ? stat === "active"
+                            ? "bg-green-100 text-green-800 border border-green-300 shadow-inner"
+                            : stat === "lost"
+                              ? "bg-red-100 text-red-800 border border-red-300 shadow-inner"
+                              : "bg-blue-100 text-blue-800 border border-blue-300 shadow-inner"
+                          : "bg-gray-50 text-gray-700 border border-gray-200 hover:bg-gray-100"
                       }`}
                       onClick={() => setStatus(stat)}
                     >
                       <motion.span
                         animate={{ scale: status === stat ? 1 : 0 }}
                         className={`w-2 h-2 rounded-full mr-2 ${
-                          stat === 'active' ? 'bg-green-500' :
-                          stat === 'lost' ? 'bg-red-500' : 'bg-blue-500'
+                          stat === "active"
+                            ? "bg-green-500"
+                            : stat === "lost"
+                              ? "bg-red-500"
+                              : "bg-blue-500"
                         }`}
                       />
                       {stat.charAt(0).toUpperCase() + stat.slice(1)}
@@ -292,7 +316,8 @@ export default function CreateQr() {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Reward if Found <span className="text-gray-500">(Optional)</span>
+                Reward if Found{" "}
+                <span className="text-gray-500">(Optional)</span>
               </label>
               <input
                 type="text"
@@ -325,7 +350,7 @@ export default function CreateQr() {
               {error && (
                 <motion.div
                   initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: 'auto' }}
+                  animate={{ opacity: 1, height: "auto" }}
                   exit={{ opacity: 0, height: 0 }}
                   className="p-3 bg-red-50 text-red-600 rounded-lg text-sm"
                 >
@@ -335,7 +360,7 @@ export default function CreateQr() {
               {success && (
                 <motion.div
                   initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: 'auto' }}
+                  animate={{ opacity: 1, height: "auto" }}
                   exit={{ opacity: 0, height: 0 }}
                   className="p-3 bg-green-50 text-green-600 rounded-lg text-sm flex items-center"
                 >
@@ -348,21 +373,38 @@ export default function CreateQr() {
             <div className="flex gap-4 pt-4 justify-between">
               <motion.button
                 type="button"
+                
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
                 disabled={isLoading}
                 onClick={saveItem}
                 className={`px-6 py-3 rounded-xl font-medium flex items-center ${
                   isLoading
-                    ? 'bg-blue-400 cursor-not-allowed'
-                    : 'bg-blue-600 hover:bg-blue-700'
+                    ? "bg-blue-400 cursor-not-allowed"
+                    : "bg-blue-600 hover:bg-blue-700"
                 } text-white shadow-md`}
               >
                 {isLoading ? (
                   <>
-                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    <svg
+                      className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      ></circle>
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                      ></path>
                     </svg>
                     Saving...
                   </>
