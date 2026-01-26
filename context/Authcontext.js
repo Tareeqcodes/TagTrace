@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (email) => {
     try {
       await account.createMagicURLToken( {
-        ID:  ID.unique(),
+        userId:  ID.unique(),
         email: email,
         url: 'https://www.tagtrace.online/verify',
       }
