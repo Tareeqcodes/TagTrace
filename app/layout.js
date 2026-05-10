@@ -85,7 +85,7 @@ export default function RootLayout({ children }) {
         <AuthProvider>
           <main className='h-screen'>
             {children}
-            <Footer />
+          
           </main>
         </AuthProvider>
          <Analytics />
